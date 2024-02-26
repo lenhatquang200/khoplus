@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "KhoPlus",
+    "name": "Kho Plus",
     "slug": "KhoPlus",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,6 +13,10 @@
     },
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "platforms":[
+      "ios",
+      "android"
     ],
     "ios": {
       "supportsTablet": true
