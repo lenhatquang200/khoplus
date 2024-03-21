@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from 'react-native'
 import { settingApp, imageApp } from '../../public'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import actions from '../../state/actions'
+import Api from '../../KhoPlus/api/khoplusApi'
+
+import Contanst from 'expo-constants'
 
 const WIDTH_TEXT_INPUT = Number(settingApp.width * 0.8);
 
 export default function AuthApp() {
+    const dispatch = useDispatch()
+    const userInfor = useSelector((store) => store?.app?.authApp)
 
     const [keyboardPading, setKeyboardPading] = useState(120);
+
+    useEffect(() => {
+        console.log('userInfor', Contanst);
+    },[userInfor])
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -23,6 +33,11 @@ export default function AuthApp() {
         };
       }, []);
 
+    async function pressBt(){
+        //dispatch(actions.authApp({user:"12345678"}))
+        const res = await Api.GetAuthInfo()
+        console.log('pressBt', res);
+    }
 
     return (
         <KeyboardAvoidingView
@@ -91,6 +106,7 @@ export default function AuthApp() {
 
                     <View style={styles.view_bt_login}>
                         <TouchableOpacity
+                            onPress={() => pressBt()}
                             style={styles.bt_login}
                         >
                             <Text style={[{ fontWeight: "500", fontSize: 26, color: settingApp.white }]}>Đăng nhập</Text>
