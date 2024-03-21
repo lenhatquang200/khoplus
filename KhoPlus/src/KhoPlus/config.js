@@ -8,8 +8,10 @@ const Configs = {
     timezone : "Asia/Ho_Chi_Minh",
     device_name: deviceName,
     version:version,
-    clientid:Constanst.expoConfig.extra.clientid,
-    apiHost:Constanst.expoConfig.extra.apiHost
+    clientid:Constanst?.expoConfig?.extra?.clientid,
+    apiHost:Constanst?.expoConfig?.extra?.apiHost
 }
 
 Configs.timezone = Localization.timezone;
+
+export default Configs

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from 'react-native'
 import { settingApp, imageApp } from '../../public'
 import actions from '../../state/actions'
-import Api from '../../KhoPlus/api/khoplusApi'
+import KhoPlusApi from '../../KhoPlus/api/khoplusApi'
 
 import Contanst from 'expo-constants'
 
@@ -15,9 +15,9 @@ export default function AuthApp() {
 
     const [keyboardPading, setKeyboardPading] = useState(120);
 
-    useEffect(() => {
-        console.log('userInfor', Contanst);
-    },[userInfor])
+    // useEffect(() => {
+    //     console.log('userInfor', Contanst);
+    // },[userInfor])
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -35,7 +35,7 @@ export default function AuthApp() {
 
     async function pressBt(){
         //dispatch(actions.authApp({user:"12345678"}))
-        const res = await Api.GetAuthInfo()
+        const res = await KhoPlusApi.GetAuthInfo()
         console.log('pressBt', res);
     }
 
@@ -67,11 +67,11 @@ export default function AuthApp() {
                         width: settingApp.width,
                     }}>
 
-                    <TextInput
+                    {/* <TextInput
                         style={[styles.text_input, { marginBottom: 15 }]}
                         placeholder="Domain"
                         placeholderTextColor={settingApp.colorPlaceText}
-                    />
+                    /> */}
 
                     <TextInput
                         style={[styles.text_input, { marginBottom: 15 }]}
