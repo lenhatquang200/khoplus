@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { settingApp } from "../public";
 
 import AuthApp from "../components/auth/authenScreen";
+import HomeScreen from "../components/app/home"
 
 const Stack = createStackNavigator();
 const optionsHorizontal = {
@@ -36,6 +37,7 @@ export default function AppStack() {
                 initialRouteName="AutApp"
             >
                 <Stack.Screen component={AuthApp} name="AuthApp" />
+                <Stack.Screen component={HomeScreen} name="HomeScreen" options={{ gestureEnabled: false,}}/>
             </Stack.Navigator>
         </SafeAreaProvider>
     );

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from 'react-native'
-import { settingApp, imageApp } from '../../public'
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, ScrollView, Keyboard, Alert } from 'react-native'
+import { settingApp, imageApp, lang, Component, colorApp } from '../../public'
 import actions from '../../state/actions'
 import KhoPlusApi from '../../KhoPlus/api/khoplusApi'
 
-import Contanst from 'expo-constants'
+import FromLogin from './component/formLogin';
 
 const WIDTH_TEXT_INPUT = Number(settingApp.width * 0.8);
 
-export default function AuthApp() {
+export default function AuthApp(props) {
     const dispatch = useDispatch()
-    const userInfor = useSelector((store) => store?.app?.authApp)
+    const colleague = useSelector((state) => state.app.authApp);
 
+    const [isLogin, setLogin] = useState(true)
+    const [isLoading, setLoading] = useState(false)
     const [keyboardPading, setKeyboardPading] = useState(120);
 
-    // useEffect(() => {
-    //     console.log('userInfor', Contanst);
-    // },[userInfor])
+    useEffect(() =>{
+        console.log('colleague', colleague);
+    },[colleague])
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -33,12 +35,23 @@ export default function AuthApp() {
         };
       }, []);
 
-    async function pressBt(){
-        //dispatch(actions.authApp({user:"12345678"}))
-        const res = await KhoPlusApi.GetAuthInfo()
-        console.log('pressBt', res);
+    async function _onLogin(param){
+        const response = await KhoPlusApi.GetAuthInfo(param)
+        console.log('response', response);
+        if(response?.id){
+            setLogin(true)
+            dispatch(actions.authApp(response))
+            //props.navigation.navigate("HomeScreen")
+        }
+        else{
+            Alert.alert('', 
+            'Số điện thoại hoặc mật khẩu không đúng',
+            [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+        }
     }
-
+    
     return (
         <KeyboardAvoidingView
             behavior="position"
@@ -47,121 +60,41 @@ export default function AuthApp() {
             <ScrollView
                 scrollEnabled={false}
                 style={{
-                    backgroundColor: settingApp.green_primary,
+                    backgroundColor: colorApp.green_primary,
                     height: settingApp.height,
                     paddingTop: keyboardPading
                 }}
             >
-                <View style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: settingApp.height * 0.3
-                }}>
+                <View style={styles.view_logo}>
                     <Image source={imageApp.logoWhiteApp} style={{ resizeMode: "stretch" }} />
                 </View>
 
-                <View
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: settingApp.width,
-                    }}>
-
-                    {/* <TextInput
-                        style={[styles.text_input, { marginBottom: 15 }]}
-                        placeholder="Domain"
-                        placeholderTextColor={settingApp.colorPlaceText}
-                    /> */}
-
-                    <TextInput
-                        style={[styles.text_input, { marginBottom: 15 }]}
-                        placeholder="Tên đăng nhập"
-                        placeholderTextColor={settingApp.colorPlaceText}
-                    />
-
-                    <TextInput
-
-                        style={styles.text_input}
-                        placeholder="Mật khẩu"
-                        placeholderTextColor={settingApp.colorPlaceText}
-                    />
-
-                    <View style={styles.view_remem}>
-                        <TouchableOpacity
-                            style={styles.bt_reme}
-                        >
-                            <View
-                                style={{
-                                    width: 24,
-                                    height: 24,
-                                    backgroundColor: settingApp.white,
-                                    borderRadius: 8,
-                                }}
-                            />
-                        </TouchableOpacity>
-
-                        <Text style={styles.rememText}>Ghi nhớ đăng nhập</Text>
-                    </View>
-
-
-                    <View style={styles.view_bt_login}>
-                        <TouchableOpacity
-                            onPress={() => pressBt()}
-                            style={styles.bt_login}
-                        >
-                            <Text style={[{ fontWeight: "500", fontSize: 26, color: settingApp.white }]}>Đăng nhập</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                </View>
+                <FromLogin
+                    onLogin={(param) => _onLogin(param)}
+                />
             </ScrollView>
+            {isLoading && <Component.Loading/>}
         </KeyboardAvoidingView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: settingApp.green_primary,
+        backgroundColor: colorApp.green_primary,
     },
-    view_remem:{
-        width: WIDTH_TEXT_INPUT,
-        height: 45,
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: "flex_start",
-        marginTop: 5
+    text_user:{
+        fontWeight: "500", 
+        fontSize: 12, 
+        color: colorApp.colorPlaceText 
     },
-    rememText: {
-        fontStyle: 'italic',
-        color: settingApp.white
-    },
-    bt_reme:{
-        width: 30,
-        height: 30,
-        justifyContent: "center",
-        alignItems: 'center'
-    },
-    text_input: {
-        width: WIDTH_TEXT_INPUT,
-        height: 45,
-        backgroundColor: settingApp.white,
-        borderRadius: 16,
-        padding: 8,
-        fontStyle: 'italic',
-    },
-    view_bt_login:{
-        width: WIDTH_TEXT_INPUT,
-        height: 45,
-        alignItems: 'center',
-        justifyContent: "center",
-        marginTop: 15
-    }, 
-    bt_login:{
-        width: settingApp.width * 0.6,
-        height: 60,
-        backgroundColor: settingApp.colorText,
-        borderRadius: 20,
+    view_logo:{
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: settingApp.height * 0.3
+    },
+    form_login:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: settingApp.width,
     }
 })

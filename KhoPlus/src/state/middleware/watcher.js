@@ -4,7 +4,6 @@ import { worker } from './worker';
 
 export function* watcher(){
     yield takeEvery(aciton =>{
-        console.log('takeEvery', aciton);
         let result = false;
         let checkType = aciton.type.indexOf('_SUCCESS') > -1 ||
                         aciton.type.indexOf('_FAIL') > -1 ||

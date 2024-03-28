@@ -9,7 +9,6 @@ const typeSuffix = key({
 })
 
 export function* worker(data){
-    console.log('worker', data);
     let  { type, payload, keyStore } = data
     if(keyStore){
         AsyncStorage.setItem(keyStore, JSON.stringify(payload.body))

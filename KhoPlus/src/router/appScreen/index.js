@@ -27,8 +27,10 @@ export const gestureSetting = {
 function AppScreen(){
     <Stack.Navigator
         initialRouteName="AutApp"
+        headerMode={"none"}
     >
         <Stack.Screen component={AuthApp} name="AuthApp"/>
+
     </Stack.Navigator>
 }
 
