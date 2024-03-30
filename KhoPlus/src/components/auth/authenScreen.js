@@ -14,12 +14,17 @@ export default function AuthApp(props) {
     const colleague = useSelector((state) => state.app.authApp);
 
     const [isLogin, setLogin] = useState(true)
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(true)
+
     const [keyboardPading, setKeyboardPading] = useState(120);
+    const [infoUser, setInfoUser] = useState(colleague)
 
     useEffect(() =>{
-        console.log('colleague', colleague);
-    },[colleague])
+        const timeOut = setTimeout(() => {
+            getAthenInfo()
+            clearTimeout(timeOut)
+        }, 500);
+    },[])
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -33,17 +38,34 @@ export default function AuthApp(props) {
           showSubscription.remove();
           hideSubscription.remove();
         };
-      }, []);
+    }, []);
 
-    async function _onLogin(param){
-        const response = await KhoPlusApi.GetAuthInfo(param)
-        console.log('response', response);
-        if(response?.id){
-            setLogin(true)
-            dispatch(actions.authApp(response))
-            //props.navigation.navigate("HomeScreen")
+    function dispatchAuth(response){
+        setLoading(false)
+        setInfoUser(response)
+        dispatch(actions.authApp(response))
+        props.navigation.navigate("HomeScreen")
+    }
+
+    async function getAthenInfo(){
+        setLoading(true)
+        const auth = await KhoPlusApi.GetAuthInfo();
+        if(auth?.id){
+            dispatchAuth(auth)
         }
         else{
+            setLoading(false)
+        }
+    }
+
+    async function _onLogin(param){
+        setLoading(true)
+        const response = await KhoPlusApi.LoginAuth(param)
+        if(response?.id){
+            dispatchAuth(response)
+        }
+        else{
+            setLoading(false)
             Alert.alert('', 
             'Số điện thoại hoặc mật khẩu không đúng',
             [
@@ -70,6 +92,7 @@ export default function AuthApp(props) {
                 </View>
 
                 <FromLogin
+                    infoUser={infoUser}
                     onLogin={(param) => _onLogin(param)}
                 />
             </ScrollView>

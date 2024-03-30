@@ -5,18 +5,29 @@ import { settingApp, lang, colorApp } from '../../../public';
 const WIDTH_TEXT_INPUT = Number(settingApp.width * 0.8);
 
 export default function FromLogin(props) {
-
-    const [userInfo, setUserInfo] = useState({
+    
+    //const [infoUser, setInfoUser] = useState(props?.infoUser)
+    const [userLogin, setUserLogin] = useState({
         phone:'',
         password:'',
     })
+
+    useEffect(() =>{
+        const { infoUser } = props
+        if(infoUser?.login?.phone){
+            setUserLogin({
+                ...userLogin,
+                phone:infoUser?.login?.phone
+            })
+        }
+    },[props])
 
     function isPhoneNumber(number) {
         return /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/.test(number);
     }
 
     function pressBt(){
-        const { phone } = userInfo || {}
+        const { phone } = userLogin || {}
         if((phone.trim().length < 10) && !isPhoneNumber(phone)){
             Alert.alert('Số điện thoại không đúng', 
             '',
@@ -25,7 +36,7 @@ export default function FromLogin(props) {
             ]);
         }
         else{
-            props.onLogin(userInfo)
+            props.onLogin(userLogin)
         }
     }
 
@@ -34,9 +45,9 @@ export default function FromLogin(props) {
             <TextInput
                 style={[styles.text_input, { marginBottom: 15 }]}
                 placeholder={lang.placeHolderUserName}
-                value={userInfo.user}
+                value={userLogin.phone}
                 keyboardType="number-pad"
-                onChangeText={(text) => setUserInfo({ ...userInfo, phone: text })}
+                onChangeText={(text) => setUserLogin({ ...userLogin, phone: text })}
                 inputMode="numeric"
             />
 
@@ -44,7 +55,7 @@ export default function FromLogin(props) {
                 style={styles.text_input}
                 placeholder={lang.placeHolderPass}
                 secureTextEntry={true}
-                onChangeText={(text) => setUserInfo({ ...userInfo, password: text })}
+                onChangeText={(text) => setUserLogin({ ...userLogin, password: text })}
             />
 
             <View style={styles.view_bt_login}>
