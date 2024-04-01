@@ -17,6 +17,16 @@ import { colorApp, settingApp } from "../../public";
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+function iconTab(focused, name) {
+  return (
+    <AntDesign
+      name={name}
+      size={24}
+      color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
+    />
+  );
+}
+
 function MyTabs(props) {
   return (
     <Tabs.Navigator
@@ -32,13 +42,7 @@ function MyTabs(props) {
         component={HomeScreen}
         options={{
           tabBarLabel: "Trang Chủ",
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="home"
-              size={24}
-              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
-            />
-          ),
+          tabBarIcon: ({ focused }) => iconTab(focused, "home"),
         }}
       />
 
@@ -47,13 +51,7 @@ function MyTabs(props) {
         component={Category}
         options={{
           tabBarLabel: "Danh mục",
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="appstore-o"
-              size={24}
-              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
-            />
-          ),
+          tabBarIcon: ({ focused }) => iconTab(focused, "appstore-o"),
         }}
       />
 
@@ -62,13 +60,7 @@ function MyTabs(props) {
         component={Selling}
         options={{
           tabBarLabel: "Bán Hàng",
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="shoppingcart"
-              size={24}
-              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
-            />
-          ),
+          tabBarIcon: ({ focused }) => iconTab(focused, "shoppingcart"),
         }}
       />
 
@@ -92,13 +84,7 @@ function MyTabs(props) {
         component={Profile}
         options={{
           tabBarLabel: "Cá Nhân",
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="profile"
-              size={24}
-              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
-            />
-          ),
+          tabBarIcon: ({ focused }) => iconTab(focused, "profile"),
         }}
       />
     </Tabs.Navigator>
