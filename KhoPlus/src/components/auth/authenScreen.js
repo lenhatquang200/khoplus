@@ -20,7 +20,7 @@ const WIDTH_TEXT_INPUT = Number(settingApp.width * 0.8);
 
 export default function AuthApp(props) {
   const dispatch = useDispatch();
-  const colleague = useSelector((state) => state.app.authApp);
+  const colleague = useSelector((state) => state?.app);
 
   const [isLoading, setLoading] = useState(true);
 
@@ -48,10 +48,10 @@ export default function AuthApp(props) {
     };
   }, []);
 
-  function dispatchAuth(response) {
+  function dispatchColluegue(response) {
     setLoading(false);
     setInfoUser(response);
-    dispatch(actions.authApp(response));
+    dispatch(actions.getColleague(response));
     props.navigation.navigate("TabStack");
   }
 
@@ -59,7 +59,7 @@ export default function AuthApp(props) {
     setLoading(true);
     const auth = await KhoPlusApi.GetAuthInfo();
     if (auth?.id) {
-      dispatchAuth(auth);
+      dispatchColluegue(auth);
     } else {
       setLoading(false);
     }
@@ -68,8 +68,9 @@ export default function AuthApp(props) {
   async function _onLogin(param) {
     setLoading(true);
     const response = await KhoPlusApi.LoginAuth(param);
-    if (response?.id) {
-      dispatchAuth(response);
+    if (response?.access_token) {
+      dispatch(actions.authApp(response));
+      dispatchColluegue(response.user);
     } else {
       setLoading(false);
       Alert.alert("", "Số điện thoại hoặc mật khẩu không đúng", [
