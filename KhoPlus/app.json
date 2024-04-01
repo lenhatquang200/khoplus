@@ -6,9 +6,12 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "extra":{
-      "apiHost":"api.khoplus.com",
-      "clientid": "khoplus.mobile"
+    "extra": {
+      "apiHost": "api.khoplus.com",
+      "clientid": "khoplus.mobile",
+      "eas": {
+        "projectId": "1f464ed1-76be-4543-8c1b-d31984f882a5"
+      }
     },
     "splash": {
       "image": "./assets/splash.png",
@@ -29,7 +32,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nguyentran.KhoPlus"
     },
     "web": {
       "favicon": "./assets/favicon.png"
