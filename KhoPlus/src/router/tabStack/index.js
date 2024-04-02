@@ -5,7 +5,13 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialIcons,
+  Ionicons,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
 
 import HomeScreen from "../../components/app/home";
 import Category from "../../components/app/category";
@@ -42,7 +48,13 @@ function MyTabs(props) {
         component={HomeScreen}
         options={{
           tabBarLabel: "Trang Chủ",
-          tabBarIcon: ({ focused }) => iconTab(focused, "home"),
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "home-sharp" : "home-outline"}
+              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
+              size={24}
+            />
+          ),
         }}
       />
 
@@ -51,7 +63,13 @@ function MyTabs(props) {
         component={Category}
         options={{
           tabBarLabel: "Danh mục",
-          tabBarIcon: ({ focused }) => iconTab(focused, "appstore-o"),
+          tabBarIcon: ({ focused }) => (
+            <AntDesign
+              name={focused ? "appstore1" : "appstore-o"}
+              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
+              size={22}
+            />
+          ),
         }}
       />
 
@@ -60,7 +78,13 @@ function MyTabs(props) {
         component={Selling}
         options={{
           tabBarLabel: "Bán Hàng",
-          tabBarIcon: ({ focused }) => iconTab(focused, "shoppingcart"),
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name={focused ? "shopping-cart" : "add-shopping-cart"}
+              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
+              size={24}
+            />
+          ),
         }}
       />
 
@@ -70,10 +94,10 @@ function MyTabs(props) {
         options={{
           tabBarLabel: "Lịch Sử",
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="manage-history"
-              size={24}
+            <MaterialCommunityIcons
+              name={focused ? "text-box-check" : "text-box-check-outline"}
               color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
+              size={24}
             />
           ),
         }}
@@ -84,7 +108,13 @@ function MyTabs(props) {
         component={Profile}
         options={{
           tabBarLabel: "Cá Nhân",
-          tabBarIcon: ({ focused }) => iconTab(focused, "profile"),
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome
+              name={focused ? "user" : "user-o"}
+              color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
+              size={focused ? 26 : 22}
+            />
+          ),
         }}
       />
     </Tabs.Navigator>

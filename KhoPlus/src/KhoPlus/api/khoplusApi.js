@@ -65,7 +65,12 @@ async function LoginAuth(param) {
   //return response.json()
 }
 
+async function LogOut() {
+  await AsyncStorage.removeItem(AuthStorageKey);
+}
+
 export default {
   LoginAuth,
   GetAuthInfo,
+  LogOut,
 };
