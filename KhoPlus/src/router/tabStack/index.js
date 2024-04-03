@@ -23,16 +23,6 @@ import { colorApp, settingApp } from "../../public";
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function iconTab(focused, name) {
-  return (
-    <AntDesign
-      name={name}
-      size={24}
-      color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
-    />
-  );
-}
-
 function MyTabs(props) {
   return (
     <Tabs.Navigator

@@ -15,6 +15,8 @@ const isTablet = width > 500 && height > 500;
 const statusBarHeight = Constants.statusBarHeight;
 
 const settingApp = {
+  isTablet,
+
   width,
   height,
   platform: Platform.OS,
