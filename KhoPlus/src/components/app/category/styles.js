@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
   viewItemMenu: {
     height: tablet ? settingApp.scale(32) : 32,
     justifyContent: "center",
-    paddingHorizontal: 12,
+    paddingHorizontal: 15,
     borderRadius: 20,
   },
   textItemMenu: {
-    fontSize: tablet ? settingApp.txt_12 : settingApp.txt_14,
+    fontSize: tablet ? settingApp.size_12 : settingApp.size_14,
     fontWeight: "500",
   },
 });

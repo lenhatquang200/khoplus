@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, memo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { View, Text, TouchableOpacity, Animated, FlatList } from "react-native";
 import styles from "./styles";
 import { configMenu } from "./components/configMenu";
 import { Component, settingApp } from "../../../public";
 import ItemList from "./components/itemList";
+import HeaderCategory from "./components/headerCategory";
 
 const tablet = settingApp.isTablet;
 
@@ -17,7 +19,8 @@ const listTop_Menu = [];
 const scrollY = new Animated.Value(0);
 
 function Category(props) {
-  const ref_flatlist_content = useRef(null);
+  const colleague = useSelector((state) => state?.app?.colleague);
+
   const ref_flatList = useRef(null);
   const ref_menu_content = useRef(null);
 
@@ -27,7 +30,6 @@ function Category(props) {
   const [listMenu, setListMenu] = useState([]);
 
   const [listContent, setListContent] = useState(listConst);
-  const [listMenu_Top, setListMenu_Top] = useState(listTop_Menu);
 
   const [list_H_Content, setList_H] = useState([]);
 
@@ -214,7 +216,7 @@ function Category(props) {
     <View style={styles.container}>
       <Component.LinearBackGround />
 
-      <View style={{ width: settingApp.width, height: 120 }} />
+      <HeaderCategory colleague={colleague} />
       <View style={styles.viewTabContainer}>
         <FlatList
           ref={ref_menu_content}
@@ -238,7 +240,6 @@ function Category(props) {
   );
 }
 
-const ItemMenu = memo(itemMenu);
 function itemMenu({ obj, tabActive, actions }) {
   const { item, index } = obj;
   let title_ = item && item.title ? item.title : "";
@@ -253,7 +254,9 @@ function itemMenu({ obj, tabActive, actions }) {
         style={[
           styles.viewItemMenu,
           {
-            backgroundColor: active ? settingApp.white : "transparent",
+            backgroundColor: active
+              ? settingApp.white
+              : "rgba(255,255,255, 0.2)",
           },
         ]}
       >
@@ -261,7 +264,7 @@ function itemMenu({ obj, tabActive, actions }) {
           style={[
             styles.textItemMenu,
             {
-              color: active ? settingApp.blue500 : settingApp.white,
+              color: active ? settingApp.colorText : settingApp.white,
             },
           ]}
         >
