@@ -15,7 +15,7 @@ import {
 
 import HomeScreen from "../../components/app/home";
 import Category from "../../components/app/category";
-import Selling from "../../components/app/history";
+import Selling from "../../components/app/selling";
 import History from "../../components/app/history";
 import Profile from "../../components/app/profile";
 import { colorApp, settingApp } from "../../public";
