@@ -7,9 +7,13 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
-import { settingApp, colorApp, CONSTANTS_APP } from "../../../public";
+import {
+  settingApp,
+  colorApp,
+  CONSTANTS_APP,
+  Component,
+} from "../../../public";
 import { HeaderProfile } from "./components";
 import KhoPlus from "../../../KhoPlus/api/khoplusApi";
 import { StackActions } from "@react-navigation/native";
@@ -42,12 +46,7 @@ function Profile(props) {
         flex: 1,
       }}
     >
-      <LinearGradient
-        // Background Linear Gradient
-        colors={[colorApp.green_primary, colorApp.white]}
-        style={styles.background}
-      />
-
+      <Component.LinearBackGround />
       <ScrollView style={{ paddingLeft: space_16 }}>
         <HeaderProfile colleague={colleague} />
         <View style={{ width, height: 450 }} />

@@ -1,48 +1,46 @@
 import React from "react";
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
-import { settingApp, colorApp } from "../../../../public";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import { colorApp, lang, settingApp } from "../../../../public";
 
+const colorIcon = colorApp.green_primary;
+const sizeIcon = settingApp.scale(24);
 export async function configMenu() {
   const list_Menu = [
     {
       keyObj: "product",
-      title: "Hàng hóa",
+      title: lang.product,
       groupId: 28,
       data: [
         {
           icon: (
-            <FontAwesome name="th-list" size={24} color={colorApp.colorText} />
+            <FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "1",
-          title: "Danh mục",
+          keyApp: "product_menu",
+          title: lang.list,
+          router: "",
+        },
+        {
+          icon: <FontAwesome name="tags" size={sizeIcon} color={colorIcon} />,
+          keyApp: "product_type",
+          title: lang.type,
           router: "",
         },
         {
           icon: (
-            <FontAwesome
-              name="align-left"
-              size={24}
-              color={colorApp.colorText}
-            />
+            <FontAwesome name="sitemap" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "1",
-          title: "Loại",
+          keyApp: "product_group",
+          title: lang.group,
           router: "",
         },
         {
-          icon: (
-            <FontAwesome name="sitemap" size={24} color={colorApp.colorText} />
-          ),
-          keyApp: "1",
-          title: "Nhóm",
-          router: "",
-        },
-        {
-          icon: (
-            <FontAwesome name="money" size={24} color={colorApp.colorText} />
-          ),
-          keyApp: "1",
-          title: "Đơn vị tính",
+          icon: <FontAwesome name="money" size={sizeIcon} color={colorIcon} />,
+          keyApp: "product_unit",
+          title: lang.unit,
           router: "",
         },
       ],
@@ -50,27 +48,77 @@ export async function configMenu() {
 
     {
       keyObj: "manufacturings",
-      title: "Nhà cung cấp",
+      title: lang.manufacturings,
       groupId: 28,
       data: [
         {
           icon: (
-            <FontAwesome name="list" size={24} color={colorApp.colorText} />
+            <FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "1",
-          title: "Danh mục",
+          keyApp: "manufacturings_menu",
+          title: lang.list,
           router: "",
         },
         {
           icon: (
             <MaterialCommunityIcons
               name="home-group"
-              size={24}
-              color={colorApp.colorText}
+              size={sizeIcon}
+              color={colorIcon}
             />
           ),
-          keyApp: "1",
-          title: "Nhóm nhà cung cấp",
+          keyApp: "manufacturings_group",
+          title: lang.manufacturings_group,
+          router: "",
+        },
+      ],
+    },
+
+    {
+      keyObj: "customer",
+      title: lang.customer,
+      groupId: 28,
+      data: [
+        {
+          icon: (
+            <FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />
+          ),
+          keyApp: "customer_list",
+          title: lang.list,
+          router: "",
+        },
+        {
+          icon: <FontAwesome name="users" size={sizeIcon} color={colorIcon} />,
+          keyApp: "customer_group",
+          title: lang.group,
+          router: "",
+        },
+        {
+          icon: (
+            <FontAwesome name="pagelines" size={sizeIcon} color={colorIcon} />
+          ),
+          keyApp: "customer_plant",
+          title: lang.plant,
+          router: "",
+        },
+      ],
+    },
+
+    {
+      keyObj: "Nhập kho",
+      title: lang.importStore,
+      groupId: 28,
+      data: [
+        {
+          icon: (
+            <MaterialIcons
+              name="add-home-work"
+              size={sizeIcon}
+              color={colorIcon}
+            />
+          ),
+          keyApp: "customer_list",
+          title: lang.importFrom_Manufact,
           router: "",
         },
       ],

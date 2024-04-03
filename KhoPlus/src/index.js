@@ -34,17 +34,6 @@ export default function AppComponent(props) {
 
   return (
     <View style={{ flex: 1 }}>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={[colorApp.green_primary, colorApp.white]}
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          height: settingApp.height,
-        }}
-      />
       <Provider store={store}>
         <StatusBar />
 

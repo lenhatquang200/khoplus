@@ -18,6 +18,7 @@ const settingApp = {
   isTablet,
 
   width,
+  width_32: width - 32,
   height,
   platform: Platform.OS,
   statusBarHeight,
