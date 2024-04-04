@@ -1,13 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, Suspense } from "react";
 import { View, BackHandler, StatusBar } from "react-native";
 import { Provider } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
-
+import { SQLiteProvider } from "expo-sqlite/next";
 import AppStack from "./router/appScreen";
 import store from "./state/store";
-import { colorApp, settingApp } from "./public";
-
 export default function AppComponent(props) {
   const navigationContainer = useRef(null);
   useEffect(() => {
@@ -37,7 +34,11 @@ export default function AppComponent(props) {
         <StatusBar />
 
         <NavigationContainer ref={navigationContainer}>
-          <AppStack props={store} />
+          <Suspense>
+            <SQLiteProvider databaseName="khoplusDB.db" useSuspense>
+              <AppStack props={store} />
+            </SQLiteProvider>
+          </Suspense>
         </NavigationContainer>
       </Provider>
     </View>

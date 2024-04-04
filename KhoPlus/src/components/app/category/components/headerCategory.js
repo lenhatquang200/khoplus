@@ -4,7 +4,6 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { colorApp, settingApp, Component } from "../../../../public";
 
 export default function HeaderCategory(props) {
-  console.log("HeaderCategory", props);
   const { colleague } = props || {};
   return (
     <View style={styles.container}>

@@ -14,6 +14,28 @@ import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
 import FromLogin from "./component/formLogin";
 
+import * as FileSystems from "expo-file-system";
+import { Asset } from "expo-asset";
+
+const loadDatabase = async () => {
+  const dbName = "khoplusDB.db";
+  const dbAsset = require("../../../khoplusDB.db");
+
+  const dbUri = Asset.fromModule(dbAsset).uri;
+  const dbFilePatch = `${FileSystems.documentDirectory}SQLite/${dbName}`;
+
+  const fileInfo = await FileSystems.getInfoAsync(dbFilePatch);
+  if (!fileInfo.exists) {
+    await FileSystems.makeDirectoryAsync(
+      `${FileSystems.documentDirectory}SQLite`,
+      {
+        intermediates: true,
+      }
+    );
+    await FileSystems.downloadAsync(dbUri, dbFilePatch);
+  }
+};
+
 export default function AuthApp(props) {
   const dispatch = useDispatch();
   const colleague = useSelector((state) => state?.app);
@@ -24,6 +46,7 @@ export default function AuthApp(props) {
   const [infoUser, setInfoUser] = useState(colleague);
 
   useEffect(() => {
+    loadDatabase().catch((e) => console.log("error", e));
     const timeOut = setTimeout(() => {
       getAthenInfo();
       clearTimeout(timeOut);
