@@ -12,7 +12,6 @@ export default function AppComponent(props) {
   const navigationContainer = useRef(null);
   useEffect(() => {
     const resp = navigationContainer?.current?.getCurrentRoute();
-    console.log("AppComponent", resp);
     const backAction = () => {
       Alert.alert("Thông báo", "Bạn có chắc chắn muốn thoát khỏi ứng dụng ?", [
         {

@@ -1,5 +1,6 @@
 import Config from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+const isDev = process.env.NODE_ENV === "development";
 
 export const AuthStorageKey = "AUTH_KHOPLUS";
 let _authInfo = null;
@@ -11,7 +12,7 @@ async function GetAuthInfo() {
     const { login } = result || {};
     if (result?.auth?.access_token) {
       _authInfo = {
-        ...result.userInfo,
+        ...result,
         login,
       };
     } else {
@@ -47,6 +48,7 @@ async function LoginAuth(param) {
     return data;
   } else {
     const dataJson = await response.json();
+    console.log("dataJson", dataJson);
     if (dataJson?.data && dataJson?.success) {
       const { data } = dataJson || {};
       const infoLogin = {
@@ -66,11 +68,54 @@ async function LoginAuth(param) {
 }
 
 async function LogOut() {
+  _authInfo = null;
   await AsyncStorage.removeItem(AuthStorageKey);
+}
+
+async function GetAccessToken() {
+  let authInfo = await GetAuthInfo();
+  if (authInfo?.auth) {
+    return authInfo;
+  } else {
+    // let expiredDate = new Date(authInfo.auth.created_time + (authInfo.auth.expires_in * 1000 / 2));
+    // if (expiredDate <= new Date()) {
+    //     authInfo = await renewToken(authInfo);
+    // }
+    return null;
+  }
+}
+
+async function CallApi(url, method, body) {
+  let authInfo = await GetAccessToken();
+
+  if (authInfo === null) {
+    await LogOut();
+    return { error: true, message: "get access token fail" };
+  }
+
+  if (!method) method = "GET";
+  let header = null;
+  let token = authInfo?.auth?.access_token;
+  header = {
+    method: method,
+    body: body ? JSON.stringify(body) : null,
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  let response = await fetch(url, header);
+  if (response.status !== 200 && isDev) {
+    console.log(
+      `-------------------------\n\u274c ${response.status} ${response.url}`
+    );
+  }
+  return await response.json();
 }
 
 export default {
   LoginAuth,
   GetAuthInfo,
   LogOut,
+  CallApi,
 };

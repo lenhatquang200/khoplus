@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   KeyboardAvoidingView,
@@ -10,13 +9,10 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import { settingApp, imageApp, lang, Component, colorApp } from "../../public";
+import { settingApp, imageApp, Component, colorApp } from "../../public";
 import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
-
 import FromLogin from "./component/formLogin";
-
-const WIDTH_TEXT_INPUT = Number(settingApp.width * 0.8);
 
 export default function AuthApp(props) {
   const dispatch = useDispatch();
@@ -69,6 +65,7 @@ export default function AuthApp(props) {
     setLoading(true);
     const response = await KhoPlusApi.LoginAuth(param);
     if (response?.access_token) {
+      const { user = {} } = response;
       dispatch(actions.authApp(response));
       dispatchColluegue(response.user);
     } else {
