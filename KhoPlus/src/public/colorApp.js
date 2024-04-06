@@ -13,9 +13,12 @@ const colorApp = {
   white: "#FFFFFF",
 
   black_opacity_05: "rgba(0,0,0,0.5)",
+  black_opacity_01: "rgba(0,0,0,0.1)",
 
   white_opacity_02: "rgba(255,255,255, 0.2)",
   white_opacity_05: "rgba(255,255,255, 0.5)",
+
+  green_opacity_03: "rgba(60, 180, 110, 0.3)",
 };
 
 export default colorApp;

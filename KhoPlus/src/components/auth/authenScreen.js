@@ -20,6 +20,7 @@ import * as FileSystems from "expo-file-system";
 import { Asset } from "expo-asset";
 import { FontAwesome } from "@expo/vector-icons";
 import Splash from "./component/splashScreen";
+import { screenName } from "../../router/screenName";
 
 const { width, height } = settingApp;
 
@@ -61,7 +62,7 @@ export default function AuthApp(props) {
   function dispatchColluegue(response) {
     setInfoUser(response);
     dispatch(actions.getColleague(response));
-    props.navigation.navigate("TabStack");
+    props.navigation.navigate(screenName.TAB_STACK);
   }
 
   async function getAthenInfo() {

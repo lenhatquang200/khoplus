@@ -7,6 +7,8 @@ import { Component, settingApp } from "../../../public";
 import ItemList from "./components/itemList";
 import HeaderCategory from "./components/headerCategory";
 
+import * as Utils from "./components/utils";
+import { screenName } from "../../../router/screenName";
 const tablet = settingApp.isTablet;
 
 const listConst = [
@@ -15,7 +17,6 @@ const listConst = [
   { view: <View />, keyMenu: "content", data: [] },
 ];
 
-const listTop_Menu = [];
 const scrollY = new Animated.Value(0);
 
 function Category(props) {
@@ -28,11 +29,8 @@ function Category(props) {
   let min_header = tablet ? settingApp.verticalScale(80) : 84;
 
   const [listMenu, setListMenu] = useState([]);
-
   const [listContent, setListContent] = useState(listConst);
-
   const [list_H_Content, setList_H] = useState([]);
-
   const [tabActive, setTabActive] = useState("0");
 
   useEffect(() => {
@@ -53,7 +51,6 @@ function Category(props) {
   async function getList() {
     let newList = await configMenu();
     let newListConten = [...listMenu];
-    let listHeader = [];
     if (newListConten.length != 0) {
       newListConten.map((e, i) => {});
     }
@@ -162,6 +159,11 @@ function Category(props) {
     }
   }
 
+  function checkActionButton(_item) {
+    props.navigation.navigate(screenName.PRODUCTS_TAB);
+  }
+
+  // rende List menu main
   function renderContentMenu() {
     return (
       <>
@@ -201,7 +203,7 @@ function Category(props) {
               item={item}
               index={index}
               tabActive={tabActive}
-              //actions={(item_) => checkBt_Content(item_)}
+              actions={(item_) => Utils.checkActionButton(item_, props)}
             />
           )}
           snapToAlignment={"start"}
@@ -224,7 +226,7 @@ function Category(props) {
           extraData={listContent[0].data}
           keyExtractor={(item, index) => "" + index}
           renderItem={(obj) =>
-            itemMenu({
+            itemMenuTabbarTop({
               obj,
               tabActive,
               actions: (index) => _scrollTo(index),
@@ -239,8 +241,8 @@ function Category(props) {
     </View>
   );
 }
-
-function itemMenu({ obj, tabActive, actions }) {
+//render item trên tabbar top
+function itemMenuTabbarTop({ obj, tabActive, actions }) {
   const { item, index } = obj;
   let title_ = item && item.title ? item.title : "";
   let active = index == tabActive;
@@ -275,6 +277,9 @@ function itemMenu({ obj, tabActive, actions }) {
   );
 }
 
+//render theo keyMenu của listCont chia ra 3 phần
+//Content là phần menu chính
+//Herder_empty là phần rỗng để tính theo scrollview
 const ItemView = memo(renderItemView);
 function renderItemView({ item, actions }) {
   if (item.keyMenu == "content") {
@@ -284,7 +289,9 @@ function renderItemView({ item, actions }) {
         data={list}
         extraData={list}
         keyExtractor={(item, index) => "" + index}
-        renderItem={({ item }) => <ItemListMenu item={item} />}
+        renderItem={({ item }) => (
+          <ItemListMenu item={item} actions={actions} />
+        )}
         scrollEnabled={false}
         // ListEmptyComponent={() => <NoData text={"Danh sách đang trống"} />}
       />
@@ -303,9 +310,9 @@ function renderItemView({ item, actions }) {
     return <View />;
   }
 }
-
+// render từng obj menu theo nhóm bên trong ItemView
 const ItemListMenu = memo(item);
-function item({ item }) {
-  return <ItemList item={item} />;
+function item({ item, actions }) {
+  return <ItemList item={item} actions={actions} />;
 }
 export default Category;

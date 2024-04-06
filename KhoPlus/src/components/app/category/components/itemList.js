@@ -14,7 +14,7 @@ const COVER_ICON_MENU_SIZE = tablet
   ? settingApp.scale(32)
   : settingApp.scale(42);
 export default function ItemList(props) {
-  const { item } = props || {};
+  const { item, actions } = props || {};
 
   const [listIcon, setListIcon] = useState([]);
 
@@ -46,7 +46,7 @@ export default function ItemList(props) {
         key={(item, index) => `${index}`}
         data={listIcon}
         extraData={listIcon}
-        renderItem={(obj) => <IconView obj={obj} />}
+        renderItem={(obj) => <IconView obj={obj} actions={actions} />}
       />
     </View>
   );
@@ -54,9 +54,11 @@ export default function ItemList(props) {
 
 const IconView = memo(iconView);
 function iconView(props) {
-  const { item, index } = props.obj;
+  const { actions, obj } = props;
+  const { item, index } = obj || {};
   return (
     <TouchableOpacity
+      onPress={() => actions(item)}
       style={[
         styles.view_icon,
         {

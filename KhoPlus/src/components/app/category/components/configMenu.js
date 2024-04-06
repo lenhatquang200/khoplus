@@ -5,13 +5,14 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { colorApp, lang, settingApp } from "../../../../public";
-
+import { screenName } from "../../../../router/screenName";
+import { CATEGORY_CONSTANT } from "./constans";
 const colorIcon = colorApp.green_primary;
 const sizeIcon = settingApp.scale(24);
 export async function configMenu() {
   const list_Menu = [
     {
-      keyObj: "product",
+      keyObj: CATEGORY_CONSTANT.OBJ_PRODUCT,
       title: lang.product,
       groupId: 28,
       data: [
@@ -19,29 +20,29 @@ export async function configMenu() {
           icon: (
             <FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "product_menu",
+          keyApp: CATEGORY_CONSTANT.KEY_PRODUCT_LIST,
           title: lang.list,
-          router: "",
+          router: screenName.PRODUCTS_LIST,
         },
         {
           icon: <FontAwesome name="tags" size={sizeIcon} color={colorIcon} />,
-          keyApp: "product_type",
+          keyApp: CATEGORY_CONSTANT.KEY_PRODUCT_TYPE,
           title: lang.type,
-          router: "",
+          router: screenName.PRODUCTS_TYPE,
         },
         {
           icon: (
             <FontAwesome name="sitemap" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "product_group",
+          keyApp: CATEGORY_CONSTANT.KEY_PRODUCT_GROUP,
           title: lang.group,
-          router: "",
+          router: screenName.PRODUCTS_GROUP,
         },
         {
           icon: <FontAwesome name="money" size={sizeIcon} color={colorIcon} />,
-          keyApp: "product_unit",
+          keyApp: CATEGORY_CONSTANT.KEY_PRODUCT_UNIT,
           title: lang.unit,
-          router: "",
+          router: screenName.PRODUCTS_UNIT,
         },
       ],
     },

@@ -8,6 +8,9 @@ import { settingApp } from "../../public";
 import AuthApp from "../../components/auth/authenScreen";
 import TabStack from "../tabStack";
 
+import ProductsTab from "../../components/app/screens/products";
+
+import { screenName } from "../screenName";
 const Stack = createStackNavigator();
 const optionsHorizontal = {
   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -31,14 +34,15 @@ function AppScreen(props) {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="AuthApp"
+      initialRouteName={screenName.AUTH_APP}
     >
-      <Stack.Screen component={AuthApp} name="AuthApp" />
+      <Stack.Screen component={AuthApp} name={screenName.AUTH_APP} />
       <Stack.Screen
         component={TabStack}
-        name="TabStack"
+        name={screenName.TAB_STACK}
         options={{ gestureEnabled: false }}
       />
+      <Stack.Screen component={ProductsTab} name={screenName.PRODUCTS_TAB} />
     </Stack.Navigator>
   );
 }
