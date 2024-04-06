@@ -19,6 +19,7 @@ import Svg, { ClipPath, Ellipse } from "react-native-svg";
 import * as FileSystems from "expo-file-system";
 import { Asset } from "expo-asset";
 import { FontAwesome } from "@expo/vector-icons";
+import Splash from "./component/splashScreen";
 
 const { width, height } = settingApp;
 
@@ -46,75 +47,52 @@ export default function AuthApp(props) {
   const colleague = useSelector((state) => state?.app);
 
   const [isLoading, setLoading] = useState(true);
-
-  const [keyboardPading, setKeyboardPading] = useState(120);
   const [infoUser, setInfoUser] = useState(colleague);
+  const [isLoginFail, setLoginFail] = useState(false);
 
   useEffect(() => {
-    loadDatabase().catch((e) => console.log("error", e));
-    const timeOut = setTimeout(() => {
-      getAthenInfo();
-      clearTimeout(timeOut);
-    }, 500);
-  }, []);
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setKeyboardPading(300);
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardPading(120);
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
+    setTimeout(() => {
+      if (infoUser) {
+        getAthenInfo();
+      }
+    }, 1500);
   }, []);
 
   function dispatchColluegue(response) {
-    setLoading(false);
     setInfoUser(response);
     dispatch(actions.getColleague(response));
     props.navigation.navigate("TabStack");
   }
 
   async function getAthenInfo() {
-    setLoading(true);
     const auth = await KhoPlusApi.GetAuthInfo();
-    if (auth?.id) {
-      dispatchColluegue(auth);
+    if (auth?.userInfo) {
+      dispatchColluegue(auth?.userInfo);
     } else {
       setLoading(false);
     }
   }
 
   async function _onLogin(param) {
-    setLoading(true);
+    setLoginFail(false);
     const response = await KhoPlusApi.LoginAuth(param);
     if (response?.access_token) {
-      const { user = {} } = response;
       dispatch(actions.authApp(response));
       dispatchColluegue(response.user);
     } else {
-      setLoading(false);
+      setLoginFail(true);
       Alert.alert("", "Số điện thoại hoặc mật khẩu không đúng", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     }
   }
 
-  return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+  function content() {
+    return (
       <ScrollView
         scrollEnabled={false}
         keyboardDismissMode="on-drag"
-        style={{
-          backgroundColor: colorApp.green_primary,
-          height: settingApp.height,
-          paddingTop: settingApp.statusBarHeight,
-          //alignItems: "center",
-        }}
+        style={styles.view_scroll}
       >
         <View style={styles.view_logo}>
           <Image
@@ -123,62 +101,34 @@ export default function AuthApp(props) {
           />
         </View>
 
-        <View
-          style={{
-            width: width,
-            backgroundColor: settingApp.white,
-            height: height * 0.8,
-            alignItems: "center",
-            borderRadius: 62,
-            paddingTop: 62,
-            ...settingApp.shadow_Top,
-          }}
-        >
-          <View
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 30,
-              backgroundColor: colorApp.white,
-              ...settingApp.shadow_Top,
-              position: "absolute",
-              top: -30,
-              left: 32,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+        <View style={styles.view_login}>
+          <View style={styles.view_profile}>
             <FontAwesome
               name="user-o"
               color={colorApp.green_primary}
               size={35}
             />
           </View>
-          <View
-            style={{
-              width: settingApp.width - 100,
-              height: 32,
-              justifyContent: "center",
-              position: "absolute",
-              top: 5,
-              left: 52,
-              alignItems: "center",
-              marginBottom: 5,
-            }}
-          ></View>
-
-          <FromLogin infoUser={infoUser} onLogin={(param) => _onLogin(param)} />
+          <FromLogin
+            isLoginFail={isLoginFail}
+            infoUser={infoUser}
+            onLogin={(param) => _onLogin(param)}
+          />
         </View>
       </ScrollView>
+    );
+  }
 
-      {isLoading && <Component.Loading />}
+  return (
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      {isLoading ? <Splash /> : content()}
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colorApp.green_001,
+    backgroundColor: colorApp.green_004,
   },
   text_user: {
     fontWeight: "500",
@@ -194,5 +144,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: settingApp.width,
+  },
+  view_profile: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: colorApp.white,
+    ...settingApp.shadow_Top,
+    position: "absolute",
+    top: -30,
+    left: 32,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  view_login: {
+    width: width,
+    backgroundColor: settingApp.white,
+    height: height * 0.8,
+    alignItems: "center",
+    borderRadius: 62,
+    paddingTop: 62,
+    ...settingApp.shadow_Top,
+  },
+  view_scroll: {
+    backgroundColor: colorApp.green_primary,
+    height: settingApp.height,
+    paddingTop: settingApp.statusBarHeight,
   },
 });

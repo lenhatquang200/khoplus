@@ -66,7 +66,7 @@ const settingApp = {
     ...Platform.select({
       ios: {
         shadowColor: "#000000",
-        shadowRadius: 1,
+        shadowRadius: 2,
         shadowOffset: { height: 1 },
         shadowOpacity: 0.3,
       },
