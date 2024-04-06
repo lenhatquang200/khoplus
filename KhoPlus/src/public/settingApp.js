@@ -51,6 +51,30 @@ const settingApp = {
   size_18: 18,
   size_20: 20,
   size_24: 24,
+
+  shadow_Top: {
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  shadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000000",
+        shadowRadius: 1,
+        shadowOffset: { height: 1 },
+        shadowOpacity: 0.3,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  },
 };
 
 export default settingApp;

@@ -1,8 +1,8 @@
 const lang = {
   login: "Đăng nhập",
   rememberLogin: "Ghi nhớ đăng nhập",
-  placeHolderUserName: "Tên đăng nhập",
-  placeHolderPass: "Mật khẩu",
+  placeHolderUserName: "Nhập số điện thoại nhân viên",
+  placeHolderPass: "Nhập mật khẩu",
 
   product: "Hàng hóa",
   manufacturings: "Nhà cung cấp",

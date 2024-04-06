@@ -8,14 +8,19 @@ import {
   ScrollView,
   Keyboard,
   Alert,
+  Text,
 } from "react-native";
 import { settingApp, imageApp, Component, colorApp } from "../../public";
 import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
 import FromLogin from "./component/formLogin";
 
+import Svg, { ClipPath, Ellipse } from "react-native-svg";
 import * as FileSystems from "expo-file-system";
 import { Asset } from "expo-asset";
+import { FontAwesome } from "@expo/vector-icons";
+
+const { width, height } = settingApp;
 
 const loadDatabase = async () => {
   const dbName = "khoplusDB.db";
@@ -100,13 +105,15 @@ export default function AuthApp(props) {
   }
 
   return (
-    <KeyboardAvoidingView behavior="position" style={styles.container}>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <ScrollView
         scrollEnabled={false}
+        keyboardDismissMode="on-drag"
         style={{
           backgroundColor: colorApp.green_primary,
           height: settingApp.height,
-          paddingTop: keyboardPading,
+          paddingTop: settingApp.statusBarHeight,
+          //alignItems: "center",
         }}
       >
         <View style={styles.view_logo}>
@@ -116,8 +123,54 @@ export default function AuthApp(props) {
           />
         </View>
 
-        <FromLogin infoUser={infoUser} onLogin={(param) => _onLogin(param)} />
+        <View
+          style={{
+            width: width,
+            backgroundColor: settingApp.white,
+            height: height * 0.8,
+            alignItems: "center",
+            borderRadius: 62,
+            paddingTop: 62,
+            ...settingApp.shadow_Top,
+          }}
+        >
+          <View
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: 30,
+              backgroundColor: colorApp.white,
+              ...settingApp.shadow_Top,
+              position: "absolute",
+              top: -30,
+              left: 32,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FontAwesome
+              name="user-o"
+              color={colorApp.green_primary}
+              size={35}
+            />
+          </View>
+          <View
+            style={{
+              width: settingApp.width - 100,
+              height: 32,
+              justifyContent: "center",
+              position: "absolute",
+              top: 5,
+              left: 52,
+              alignItems: "center",
+              marginBottom: 5,
+            }}
+          ></View>
+
+          <FromLogin infoUser={infoUser} onLogin={(param) => _onLogin(param)} />
+        </View>
       </ScrollView>
+
       {isLoading && <Component.Loading />}
     </KeyboardAvoidingView>
   );
@@ -125,7 +178,7 @@ export default function AuthApp(props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colorApp.green_primary,
+    backgroundColor: colorApp.green_001,
   },
   text_user: {
     fontWeight: "500",
@@ -133,8 +186,8 @@ const styles = StyleSheet.create({
     color: colorApp.colorPlaceText,
   },
   view_logo: {
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
     height: settingApp.height * 0.3,
   },
   form_login: {
