@@ -1,6 +1,5 @@
 import { Dimensions, Platform } from "react-native";
 import Constants from "expo-constants";
-
 const { width, height } = Dimensions.get("screen");
 
 const guidelineBaseWidth = Number("360");
@@ -37,7 +36,7 @@ const settingApp = {
   scale,
   verticalScale,
   horizontalScale,
-
+  space_6: 6,
   space_8: 8,
   space_10: 10,
   space_12: 12,
@@ -51,6 +50,7 @@ const settingApp = {
   size_16: 16,
   size_18: 18,
   size_20: 20,
+  size_22: 22,
   size_24: 24,
 
   shadow_Top: {

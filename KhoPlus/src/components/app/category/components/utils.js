@@ -2,7 +2,6 @@ import { screenName } from "../../../../router/screenName";
 import { CATEGORY_CONSTANT } from "./constans";
 
 function checkActionButton(item, props) {
-  console.log("checkActionButton", item);
   const { keyApp, router } = item;
   switch (keyApp) {
     // check action của loại hàng hóa

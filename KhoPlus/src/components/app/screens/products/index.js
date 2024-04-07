@@ -1,39 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ProductsGroup from "../components/productsGroup";
 import ProductsList from "../components/productsList";
 import ProductsType from "../components/productsType";
 import ProductsUnit from "../components/productsUnit";
 import { screenName } from "../../../../router/screenName";
-import HeaderProducts from "./comp/header";
 import { colorApp, lang, settingApp } from "../../../../public";
+import { HeaderSearch } from "../../../../public/component";
 
 const Tabs = createMaterialTopTabNavigator();
-
-function iconTab(focused, name) {
-  return (
-    <View
-      style={{
-        minWidth: 120,
-        height: 42,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: focused ? "transparent" : colorApp.black_opacity_01,
-        borderRadius: 20,
-        marginBottom: 15,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: settingApp.size_16,
-        }}
-      >
-        {name}
-      </Text>
-    </View>
-  );
-}
 
 function myTab(props) {
   return (
@@ -53,10 +29,7 @@ function myTab(props) {
         component={ProductsList}
         options={{
           tabBarLabel: lang.list,
-          tabBarLabelStyle: {
-            fontSize: settingApp.size_18,
-            textTransform: "none",
-          },
+          tabBarLabelStyle: styles.label_style,
         }}
       />
       <Tabs.Screen
@@ -64,10 +37,7 @@ function myTab(props) {
         component={ProductsType}
         options={{
           tabBarLabel: lang.type,
-          tabBarLabelStyle: {
-            fontSize: settingApp.size_18,
-            textTransform: "none",
-          },
+          tabBarLabelStyle: styles.label_style,
         }}
       />
       <Tabs.Screen
@@ -75,10 +45,7 @@ function myTab(props) {
         component={ProductsGroup}
         options={{
           tabBarLabel: lang.group,
-          tabBarLabelStyle: {
-            fontSize: settingApp.size_18,
-            textTransform: "none",
-          },
+          tabBarLabelStyle: styles.label_style,
         }}
       />
       <Tabs.Screen
@@ -86,39 +53,49 @@ function myTab(props) {
         component={ProductsUnit}
         options={{
           tabBarLabel: lang.unit,
-          tabBarLabelStyle: {
-            fontSize: settingApp.size_18,
-            textTransform: "none",
-          },
+          tabBarLabelStyle: styles.label_style,
         }}
       />
     </Tabs.Navigator>
   );
 }
 
-function ProductsTab() {
+function ProductsTab(props) {
+  const headerRef = useRef(HeaderSearch);
+
+  function goBack() {
+    props?.navigation.goBack();
+  }
+
+  function onSearchValue(value) {}
+
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <HeaderProducts />
-      {myTab()}
+    <View style={styles.main}>
+      <HeaderSearch
+        ref={headerRef}
+        goBack={goBack}
+        title={lang.product}
+        placeholder={lang.placeSearchProduct}
+        onSearch={onSearchValue}
+      />
+      {myTab(props)}
     </View>
   );
 }
 export default ProductsTab;
 
 const styles = StyleSheet.create({
-  mainTan: {},
+  main: { flex: 1 },
   indicatorTab: {
     backgroundColor: colorApp.green_opacity_03,
-    height: 42,
+    height: 36,
     borderRadius: 22,
   },
   itemTab: {
     height: 42,
-    marginTop: 10,
+  },
+  label_style: {
+    fontSize: settingApp.size_16,
+    textTransform: "none",
   },
 });

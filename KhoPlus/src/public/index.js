@@ -7,6 +7,7 @@ import lottiesJson from "./lottiesJson";
 
 import * as Component from "./component";
 import CONSTANTS_APP from "./CONSTANTS";
+import * as Icon from "./icon";
 
 export {
   settingApp,
@@ -17,4 +18,5 @@ export {
   colorApp,
   CONSTANTS_APP,
   lottiesJson,
+  Icon,
 };

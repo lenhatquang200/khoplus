@@ -1,4 +1,6 @@
 import Loading from "./Loading";
 import LinearBackGround from "./LinearBackground";
 import AvatarCustom from "./AvatarName";
-export { Loading, LinearBackGround, AvatarCustom };
+import HeaderSearch from "./HeaderSearch";
+
+export { Loading, LinearBackGround, AvatarCustom, HeaderSearch };

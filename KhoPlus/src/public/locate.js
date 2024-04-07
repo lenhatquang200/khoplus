@@ -20,6 +20,10 @@ const lang = {
   manufacturings_group: "Nhóm nhà cung cấp",
   plant: "Cây trồng",
   list: "Danh sách",
+
+  defaultSearch: "Tìm kiếm",
+
+  placeSearchProduct: "Tìm theo tên hoặc mã sản phẩm",
 };
 
 export default lang;
