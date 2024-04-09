@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { View, Text } from "react-native";
 import LottieView from "lottie-react-native";
 import { lottiesJson, settingApp } from "../../../public";
+import { LinearBackGround } from "../../../public/component";
 
 const { width, height } = settingApp;
 export default function Splash() {
@@ -82,6 +83,7 @@ export default function Splash() {
         alignItems: "center",
       }}
     >
+      <LinearBackGround />
       {getViewRamd()}
     </View>
   );

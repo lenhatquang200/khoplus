@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { Component, colorApp } from "../../../../../public";
+import { Component, colorApp } from "../../../../../../public";
 
 function ProductsType(props) {
   return (

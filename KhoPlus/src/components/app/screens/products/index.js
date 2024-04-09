@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View, StyleSheet } from "react-native";
-import ProductsGroup from "../components/productsGroup";
-import ProductsList from "../components/productsList";
-import ProductsType from "../components/productsType";
-import ProductsUnit from "../components/productsUnit";
+import ProductsGroup from "./components/productsGroup";
+import ProductsList from "./components/productsList";
+import ProductsType from "./components/productsType";
+import ProductsUnit from "./components/productsUnit";
 import { screenName } from "../../../../router/screenName";
 import { colorApp, lang, settingApp } from "../../../../public";
 import { HeaderSearch } from "../../../../public/component";
@@ -61,8 +61,6 @@ function myTab(props) {
 }
 
 function ProductsTab(props) {
-  const headerRef = useRef(HeaderSearch);
-
   function goBack() {
     props?.navigation.goBack();
   }
@@ -72,7 +70,6 @@ function ProductsTab(props) {
   return (
     <View style={styles.main}>
       <HeaderSearch
-        ref={headerRef}
         goBack={goBack}
         title={lang.product}
         placeholder={lang.placeSearchProduct}

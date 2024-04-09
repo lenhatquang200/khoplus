@@ -8,16 +8,16 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { Component, colorApp } from "../../../../../public";
+import { Component, colorApp } from "../../../../../../public";
 
-function ProductsGroup(props) {
+function ProductsList(props) {
   return (
     <View style={styles.container}>
-      <Text>ProductGroup</Text>
+      <Text>ProductList</Text>
     </View>
   );
 }
-export default ProductsGroup;
+export default ProductsList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

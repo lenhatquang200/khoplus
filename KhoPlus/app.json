@@ -26,14 +26,15 @@
       "android"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.khoplus.khoplusapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.nguyentran.KhoPlus"
+      "package": "com.khoplus.khoplusapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
