@@ -9,12 +9,14 @@ import {
   ScrollView,
 } from "react-native";
 import { Component, colorApp } from "../../../../../../public";
+import { LoadingInContent } from "../../../../../../public/component";
 
 function ProductsList(props) {
+  const [listData, setListData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <View style={styles.container}>
-      <Text>ProductList</Text>
-    </View>
+    <View style={styles.container}>{isLoading && <LoadingInContent />}</View>
   );
 }
 export default ProductsList;

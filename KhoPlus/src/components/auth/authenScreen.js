@@ -15,7 +15,6 @@ import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
 import FromLogin from "./component/formLogin";
 
-import Svg, { ClipPath, Ellipse } from "react-native-svg";
 import * as FileSystems from "expo-file-system";
 import { Asset } from "expo-asset";
 import { FontAwesome } from "@expo/vector-icons";

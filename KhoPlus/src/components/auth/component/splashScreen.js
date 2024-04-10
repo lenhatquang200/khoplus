@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
 import { lottiesJson, settingApp } from "../../../public";
 import { LinearBackGround } from "../../../public/component";
@@ -26,10 +26,7 @@ export default function Splash() {
           autoPlay
           renderMode="center"
           source={lottiesJson.managerJson}
-          style={{
-            width: width * 0.6,
-            height: height,
-          }}
+          style={styles.lotties}
         />
       );
     } else if (rand == 2) {
@@ -39,10 +36,7 @@ export default function Splash() {
           autoPlay
           renderMode="center"
           source={lottiesJson.storeJson}
-          style={{
-            width: width * 0.6,
-            height: height,
-          }}
+          style={styles.lotties}
         />
       );
     } else if (rand == 3) {
@@ -52,10 +46,7 @@ export default function Splash() {
           autoPlay
           renderMode="center"
           source={lottiesJson.shippingJson}
-          style={{
-            width: width * 0.6,
-            height: height,
-          }}
+          style={styles.lotties}
         />
       );
     } else {
@@ -65,26 +56,28 @@ export default function Splash() {
           autoPlay
           renderMode="center"
           source={lottiesJson.settingJson}
-          style={{
-            width: width * 0.6,
-            height: height,
-          }}
+          style={styles.lotties}
         />
       );
     }
   }
 
   return (
-    <View
-      style={{
-        width: settingApp.width,
-        height: settingApp.height,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <View style={styles.container}>
       <LinearBackGround />
       {getViewRamd()}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    width: settingApp.width,
+    height: settingApp.height,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  lotties: {
+    width: width * 0.6,
+    height: height,
+  },
+});

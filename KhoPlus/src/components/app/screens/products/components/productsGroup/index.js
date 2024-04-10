@@ -11,10 +11,6 @@ import {
 import { Component, colorApp } from "../../../../../../public";
 
 function ProductsGroup(props) {
-  useEffect(() => {
-    console.log("ProductsGroup");
-  }, []);
-
   return (
     <View style={styles.container}>
       <Text>ProductGroup</Text>
