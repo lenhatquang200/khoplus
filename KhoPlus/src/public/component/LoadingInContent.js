@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import { View, ActivityIndicator } from "react-native";
 import settingApp from "../settingApp";
 import colorApp from "../colorApp";
+import LottieView from "lottie-react-native";
+import lottiesJson from "../lottiesJson";
 
-function LoadingInContent(props) {
-  let { width, height, color, backgroundColor } = props;
-  width || settingApp.width;
-  height || settingApp.height;
+function LoadingInContent({
+  width = settingApp.width,
+  height = settingApp.height,
+  color,
+  backgroundColor,
+  size = 120,
+}) {
   color || colorApp.white;
   backgroundColor || "transparent";
   return (
@@ -19,7 +24,15 @@ function LoadingInContent(props) {
         alignItems: "center",
       }}
     >
-      <ActivityIndicator size={"small"} color={color} />
+      <LottieView
+        autoPlay
+        source={lottiesJson.loading}
+        style={{
+          width: size,
+          height: size,
+        }}
+        speed={1.5}
+      />
     </View>
   );
 }

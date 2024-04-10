@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 import colorApp from "../colorApp";
 import settingApp from "../settingApp";
 
-export default function LinearBackGround(props) {
+export default function LinearBackGround() {
   return (
     <LinearGradient
       // Background Linear Gradient

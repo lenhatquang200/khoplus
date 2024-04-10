@@ -24,6 +24,9 @@ const lang = {
   defaultSearch: "Tìm kiếm",
 
   placeSearchProduct: "Tìm theo tên hoặc mã sản phẩm",
+  noData: "Không có dữ liệu",
+  listEmpty: "Danh sách đang trống",
+  emptyText: "--",
 };
 
 export default lang;

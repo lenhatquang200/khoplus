@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { View, Text, TouchableOpacity, Animated, FlatList } from "react-native";
 import styles from "./styles";
 import { configMenu } from "./components/configMenu";
-import { Component, settingApp } from "../../../public";
+import { Component, colorApp, settingApp } from "../../../public";
 import ItemList from "./components/itemList";
 import HeaderCategory from "./components/headerCategory";
 
@@ -256,9 +256,7 @@ function itemMenuTabbarTop({ obj, tabActive, actions }) {
         style={[
           styles.viewItemMenu,
           {
-            backgroundColor: active
-              ? settingApp.white
-              : "rgba(255,255,255, 0.2)",
+            backgroundColor: active ? colorApp.white : "rgba(255,255,255, 0.2)",
           },
         ]}
       >
@@ -266,7 +264,7 @@ function itemMenuTabbarTop({ obj, tabActive, actions }) {
           style={[
             styles.textItemMenu,
             {
-              color: active ? settingApp.colorText : settingApp.white,
+              color: active ? colorApp.colorText : colorApp.white,
             },
           ]}
         >
@@ -300,7 +298,7 @@ function renderItemView({ item, actions }) {
     return (
       <View
         style={{
-          width: settingApp.width,
+          width: colorApp.width,
           height: 10,
           backgroundColor: "transparent",
         }}

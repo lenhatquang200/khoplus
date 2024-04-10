@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { View, Text, Image } from "react-native";
-import Svg, { Path } from "react-native-svg";
 import settingApp from "../settingApp";
 
-export default function AvatarCustom(props) {
+export default function AvatarCustom({ size, name = "", picture = "" }) {
   let avatar = (name) => {
-    let { size } = props;
     let fontSize = size - 4;
     fontSize = fontSize || 30;
     if (name && name.length > 0) {
@@ -81,7 +79,6 @@ export default function AvatarCustom(props) {
     }
   };
 
-  let { size } = props;
   let v = size;
   const responsive = (v) => {
     if (settingApp.isTablet) {
@@ -90,7 +87,6 @@ export default function AvatarCustom(props) {
       return v ? v + 5 : 75;
     }
   };
-  const { name = "", picture = "" } = props;
   const avatar_ = avatar(name);
   const avatarPicture_ = avatarPicture(picture);
   // v =  v ? (v + 5) : 75;
@@ -136,20 +132,6 @@ export default function AvatarCustom(props) {
             {avatarPicture_}
           </View>
         </View>
-        {/* {props && props.editAvatar == true &&
-                    <View style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        right: settingApp.isTablet ? -15 : -12,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: settingApp.isTablet ? 30 : 24,
-                        height: settingApp.isTablet ? 30 : 24,
-                        borderRadius: (settingApp.isTablet ? 30 : 24) / 2,
-                        backgroundColor: '#E8EAED'
-                    }}>
-                        <Svg_v2.iconTakeCamera />
-                    </View>} */}
       </View>
     </View>
   );

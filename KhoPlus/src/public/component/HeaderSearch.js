@@ -14,8 +14,12 @@ import lang from "../locate";
 
 const { width } = settingApp;
 
-export default function HeaderSearch(props) {
-  let { goBack, title = "", placeholder, onSearch } = props;
+export default function HeaderSearch({
+  goBack,
+  title = "",
+  placeholder,
+  onSearch,
+}) {
   placeholder || lang.defaultSearch;
   const [text, setText] = useState("");
 

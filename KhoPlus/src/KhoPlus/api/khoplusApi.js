@@ -48,7 +48,6 @@ async function LoginAuth(param) {
     return data;
   } else {
     const dataJson = await response.json();
-    console.log("dataJson", dataJson);
     if (dataJson?.data && dataJson?.success) {
       const { data } = dataJson || {};
       const infoLogin = {

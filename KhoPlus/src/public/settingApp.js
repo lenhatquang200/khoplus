@@ -1,5 +1,6 @@
 import { Dimensions, Platform } from "react-native";
 import Constants from "expo-constants";
+import colorApp from "./colorApp";
 const { width, height } = Dimensions.get("screen");
 
 const guidelineBaseWidth = Number("360");
@@ -75,6 +76,18 @@ const settingApp = {
         elevation: 3,
       },
     }),
+  },
+
+  shadow_Item: {
+    borderColor: colorApp.black_opacity_05,
+    borderBottomWidth: 0,
+    shadowColor: colorApp.black_opacity_05,
+    shadowOffset: { width: 0, height: 1.5 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    marginLeft: 5,
+    marginRight: 5,
   },
 };
 

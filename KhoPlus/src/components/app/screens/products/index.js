@@ -18,7 +18,7 @@ import { HeaderSearch } from "../../../../public/component";
 
 const Tabs = createMaterialTopTabNavigator();
 
-function MyTabBar({ state, descriptors, navigation, position }) {
+function MyTabBarRender({ state, descriptors, navigation, position }) {
   const flatList = useRef(null);
   const listRourter = state?.routes || [];
 
@@ -54,6 +54,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 
     return (
       <TouchableOpacity
+        activeOpacity={0.5}
         key={index}
         accessibilityRole="button"
         accessibilityState={isFocused ? { selected: true } : {}}
@@ -117,7 +118,7 @@ function myTab(props) {
         tabBarShowLabel: true,
       }}
       sceneContainerStyle={{ backgroundColor: colorApp.white }}
-      tabBar={(props) => <MyTabBar {...props} />}
+      tabBar={(props) => <MyTabBarRender {...props} />}
     >
       <Tabs.Screen
         name={screenName.PRODUCTS_LIST}
