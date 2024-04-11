@@ -44,3 +44,15 @@ export async function getTypeProduct(page, limit, name, search, code) {
   );
   return result;
 }
+
+export async function getUnitProduct(page, limit, name, search, code) {
+  page || "";
+  limit || 10;
+  name || "";
+  search || false;
+  code || "";
+  const result = await KhoPlusApi.CallApi(
+    `${uri}/product-units?skip=${page}&limit=${limit}`
+  );
+  return result;
+}

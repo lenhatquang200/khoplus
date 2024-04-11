@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View, StyleSheet, FlatList } from "react-native";
-import { lang } from "../../../../../../public";
+import { lang, settingApp } from "../../../../../../public";
 import {
   LoadingInContent,
   Nonedata,
@@ -84,5 +84,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  footer: {
+    width: settingApp.width_32,
+    height: 60,
+    backgroundColor: "transparent",
   },
 });
