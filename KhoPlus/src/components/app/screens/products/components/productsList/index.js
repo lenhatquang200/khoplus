@@ -15,7 +15,7 @@ import {
   Nonedata,
 } from "../../../../../../public/component";
 import { ApiCall } from "../../../../../../KhoPlus";
-import Item from "./component/Item";
+import Item from "./component/item";
 
 let current_page = 1;
 
