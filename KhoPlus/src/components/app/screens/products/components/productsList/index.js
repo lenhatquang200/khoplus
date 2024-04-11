@@ -113,8 +113,8 @@ function ProductsList(props) {
           onEndReached={() => onLoadMore()}
           onEndReachedThreshold={5}
           initialNumToRender={10}
-          //maxToRenderPerBatch={20}
-          //removeClippedSubviews={true}
+          maxToRenderPerBatch={20}
+          removeClippedSubviews={true}
         />
         // <ScrollView>
         //   {listData.map((item, index) => {
