@@ -15,7 +15,7 @@ function HomeScreen(props) {
       <MaterialCommunityIcons
         name="office-building-cog"
         size={100}
-        color={colorApp.colorPlaceText}
+        color={colorApp}
       />
       <Text>Tính năng đang được xây dựng</Text>
     </View>
