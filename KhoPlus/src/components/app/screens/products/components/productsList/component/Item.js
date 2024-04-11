@@ -14,8 +14,6 @@ import {
   Icon,
 } from "../../../../../../../public";
 
-import { Feather } from "@expo/vector-icons";
-
 const { height, width_32 } = settingApp;
 const WIDTH_IMGE = 80;
 const WIDTH_CONTENT = width_32 - 80 - 80; // 80 là rộng của imgae, 60 là rộng của button
@@ -27,14 +25,16 @@ const Item = memo((props) => {
   const [dataItem, setDataItem] = useState(null);
 
   useEffect(() => {
+    const { obj } = props || {};
+    const { item, index } = obj || {};
     if (item?.id) {
       setDataItem(item);
     }
-  }, []);
+  }, [props?.obj]);
 
   const { unit = {}, type = {}, group = {} } = dataItem || {};
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.view_image}>
         <View style={styles.cover_image}>
           <Component.AsyncImage source={{ uri: dataItem?.image_url }} />
@@ -72,7 +72,7 @@ const Item = memo((props) => {
           <Text style={styles.txt_delete}>{lang.delete}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 });
 export default Item;
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     padding: settingApp.space_8,
   },
   view_image: {
-    width: 80,
+    width: WIDTH_IMGE,
     minHeight: 110,
     overflow: "hidden",
   },

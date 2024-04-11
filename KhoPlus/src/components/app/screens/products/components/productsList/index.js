@@ -1,14 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { View, StyleSheet, FlatList, Alert } from "react-native";
 import {
   Component,
   ToastShow,
@@ -22,7 +15,7 @@ import {
   Nonedata,
 } from "../../../../../../public/component";
 import { ApiCall } from "../../../../../../KhoPlus";
-import Item from "./componenst/Item";
+import Item from "./component/Item";
 
 let current_page = 1;
 
@@ -49,10 +42,23 @@ function ProductsList(props) {
     } else {
       newList = newList;
     }
+    console.log("newList", newList);
     setListData(newList);
     setIsLoading(false);
     setRefreshing(false);
     setIsLoadmore(false);
+  }
+
+  function alertDelete(item) {
+    Alert.alert("Thông báo", "Bạn có chắc chắn muốn xóa sản phẩm này ?", [
+      {
+        text: "Hủy",
+        onPress: () => null,
+        style: "cancel",
+      },
+      { text: "Xóa", onPress: () => onDelete(item) },
+    ]);
+    return true;
   }
 
   async function onDelete(item) {
@@ -89,15 +95,15 @@ function ProductsList(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
           extraData={listData}
-          keyExtractor={(item, index) => item?.id}
+          keyExtractor={(item, index) => item?.id + index + ""}
           data={listData}
-          renderItem={(obj) => <Item obj={obj} onDelete={onDelete} />}
+          renderItem={(obj) => <Item obj={obj} onDelete={alertDelete} />}
           style={{ paddingTop: 12 }}
           ListFooterComponent={() =>
             !isLoadMore ? (
               <View style={styles.footer} />
             ) : (
-              <Component.Loadmore width={settingApp.width_32} height={80} />
+              <Loadmore width={settingApp.width_32} height={80} />
             )
           }
           onEndReached={() => onLoadMore()}

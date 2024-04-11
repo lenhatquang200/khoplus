@@ -29,6 +29,8 @@ const lang = {
   noData: "Không có dữ liệu",
   listEmpty: "Danh sách đang trống",
   emptyText: "--",
+
+  fetchApiFail: "Lấy dữ liệu không thành công",
 };
 
 export default lang;
