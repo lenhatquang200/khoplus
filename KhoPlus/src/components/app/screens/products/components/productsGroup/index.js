@@ -32,7 +32,7 @@ function ProductsGroup(props) {
 
   useEffect(() => {
     loadData();
-  }, [current_page, refreshing]);
+  }, [isLoadMore, refreshing]);
 
   async function loadData() {
     const result = await ApiCall.getGroupProduct(current_page, limit);
