@@ -11,11 +11,14 @@ import {
   settingApp,
   Component,
   lang,
+  Icon,
 } from "../../../../../../../public";
+
+import { Feather } from "@expo/vector-icons";
 
 const { height, width_32 } = settingApp;
 const WIDTH_IMGE = 80;
-const WIDTH_CONTENT = width_32 - 80 - 60; // 80 là rộng của imgae, 60 là rộng của button
+const WIDTH_CONTENT = width_32 - 80 - 80; // 80 là rộng của imgae, 60 là rộng của button
 
 const Item = memo((props) => {
   const { obj, onDelete } = props || {};
@@ -36,12 +39,10 @@ const Item = memo((props) => {
         <View style={styles.cover_image}>
           <Component.AsyncImage source={{ uri: dataItem?.image_url }} />
         </View>
-        <Text style={styles.txt_dvt}>
-          {"Đvt: "}
-          <Text style={{ fontSize: settingApp.size_14, color: colorApp.red }}>
-            {unit?.name || lang.emptyText}
-          </Text>
-        </Text>
+        <View style={styles.view_unit}>
+          <Icon.icon_Unit />
+          <Text style={styles.text_unit}>{unit?.name || lang.emptyText}</Text>
+        </View>
       </View>
 
       <View style={styles.view_content}>
@@ -57,6 +58,19 @@ const Item = memo((props) => {
         <Text style={styles.txt_type}>
           {dataItem?.formatted_created_at || lang.emptyText}
         </Text>
+      </View>
+
+      <View style={styles.view_Action}>
+        <TouchableOpacity style={styles.bt_edit}>
+          {/* <Icon.icon_Edit /> */}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => onDelete(dataItem)}
+          style={styles.bt_delete}
+        >
+          <Text style={styles.txt_delete}>{lang.delete}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -76,7 +90,7 @@ const styles = StyleSheet.create({
   },
   view_image: {
     width: 80,
-    height: 110,
+    minHeight: 110,
     overflow: "hidden",
   },
   cover_image: {
@@ -84,6 +98,12 @@ const styles = StyleSheet.create({
     height: 80,
     overflow: "hidden",
     borderRadius: settingApp.space_8,
+  },
+  view_unit: {
+    flexDirection: "row",
+    alignItems: "center",
+    minHeight: 30,
+    width: 60,
   },
   view_content: {
     width: WIDTH_CONTENT,
@@ -111,5 +131,42 @@ const styles = StyleSheet.create({
     fontSize: settingApp.size_14,
     color: colorApp.colorText,
     marginTop: 8,
+  },
+  bt_delete: {
+    width: 60,
+    height: 30,
+    backgroundColor: colorApp.red_opacity_03,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+  },
+  bt_edit: {
+    width: 60,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "flex-end",
+    borderRadius: 15,
+  },
+  txt_delete: {
+    fontSize: settingApp.size_14,
+    fontWeight: "500",
+    color: colorApp.red,
+  },
+  txt_edit: {
+    fontSize: settingApp.size_14,
+    fontWeight: "500",
+    color: colorApp.red,
+  },
+  text_unit: {
+    fontSize: settingApp.size_14,
+    color: colorApp.green_001,
+    textTransform: "uppercase",
+    marginLeft: 5,
+    fontWeight: "800",
+  },
+  view_Action: {
+    width: 70,
+    height: 110,
+    justifyContent: "space-between",
   },
 });

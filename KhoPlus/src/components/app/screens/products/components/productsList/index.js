@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import {
   Component,
+  ToastShow,
   colorApp,
   lang,
   settingApp,
@@ -40,7 +41,7 @@ function ProductsList(props) {
     let newList = [];
     const result = await ApiCall.getListProduct(current_page, limit);
     if (result?.data?.length != 0) {
-      if (refreshing && current_page == 1) {
+      if (current_page == 1) {
         newList = result?.data;
       } else {
         newList = [...listData, ...result?.data];
@@ -54,8 +55,18 @@ function ProductsList(props) {
     setIsLoadmore(false);
   }
 
-  function onDelete(item) {
-    console.log("onDelete", item);
+  async function onDelete(item) {
+    const { id } = item;
+    const result = await ApiCall.deleteOneProductsGroup(id);
+    if (result?.success) {
+      let newListDelelte = [...listData];
+      const index_delete = newListDelelte.findIndex((e) => e.id == id);
+      if (index_delete > -1) {
+        newListDelelte.splice(index_delete, 1);
+        setListData(newListDelelte);
+        ToastShow(result?.message);
+      }
+    }
   }
 
   function onRefresh() {
@@ -78,7 +89,7 @@ function ProductsList(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
           extraData={listData}
-          keyExtractor={(item, index) => index + ""}
+          keyExtractor={(item, index) => item?.id}
           data={listData}
           renderItem={(obj) => <Item obj={obj} onDelete={onDelete} />}
           style={{ paddingTop: 12 }}
@@ -91,22 +102,12 @@ function ProductsList(props) {
           }
           onEndReached={() => onLoadMore()}
           onEndReachedThreshold={0.1}
-          removeClippedSubviews={true}
-          initialNumToRender={10}
         />
       )}
     </View>
   );
 }
 
-const ItemMemo = memo(itemRender);
-function itemRender({ obj, onDelete }) {
-  return <Item obj={obj} onDelete={onDelete} />;
-}
-
-const RenderCategoriesMenu = React.memo(({ obj, onDelete }) => {
-  return <Item obj={obj} onDelete={onDelete} />;
-});
 export default ProductsList;
 const styles = StyleSheet.create({
   container: {

@@ -19,6 +19,8 @@ const colorApp = {
   white_opacity_05: "rgba(255,255,255, 0.5)",
 
   green_opacity_03: "rgba(60, 180, 110, 0.3)",
+
+  red_opacity_03: "rgba(248, 0, 0, 0.1)",
 };
 
 export default colorApp;

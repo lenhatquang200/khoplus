@@ -125,7 +125,7 @@ function myTab(props) {
         component={ProductsList}
         key={screenName.PRODUCTS_LIST}
         options={{
-          tabBarLabel: lang.group,
+          tabBarLabel: lang.list,
         }}
       />
       <Tabs.Screen
@@ -133,7 +133,7 @@ function myTab(props) {
         component={ProductsGroup}
         key={screenName.PRODUCTS_LIST}
         options={{
-          tabBarLabel: lang.list,
+          tabBarLabel: lang.group,
         }}
       />
       <Tabs.Screen

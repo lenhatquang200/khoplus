@@ -5,6 +5,8 @@ import { Provider } from "react-redux";
 import { SQLiteProvider } from "expo-sqlite/next";
 import AppStack from "./router/appScreen";
 import store from "./state/store";
+
+import { RootSiblingParent } from "react-native-root-siblings";
 export default function AppComponent(props) {
   const navigationContainer = useRef(null);
   useEffect(() => {
@@ -36,7 +38,9 @@ export default function AppComponent(props) {
         <NavigationContainer ref={navigationContainer}>
           <Suspense>
             <SQLiteProvider databaseName="khoplusDB.db" useSuspense>
-              <AppStack props={store} />
+              <RootSiblingParent>
+                <AppStack props={store} />
+              </RootSiblingParent>
             </SQLiteProvider>
           </Suspense>
         </NavigationContainer>

@@ -14,3 +14,9 @@ export async function getListProduct(page, limit, name, search, code) {
   );
   return result;
 }
+
+export async function deleteOneProductsGroup(id) {
+  const method = "DELETE";
+  const result = await KhoPlusApi.CallApi(`${uri}/products/${id}`, method);
+  return result;
+}

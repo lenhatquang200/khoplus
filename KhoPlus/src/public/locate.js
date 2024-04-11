@@ -6,6 +6,8 @@ const lang = {
   userName: "Tên đăng nhập",
   password: "Mật khẩu",
   forgotPass: "Quên mật khẩu ?",
+  delete: "Xóa",
+  edit: "Sửa",
 
   product: "Hàng hóa",
   manufacturings: "Nhà cung cấp",

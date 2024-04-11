@@ -38,7 +38,7 @@ export default function HeaderSearch({
 
       <View style={styles.view_main}>
         <TouchableOpacity onPress={goBack} style={styles.bt_goback}>
-          <Icon.arrowleft size={24} color={colorApp.colorText} />
+          <Icon.arrow_Left size={24} color={colorApp.colorText} />
         </TouchableOpacity>
 
         <View style={styles.box_search}>
