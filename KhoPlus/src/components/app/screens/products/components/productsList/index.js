@@ -42,7 +42,6 @@ function ProductsList(props) {
     } else {
       newList = newList;
     }
-    console.log("newList", newList);
     setListData(newList);
     setIsLoading(false);
     setRefreshing(false);

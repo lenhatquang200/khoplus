@@ -14,7 +14,11 @@ import {
   lang,
   settingApp,
 } from "../../../../../../public";
-import { LoadingInContent } from "../../../../../../public/component";
+import {
+  LoadingInContent,
+  Loadmore,
+  Nonedata,
+} from "../../../../../../public/component";
 import { ApiCall } from "../../../../../../KhoPlus";
 import Item from "./component/item";
 
@@ -28,7 +32,7 @@ function ProductsGroup(props) {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [current_page, refreshing]);
 
   async function loadData() {
     const result = await ApiCall.getGroupProduct(current_page, limit);
@@ -45,11 +49,18 @@ function ProductsGroup(props) {
     }
     setListData(newList);
     setIsLoading(false);
+    setIsLoadmore(false);
+    setRefreshing(false);
   }
 
-  function onRefresh() {}
+  function onRefresh() {
+    setRefreshing(true);
+  }
 
-  function onLoadMore() {}
+  function onLoadMore() {
+    setIsLoadmore(true);
+    current_page = current_page + 1;
+  }
 
   return (
     <View style={styles.container}>
@@ -70,7 +81,7 @@ function ProductsGroup(props) {
             !isLoadMore ? (
               <View style={styles.footer} />
             ) : (
-              <Component.Loadmore width={settingApp.width_32} height={80} />
+              <Loadmore width={settingApp.width_32} height={80} />
             )
           }
           onEndReached={() => onLoadMore()}
