@@ -14,9 +14,9 @@ import {
   Icon,
 } from "../../../../../../../public";
 
-const { height, width_32 } = settingApp;
+const { height, width } = settingApp;
 const WIDTH_IMGE = 80;
-const WIDTH_CONTENT = width_32 - 80 - 80; // 80 là rộng của imgae, 60 là rộng của button
+const WIDTH_CONTENT = width - 80 - 80; // 80 là rộng của imgae, 60 là rộng của button
 
 const Item = memo((props) => {
   const { obj, onDelete } = props || {};
@@ -80,13 +80,12 @@ export default Item;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colorApp.white,
-    width: settingApp.width_32,
+    width: settingApp.width,
     minHeight: 120,
-    marginBottom: settingApp.space_8,
-    borderRadius: settingApp.space_8,
-    ...settingApp.shadow_Item,
     flexDirection: "row",
     padding: settingApp.space_8,
+    borderBottomColor: colorApp.black_opacity_01,
+    borderBottomWidth: 8,
   },
   view_image: {
     width: WIDTH_IMGE,

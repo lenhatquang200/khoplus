@@ -8,17 +8,19 @@ import {
   Icon,
 } from "../../../../../../../public";
 
-const { width_32, height } = settingApp;
+const { width, height } = settingApp;
 
 const WIDTH_IMGE = 80;
-const WIDTH_CONTENT = width_32 - 100;
+const WIDTH_CONTENT = width - 100;
 
 const Item = memo((props) => {
+  const { obj } = props;
+  const { index } = obj || {};
   const [dataItem, setDataItem] = useState(props?.obj?.item);
 
   useEffect(() => {
     const { obj } = props;
-    const { item, index } = obj || {};
+    const { item } = obj || {};
     if (item?.id) {
       setDataItem(item);
     }
@@ -51,14 +53,12 @@ export default Item;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colorApp.white,
-    width: width_32,
-    minHeight: 80,
-    marginBottom: settingApp.space_8,
-    borderRadius: settingApp.space_8,
-    ...settingApp.shadow_Item,
+    width: settingApp.width,
+    minHeight: 120,
     flexDirection: "row",
     padding: settingApp.space_8,
-    justifyContent: "space-between",
+    borderBottomColor: colorApp.black_opacity_01,
+    borderBottomWidth: 8,
   },
   content: {
     width: WIDTH_CONTENT,

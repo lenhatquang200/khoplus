@@ -24,22 +24,26 @@ function ProductsType(props) {
   }, [isLoadMore, refreshing]);
 
   async function loadData() {
-    let newList = [];
+    let newList = listData;
     const result = await ApiCall.getTypeProduct(null, limit);
-    if (result?.data?.length > 0) {
+    if (result?.data?.length != 0) {
       if (current_page == 1) {
         newList = result?.data;
       } else {
-        newList = [...listData, result?.data];
+        result?.data?.map((item) => {
+          const index_ = newList.findIndex((e) => e?.id == item?.id);
+          if (index_ < 0) {
+            newList.push(item);
+          }
+        });
       }
     } else {
-      newList = listData;
+      newList = newList;
     }
-
-    setIsLoading(false);
-    setIsLoadmore(false);
-    setRefreshing(false);
     setListData(newList);
+    setIsLoading(false);
+    setRefreshing(false);
+    setIsLoadmore(false);
   }
 
   function onRefresh() {

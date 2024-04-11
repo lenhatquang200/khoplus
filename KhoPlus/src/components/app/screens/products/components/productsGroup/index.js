@@ -35,22 +35,26 @@ function ProductsGroup(props) {
   }, [isLoadMore, refreshing]);
 
   async function loadData() {
+    let newList = listData;
     const result = await ApiCall.getGroupProduct(current_page, limit);
-    let newList = [];
-    if (result?.data?.length > 0) {
+    if (result?.data?.length != 0) {
       if (current_page == 1) {
         newList = result?.data;
       } else {
-        newList = [...listData, ...result?.data];
+        result?.data?.map((item) => {
+          const index_ = newList.findIndex((e) => e?.id == item?.id);
+          if (index_ < 0) {
+            newList.push(item);
+          }
+        });
       }
     } else {
-      newList = listData;
-      ToastShow(lang.fetchApiFail);
+      newList = newList;
     }
     setListData(newList);
     setIsLoading(false);
-    setIsLoadmore(false);
     setRefreshing(false);
+    setIsLoadmore(false);
   }
 
   function onRefresh() {

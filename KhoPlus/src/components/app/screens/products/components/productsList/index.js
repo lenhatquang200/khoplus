@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { View, StyleSheet, FlatList, Alert, ScrollView } from "react-native";
 import {
   Component,
   ToastShow,
@@ -31,13 +31,18 @@ function ProductsList(props) {
   }, [isLoadMore, refreshing]);
 
   async function loadData() {
-    let newList = [];
+    let newList = listData;
     const result = await ApiCall.getListProduct(current_page, limit);
     if (result?.data?.length != 0) {
       if (current_page == 1) {
         newList = result?.data;
       } else {
-        newList = [...listData, ...result?.data];
+        result?.data?.map((item) => {
+          const index_ = newList.findIndex((e) => e?.id == item?.id);
+          if (index_ < 0) {
+            newList.push(item);
+          }
+        });
       }
     } else {
       newList = newList;
@@ -94,7 +99,7 @@ function ProductsList(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
           extraData={listData}
-          keyExtractor={(item, index) => item?.id + index + ""}
+          keyExtractor={(item, index) => item?.id}
           data={listData}
           renderItem={(obj) => <Item obj={obj} onDelete={alertDelete} />}
           style={{ paddingTop: 12 }}
@@ -106,8 +111,16 @@ function ProductsList(props) {
             )
           }
           onEndReached={() => onLoadMore()}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={5}
+          initialNumToRender={10}
+          //maxToRenderPerBatch={20}
+          //removeClippedSubviews={true}
         />
+        // <ScrollView>
+        //   {listData.map((item, index) => {
+        //     return <Item obj={{ item, index }} onDelete={alertDelete} />;
+        //   })}
+        // </ScrollView>
       )}
     </View>
   );

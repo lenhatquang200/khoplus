@@ -90,6 +90,8 @@ function MyTabBarRender({ state, descriptors, navigation, position }) {
         paddingBottom: 6,
         paddingTop: 6,
         backgroundColor: colorApp.white,
+        borderBottomColor: colorApp.black_opacity_01,
+        borderBottomWidth: 1,
       }}
     >
       <FlatList
@@ -116,6 +118,7 @@ function myTab(props) {
         tabBarItemStyle: styles.itemTab,
         tabBarShowIcon: true,
         tabBarShowLabel: true,
+        swipeEnabled: false,
       }}
       sceneContainerStyle={{ backgroundColor: colorApp.white }}
       tabBar={(props) => <MyTabBarRender {...props} />}
