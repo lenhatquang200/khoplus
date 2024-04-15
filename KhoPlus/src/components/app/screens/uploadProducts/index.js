@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { colorApp, lang, settingApp } from "../../../../public";
+import { ToastShow, colorApp, lang, settingApp } from "../../../../public";
 import { HeaderName, Loading } from "../../../../public/component";
 import { ApiCall } from "../../../../KhoPlus";
 import ModalSearch from "./component/modalSearch";
 import Constanst from "./component/constans";
 import actions from "../../../../state/actions";
+import { set } from "immutable";
 
 const SPACE_TOP = 32;
 let typeModal = null;
@@ -32,11 +33,21 @@ export default function UploadProducts(props) {
   const [listGroup, setListGroup] = useState([]);
 
   const [isVisible, setIsVisible] = useState(false);
+  const [activeBt, setActive] = useState(false);
 
   useEffect(() => {
-    newData = dataItem;
+    if (dataItem?.id) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+
     fetchData();
   }, []);
+
+  useEffect(() => {
+    validateCreate();
+  }, [dataItem]);
 
   function goBack() {
     props?.navigation.pop();
@@ -78,6 +89,23 @@ export default function UploadProducts(props) {
   function onChangeText(value) {
     if (value.trim().length > 0) {
       setDataItem({ ...dataItem, name: value });
+    } else {
+      if (!dataItem?.id) {
+        setDataItem({ ...dataItem, name: value });
+      }
+    }
+  }
+
+  function validateCreate() {
+    if (
+      dataItem?.name.trim().length > 0 &&
+      dataItem?.unit?.id &&
+      dataItem?.type?.id &&
+      dataItem?.group?.id
+    ) {
+      setActive(true);
+    } else {
+      setActive(false);
     }
   }
 
@@ -114,6 +142,14 @@ export default function UploadProducts(props) {
     dataField = null;
   }
 
+  function checkCreateUpdate() {
+    if (dataItem?.id) {
+      onUpdateData();
+    } else {
+      onCreate();
+    }
+  }
+
   async function onUpdateData() {
     setIsloading(true);
     let dataUpdate = {
@@ -129,17 +165,48 @@ export default function UploadProducts(props) {
     );
     if (result?.data) {
       dispatch(actions.updateItemProduct(result?.data));
+      let toast = `${lang.update} ${lang.succees}`;
+      ToastShow(toast);
       setTimeout(() => {
         goBack();
       }, 300);
+    } else {
+      let toast = `${lang.update} ${lang.failed}`;
+      ToastShow(toast);
     }
     setIsloading(false);
   }
 
+  async function onCreate() {
+    setIsloading(true);
+    let dataUpdate = {
+      name: dataItem?.name,
+      type_id: dataItem?.type?.id,
+      group_id: dataItem?.group?.id,
+      code: dataItem?.code,
+      unit_id: dataItem?.unit?.id,
+      code: new Date().getTime(),
+    };
+    const result = await ApiCall.createProducts(dataUpdate);
+    if (result?.data?.id) {
+      let toast = `${lang.create} ${lang.succees}`;
+      dispatch(actions?.updateItemProduct(result?.data));
+      ToastShow(toast);
+      setTimeout(() => {
+        goBack();
+      }, 300);
+    } else {
+      let toast = `${lang.create} ${lang.failed}`;
+      ToastShow(toast);
+    }
+    setIsloading(false);
+  }
+
+  let title = dataItem?.id ? "Cập nhật hàng hóa" : "Tạo hàng hóa";
   return (
     <View style={styles.container}>
       {isLoading && <Loading />}
-      <HeaderName goBack={goBack} title="Cập nhật hàng hóa" />
+      <HeaderName goBack={goBack} title={title} />
 
       <ScrollView
         scrollEnabled
@@ -168,7 +235,9 @@ export default function UploadProducts(props) {
             onPress={() => _onPress(Constanst.UNIT)}
             style={styles.view_input}
           >
-            <Text style={styles.textField}>{dataItem?.unit?.name}</Text>
+            <Text style={styles.textField}>
+              {dataItem?.unit?.name || lang?.emptyText}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -179,7 +248,9 @@ export default function UploadProducts(props) {
             onPress={() => _onPress(Constanst.TYPE)}
             style={styles.view_input}
           >
-            <Text style={styles.textField}>{dataItem?.type?.name}</Text>
+            <Text style={styles.textField}>
+              {dataItem?.type?.name || lang.emptyText}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -190,7 +261,9 @@ export default function UploadProducts(props) {
             onPress={() => _onPress(Constanst.GROUP)}
             style={styles.view_input}
           >
-            <Text style={styles.textField}>{dataItem?.group?.name}</Text>
+            <Text style={styles.textField}>
+              {dataItem?.group?.name || lang.emptyText}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -199,10 +272,18 @@ export default function UploadProducts(props) {
       {!isLoading && (
         <View style={styles.view_bt_update}>
           <TouchableOpacity
-            onPress={() => onUpdateData()}
-            style={styles.bt_update}
+            disabled={!activeBt}
+            onPress={() => checkCreateUpdate()}
+            style={[
+              styles.bt_update,
+              {
+                opacity: activeBt ? 1 : 0.5,
+              },
+            ]}
           >
-            <Text style={styles.txt_update}>{lang.update}</Text>
+            <Text style={styles.txt_update}>
+              {dataItem?.id ? lang.update : lang.save}
+            </Text>
           </TouchableOpacity>
         </View>
       )}

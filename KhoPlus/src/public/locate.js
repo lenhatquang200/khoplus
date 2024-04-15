@@ -31,7 +31,11 @@ const lang = {
   emptyText: "--",
 
   fetchApiFail: "Lấy dữ liệu không thành công",
+  create: "Tạo mới",
   update: "Cập nhật",
+  save: "Lưu",
+  succees: "thành công",
+  failed: "thất bại",
 };
 
 export default lang;

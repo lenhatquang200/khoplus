@@ -1,7 +1,14 @@
 import React, { useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { View, StyleSheet, FlatList, Alert, ScrollView } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import {
   Component,
   ToastShow,
@@ -39,6 +46,8 @@ function ProductsList(props) {
       const _index = newList?.findIndex((item) => item?.id == itemUpdate?.id);
       if (_index !== -1) {
         newList[_index] = itemUpdate;
+      } else {
+        newList.unshift(itemUpdate);
       }
       dispatch(actions.updateItemProduct(null));
       setListData(newList);
@@ -114,6 +123,17 @@ function ProductsList(props) {
     setIsLoadmore(true);
   }
 
+  function renderAddItem() {
+    return (
+      <TouchableOpacity
+        onPress={() => props?.navigation?.navigate(screenName.UPLOAD_PRODUCTS)}
+        style={styles.view_Add}
+      >
+        <MaterialIcons name="add" color={colorApp.white} size={40} />
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {isLoading && <LoadingInContent />}
@@ -148,6 +168,7 @@ function ProductsList(props) {
           removeClippedSubviews={true}
         />
       )}
+      {!isLoading && renderAddItem()}
     </View>
   );
 }
@@ -161,7 +182,19 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: settingApp.width_32,
-    height: 60,
+    height: 120,
     backgroundColor: "transparent",
+  },
+  view_Add: {
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    borderRadius: 40,
+    backgroundColor: colorApp.green_002,
+    bottom: 32,
+    right: 16,
+    ...settingApp.shadow_Item,
   },
 });
