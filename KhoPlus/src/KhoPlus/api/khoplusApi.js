@@ -36,7 +36,8 @@ async function LoginAuth(param) {
     body: JSON.stringify(param),
     credentials: "omit",
     headers: {
-      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Content-Type": "application/json/x-www-form-urlencoded",
     },
   });
   if (response?.status === 403) {
@@ -101,6 +102,7 @@ async function CallApi(url, method, body) {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   };
   let response = await fetch(url, header);

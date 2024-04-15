@@ -34,13 +34,23 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.khoplus.khoplusapp"
+      "package": "com.khoplus.khoplusapp",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-localization"
+      "expo-localization",
+      ["expo-build-properties", {
+        "android": {
+          "usesCleartextTraffic": true
+        }
+        
+      }]
     ],
     "runtimeVersion": {
       "policy": "appVersion"

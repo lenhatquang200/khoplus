@@ -22,6 +22,7 @@ const SUPPORT = "support";
 
 const URL_BROWSER = `https://web.khoplus.com/`;
 export default function FromLogin(props) {
+  const { infoUser, isLoginFail, isLogout, resetLogOut } = props || {};
   const [userLogin, setUserLogin] = useState({
     phone: "",
     password: "",
@@ -29,24 +30,27 @@ export default function FromLogin(props) {
   const [isLogin, setLogin] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect", props);
-    const { infoUser, isLoginFail } = props;
     if (infoUser?.login?.phone) {
       setUserLogin({
         ...userLogin,
         phone: infoUser?.login?.phone,
       });
-    } else {
-      setLogin(false);
-      setUserLogin({
-        ...userLogin?.password,
-        phone: "",
-      });
     }
     if (isLoginFail == true) {
       setLogin(false);
     }
-  }, [props]);
+  }, [infoUser, isLoginFail]);
+
+  useEffect(() => {
+    if (isLogout == true) {
+      setUserLogin({
+        phone: "",
+        password: "",
+      });
+      setLogin(false);
+      resetLogOut;
+    }
+  }, [isLogout]);
 
   function isPhoneNumber(number) {
     return /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/.test(number);
@@ -97,6 +101,7 @@ export default function FromLogin(props) {
 
   return (
     <KeyboardAvoidingView
+      keyboardVerticalOffset={80}
       behavior={Platform.OS === "android" ? "height" : "padding"}
       style={styles.form_login}
     >

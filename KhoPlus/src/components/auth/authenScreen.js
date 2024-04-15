@@ -4,11 +4,10 @@ import {
   View,
   StyleSheet,
   Image,
-  KeyboardAvoidingView,
   ScrollView,
   Keyboard,
   Alert,
-  Text,
+  TouchableOpacity,
 } from "react-native";
 import { settingApp, imageApp, Component, colorApp } from "../../public";
 import actions from "../../state/actions";
@@ -27,15 +26,36 @@ export default function AuthApp(props) {
   const [isLoading, setLoading] = useState(true);
   const [infoUser, setInfoUser] = useState(colleague);
   const [isLoginFail, setLoginFail] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [isLogout, setIsLogout] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       getAthenInfo();
     }, 1500);
+
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true); // or some other action
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false); // or some other action
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, []);
 
   useEffect(() => {
-    if (props?.route?.params?.isLogout == true) {
+    if (props?.route?.params?.isLogout) {
+      setIsLogout(props?.route?.params?.isLogout);
     }
   }, [props]);
 
@@ -57,7 +77,6 @@ export default function AuthApp(props) {
   }
 
   async function _onLogin(param) {
-    console.log("parrmaaaaa", param);
     setLoginFail(false);
     const response = await KhoPlusApi.LoginAuth(param);
     if (response?.access_token) {
@@ -73,14 +92,21 @@ export default function AuthApp(props) {
   }
 
   return (
-    <View behavior="padding" style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => Keyboard.dismiss()}
+      style={[styles.container]}
+    >
       {isLoading ? (
         <Splash />
       ) : (
-        <ScrollView
-          scrollEnabled={false}
-          keyboardDismissMode="on-drag"
-          style={styles.view_scroll}
+        <View
+          style={[
+            styles.view_scroll,
+            {
+              height: keyboardVisible ? height * 1.5 : height,
+            },
+          ]}
         >
           <View style={styles.view_logo}>
             <Image
@@ -89,7 +115,15 @@ export default function AuthApp(props) {
             />
           </View>
 
-          <View style={styles.view_login}>
+          <View
+            style={[
+              styles.view_login,
+              {
+                marginBottom: keyboardVisible ? 350 : 1,
+                minHeight: keyboardVisible ? height : height * 0.8,
+              },
+            ]}
+          >
             <View style={styles.view_profile}>
               <FontAwesome
                 name="user-o"
@@ -101,11 +135,13 @@ export default function AuthApp(props) {
               isLoginFail={isLoginFail}
               infoUser={infoUser}
               onLogin={(param) => _onLogin(param)}
+              isLogout={isLogout}
+              resetLogOut={() => setIsLogout(false)}
             />
           </View>
-        </ScrollView>
+        </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -143,7 +179,6 @@ const styles = StyleSheet.create({
   view_login: {
     width: width,
     backgroundColor: settingApp.white,
-    height: height * 0.8,
     alignItems: "center",
     borderRadius: 62,
     paddingTop: 62,
@@ -151,7 +186,7 @@ const styles = StyleSheet.create({
   },
   view_scroll: {
     backgroundColor: colorApp.green_primary,
-    height: settingApp.height,
+    minHeight: settingApp.height,
     paddingTop: settingApp.statusBarHeight,
   },
 });

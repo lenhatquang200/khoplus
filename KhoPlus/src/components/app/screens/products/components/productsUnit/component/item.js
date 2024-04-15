@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colorApp.white,
     width: settingApp.width,
-    minHeight: 120,
+    minHeight: 80,
     flexDirection: "row",
     padding: settingApp.space_8,
     borderBottomColor: colorApp.black_opacity_01,
