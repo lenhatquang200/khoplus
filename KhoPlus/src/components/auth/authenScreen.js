@@ -15,53 +15,36 @@ import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
 import FromLogin from "./component/formLogin";
 
-import * as FileSystems from "expo-file-system";
-import { Asset } from "expo-asset";
 import { FontAwesome } from "@expo/vector-icons";
 import Splash from "./component/splashScreen";
 import { screenName } from "../../router/screenName";
 
 const { width, height } = settingApp;
 
-const loadDatabase = async () => {
-  const dbName = "khoplusDB.db";
-  const dbAsset = require("../../../khoplusDB.db");
-
-  const dbUri = Asset.fromModule(dbAsset).uri;
-  const dbFilePatch = `${FileSystems.documentDirectory}SQLite/${dbName}`;
-
-  const fileInfo = await FileSystems.getInfoAsync(dbFilePatch);
-  if (!fileInfo.exists) {
-    await FileSystems.makeDirectoryAsync(
-      `${FileSystems.documentDirectory}SQLite`,
-      {
-        intermediates: true,
-      }
-    );
-    await FileSystems.downloadAsync(dbUri, dbFilePatch);
-  }
-};
-
 export default function AuthApp(props) {
   const dispatch = useDispatch();
-  const colleague = useSelector((state) => state?.app);
-
+  const colleague = useSelector((state) => state?.app?.colleague);
   const [isLoading, setLoading] = useState(true);
   const [infoUser, setInfoUser] = useState(colleague);
   const [isLoginFail, setLoginFail] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      if (infoUser) {
-        getAthenInfo();
-      }
+      getAthenInfo();
     }, 1500);
   }, []);
+
+  useEffect(() => {
+    if (props?.route?.params?.isLogout == true) {
+    }
+  }, [props]);
 
   function dispatchColluegue(response) {
     setInfoUser(response);
     dispatch(actions.getColleague(response));
     props.navigation.navigate(screenName.TAB_STACK);
+    setLoading(false);
+    setLoginFail(false);
   }
 
   async function getAthenInfo() {
@@ -74,55 +57,55 @@ export default function AuthApp(props) {
   }
 
   async function _onLogin(param) {
+    console.log("parrmaaaaa", param);
     setLoginFail(false);
     const response = await KhoPlusApi.LoginAuth(param);
     if (response?.access_token) {
       dispatch(actions.authApp(response));
       dispatchColluegue(response.user);
     } else {
+      setInfoUser({ login: { ...param } });
       setLoginFail(true);
       Alert.alert("", "Số điện thoại hoặc mật khẩu không đúng", [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => setLoading(false) },
       ]);
     }
   }
 
-  function content() {
-    return (
-      <ScrollView
-        scrollEnabled={false}
-        keyboardDismissMode="on-drag"
-        style={styles.view_scroll}
-      >
-        <View style={styles.view_logo}>
-          <Image
-            source={imageApp.logoWhiteApp}
-            style={{ resizeMode: "stretch" }}
-          />
-        </View>
-
-        <View style={styles.view_login}>
-          <View style={styles.view_profile}>
-            <FontAwesome
-              name="user-o"
-              color={colorApp.green_primary}
-              size={35}
+  return (
+    <View behavior="padding" style={styles.container}>
+      {isLoading ? (
+        <Splash />
+      ) : (
+        <ScrollView
+          scrollEnabled={false}
+          keyboardDismissMode="on-drag"
+          style={styles.view_scroll}
+        >
+          <View style={styles.view_logo}>
+            <Image
+              source={imageApp.logoWhiteApp}
+              style={{ resizeMode: "stretch" }}
             />
           </View>
-          <FromLogin
-            isLoginFail={isLoginFail}
-            infoUser={infoUser}
-            onLogin={(param) => _onLogin(param)}
-          />
-        </View>
-      </ScrollView>
-    );
-  }
 
-  return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      {isLoading ? <Splash /> : content()}
-    </KeyboardAvoidingView>
+          <View style={styles.view_login}>
+            <View style={styles.view_profile}>
+              <FontAwesome
+                name="user-o"
+                color={colorApp.green_primary}
+                size={35}
+              />
+            </View>
+            <FromLogin
+              isLoginFail={isLoginFail}
+              infoUser={infoUser}
+              onLogin={(param) => _onLogin(param)}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </View>
   );
 }
 

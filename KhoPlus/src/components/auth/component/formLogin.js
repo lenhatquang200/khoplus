@@ -8,6 +8,8 @@ import {
   Alert,
   Linking,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { settingApp, lang, colorApp } from "../../../public";
 
@@ -27,14 +29,20 @@ export default function FromLogin(props) {
   const [isLogin, setLogin] = useState(false);
 
   useEffect(() => {
+    console.log("useEffect", props);
     const { infoUser, isLoginFail } = props;
     if (infoUser?.login?.phone) {
       setUserLogin({
         ...userLogin,
         phone: infoUser?.login?.phone,
       });
+    } else {
+      setLogin(false);
+      setUserLogin({
+        ...userLogin?.password,
+        phone: "",
+      });
     }
-
     if (isLoginFail == true) {
       setLogin(false);
     }
@@ -49,7 +57,7 @@ export default function FromLogin(props) {
     const { phone } = userLogin || {};
     if (phone.trim().length < 10 && !isPhoneNumber(phone)) {
       Alert.alert("Số điện thoại không đúng", "", [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => setLogin(false) },
       ]);
     } else {
       props.onLogin(userLogin);
@@ -88,15 +96,18 @@ export default function FromLogin(props) {
   }
 
   return (
-    <View style={styles.form_login}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "android" ? "height" : "padding"}
+      style={styles.form_login}
+    >
       {/* input user name */}
       <View>
         <Text style={styles.txt_title}>{lang.userName}</Text>
         <TextInput
           editable={!isLogin}
           style={[styles.text_input, { marginBottom: 15 }]}
-          placeholder={lang.placeHolderUserName}
-          value={userLogin.phone}
+          placeholder={lang?.placeHolderUserName}
+          value={userLogin?.phone}
           keyboardType="number-pad"
           onChangeText={(text) => setUserLogin({ ...userLogin, phone: text })}
           inputMode="numeric"
@@ -115,6 +126,7 @@ export default function FromLogin(props) {
             setUserLogin({ ...userLogin, password: text })
           }
           placeholderTextColor={colorApp.colorPlaceText}
+          value={userLogin?.password}
         />
       </View>
       {/* Forgot password */}
@@ -128,7 +140,11 @@ export default function FromLogin(props) {
       </View>
 
       {/* Login button */}
-      <TouchableOpacity onPress={() => pressBt()} style={styles.view_bt_login}>
+      <TouchableOpacity
+        disabled={isLogin}
+        onPress={() => pressBt()}
+        style={styles.view_bt_login}
+      >
         <Text style={styles.text_login}>{lang.login}</Text>
         {isLogin ? (
           <ActivityIndicator size={"small"} color={colorApp.green_primary} />
@@ -152,7 +168,7 @@ export default function FromLogin(props) {
           SUPPORT
         )}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({

@@ -18,6 +18,7 @@ import { HeaderProfile } from "./components";
 import KhoPlus from "../../../KhoPlus/api/khoplusApi";
 import { StackActions } from "@react-navigation/native";
 import CONSTANTS from "./components/CONSTANTS";
+import { screenName } from "../../../router/screenName";
 
 const { space_8, space_16, size_14, size_20, width } = settingApp;
 function Profile(props) {
@@ -28,7 +29,10 @@ function Profile(props) {
   async function _onLogout() {
     KhoPlus.LogOut();
     dispatch({ type: CONSTANTS_APP.USER_LOGOUT });
-    props.navigation.dispatch(StackActions.pop(1));
+    setTimeout(() => {
+      props.navigation.setParam;
+      props.navigation.navigate(screenName.AUTH_APP, { isLogout: true });
+    }, 500);
   }
 
   function buttonLogout() {
