@@ -19,7 +19,7 @@ const WIDTH_IMGE = 80;
 const WIDTH_CONTENT = width - 80 - 80; // 80 là rộng của imgae, 60 là rộng của button
 
 const Item = memo((props) => {
-  const { obj, onDelete } = props || {};
+  const { obj, onDelete, onUpdateItem } = props || {};
   const { item, index } = obj || {};
 
   const [dataItem, setDataItem] = useState(null);
@@ -61,8 +61,11 @@ const Item = memo((props) => {
       </View>
 
       <View style={styles.view_Action}>
-        <TouchableOpacity style={styles.bt_edit}>
-          {/* <Icon.icon_Edit /> */}
+        <TouchableOpacity
+          onPress={() => onUpdateItem(dataItem)}
+          style={styles.bt_edit}
+        >
+          <Icon.icon_Edit />
         </TouchableOpacity>
 
         <TouchableOpacity

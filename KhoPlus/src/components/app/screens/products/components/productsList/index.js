@@ -16,15 +16,34 @@ import {
 } from "../../../../../../public/component";
 import { ApiCall } from "../../../../../../KhoPlus";
 import Item from "./component/item";
+import { screenName } from "../../../../../../router/screenName";
+import actions from "../../../../../../state/actions";
 
 let current_page = 1;
 
 function ProductsList(props) {
+  const dispatch = useDispatch();
+
+  const itemUpdate = useSelector((state) => state?.app?.updateItemProduct);
+
   const limit = 10;
   const [listData, setListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isLoadMore, setIsLoadmore] = useState(false);
+  const [visibleEdit, setVisibleEdit] = useState(false);
+
+  useEffect(() => {
+    if (itemUpdate?.id) {
+      let newList = listData;
+      const _index = newList?.findIndex((item) => item?.id == itemUpdate?.id);
+      if (_index !== -1) {
+        newList[_index] = itemUpdate;
+      }
+      dispatch(actions.updateItemProduct(null));
+      setListData(newList);
+    }
+  }, [itemUpdate]);
 
   useEffect(() => {
     loadData();
@@ -79,6 +98,12 @@ function ProductsList(props) {
     }
   }
 
+  async function onUpdateItem(item) {
+    if (item) {
+      props?.navigation?.navigate(screenName.UPLOAD_PRODUCTS, { item: item });
+    }
+  }
+
   function onRefresh() {
     setRefreshing(true);
     current_page = 1;
@@ -101,7 +126,13 @@ function ProductsList(props) {
           extraData={listData}
           keyExtractor={(item, index) => item?.id}
           data={listData}
-          renderItem={(obj) => <Item obj={obj} onDelete={alertDelete} />}
+          renderItem={(obj) => (
+            <Item
+              obj={obj}
+              onDelete={alertDelete}
+              onUpdateItem={onUpdateItem}
+            />
+          )}
           style={{ paddingTop: 12 }}
           ListFooterComponent={() =>
             !isLoadMore ? (
@@ -116,11 +147,6 @@ function ProductsList(props) {
           maxToRenderPerBatch={20}
           removeClippedSubviews={true}
         />
-        // <ScrollView>
-        //   {listData.map((item, index) => {
-        //     return <Item obj={{ item, index }} onDelete={alertDelete} />;
-        //   })}
-        // </ScrollView>
       )}
     </View>
   );

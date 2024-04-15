@@ -31,6 +31,7 @@ const lang = {
   emptyText: "--",
 
   fetchApiFail: "Lấy dữ liệu không thành công",
+  update: "Cập nhật",
 };
 
 export default lang;

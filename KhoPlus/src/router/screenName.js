@@ -8,4 +8,5 @@ export const screenName = {
   PRODUCTS_GROUP: "ProducstGroup",
   PRODUCTS_TYPE: "ProductsType",
   PRODUCTS_UNIT: "ProductsUnit",
+  UPLOAD_PRODUCTS: "UploadProducts",
 };

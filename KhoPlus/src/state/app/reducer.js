@@ -19,4 +19,7 @@ export default createReducer(initialState, {
   [types.COLLUAGUE_SUCCESS]: (state, data) => {
     return state.set("colleague", data.body);
   },
+  [types.UPDATE_ITEM_PRODUCT_SUCCESS]: (state, data) => {
+    return state.set("updateItemProduct", data.body);
+  },
 });

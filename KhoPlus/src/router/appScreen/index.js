@@ -9,6 +9,7 @@ import AuthApp from "../../components/auth/authenScreen";
 import TabStack from "../tabStack";
 
 import ProductsTab from "../../components/app/screens/products";
+import UploadProducts from "../../components/app/screens/uploadProducts";
 
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();
@@ -43,6 +44,10 @@ function AppScreen(props) {
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen component={ProductsTab} name={screenName.PRODUCTS_TAB} />
+      <Stack.Screen
+        component={UploadProducts}
+        name={screenName.UPLOAD_PRODUCTS}
+      />
     </Stack.Navigator>
   );
 }

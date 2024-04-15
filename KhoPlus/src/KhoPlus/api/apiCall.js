@@ -21,6 +21,17 @@ export async function deleteOneProductsGroup(id) {
   return result;
 }
 
+export async function updateOneProductsGroup(id, data) {
+  const method = "PUT";
+  const body = { ...data };
+  const result = await KhoPlusApi.CallApi(
+    `${uri}/products/${id}`,
+    method,
+    body
+  );
+  return result;
+}
+
 export async function getGroupProduct(page, limit, name, search, code) {
   page || 1;
   limit || 10;

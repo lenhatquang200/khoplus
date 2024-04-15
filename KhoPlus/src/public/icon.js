@@ -36,3 +36,10 @@ export const icon_Unit = (props) => {
 export const icon_Edit = (props) => {
   return <Feather name="edit" size={18} color={colorApp.colorText} />;
 };
+
+export const icon_Close = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return <AntDesign name="close" size={size} color={colorApp.colorText} />;
+};

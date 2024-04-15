@@ -18,3 +18,12 @@ export function getColleague(data) {
     keyStore: keyStore.colleague,
   };
 }
+
+export function updateItemProduct(data) {
+  return {
+    type: types.UPDATE_ITEM_PRODUCT,
+    payload: {
+      body: data,
+    },
+  };
+}

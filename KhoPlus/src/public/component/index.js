@@ -6,6 +6,7 @@ import LoadingInContent from "./LoadingInContent";
 import Nonedata from "./NoneData";
 import AsyncImage from "./ImageCustom";
 import Loadmore from "./Loadmore";
+import HeaderName from "./HeaderName";
 
 export {
   Loading,
@@ -16,4 +17,5 @@ export {
   Nonedata,
   AsyncImage,
   Loadmore,
+  HeaderName,
 };

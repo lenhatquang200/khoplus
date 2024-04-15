@@ -10,6 +10,7 @@ const colorApp = {
   green_003: "#78E495",
   green_004: "#CFF4D2",
 
+  black: "#000000",
   white: "#FFFFFF",
 
   black_opacity_05: "rgba(0,0,0,0.5)",
@@ -19,6 +20,7 @@ const colorApp = {
   white_opacity_05: "rgba(255,255,255, 0.5)",
 
   green_opacity_03: "rgba(60, 180, 110, 0.3)",
+  green_opacity_01: "rgba(60, 180, 110, 0.1)",
 
   red_opacity_03: "rgba(248, 0, 0, 0.1)",
 };
