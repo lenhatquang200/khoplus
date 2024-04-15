@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React, { useRef, useEffect, Suspense } from "react";
-import { View, BackHandler, StatusBar } from "react-native";
+import { View, BackHandler, StatusBar, Alert } from "react-native";
 import { Provider } from "react-redux";
 import { SQLiteProvider } from "expo-sqlite/next";
 import AppStack from "./router/appScreen";
@@ -10,9 +10,10 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import { screenName } from "./router/screenName";
 export default function AppComponent(props) {
   const navigationContainer = useRef(null);
+
   useEffect(() => {
     const resp = navigationContainer?.current?.getCurrentRoute();
-    if (resp == screenName.AUTH_APP) {
+    if (resp?.name == screenName.AUTH_APP || resp?.name == "HomeScreen") {
       const backAction = () => {
         Alert.alert(
           "Thông báo",

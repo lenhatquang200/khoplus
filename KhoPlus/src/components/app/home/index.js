@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler } from "react-native";
 import { Component, colorApp } from "../../../public";
 
-//test_product
 function HomeScreen(props) {
-  useEffect(() => {}, []);
-
   return (
     <View style={styles.container}>
       <Component.LinearBackGround />

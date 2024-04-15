@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from "react-native";
 import settingApp from "../settingApp";
 import colorApp from "../colorApp";
@@ -17,7 +18,7 @@ const { width } = settingApp;
 export default function HeaderName({ goBack, title = "" }) {
   return (
     <View style={styles.container}>
-      <View style={styles.statusBar} />
+      {Platform.OS === "ios" && <View style={styles.statusBar} />}
 
       <View style={styles.view_main}>
         <TouchableOpacity onPress={goBack} style={styles.bt_goback}>

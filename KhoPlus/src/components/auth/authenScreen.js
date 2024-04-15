@@ -62,7 +62,7 @@ export default function AuthApp(props) {
   function dispatchColluegue(response) {
     setInfoUser(response);
     dispatch(actions.getColleague(response));
-    props.navigation.navigate(screenName.TAB_STACK);
+    props.navigation.replace(screenName.TAB_STACK);
     setLoading(false);
     setLoginFail(false);
   }

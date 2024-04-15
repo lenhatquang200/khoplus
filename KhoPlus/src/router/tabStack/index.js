@@ -112,6 +112,8 @@ function MyTabs(props) {
 }
 
 export default function TabStack() {
+  //test_product
+
   return (
     <Stack.Navigator
       screenOptions={{

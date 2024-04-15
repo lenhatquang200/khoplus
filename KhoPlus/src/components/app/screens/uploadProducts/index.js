@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { ToastShow, colorApp, lang, settingApp } from "../../../../public";
@@ -335,7 +336,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    bottom: 16,
+    zIndex: 9,
+    bottom: Platform.OS == "android" ? 102 : 32,
   },
   bt_update: {
     width: settingApp.width * 0.6,
