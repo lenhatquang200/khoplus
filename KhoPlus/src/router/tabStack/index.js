@@ -69,10 +69,10 @@ function MyTabs(props) {
         options={{
           tabBarLabel: "Bán Hàng",
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name={focused ? "shopping-cart" : "add-shopping-cart"}
+            <MaterialCommunityIcons
+              name={focused ? "truck-fast" : "truck-fast-outline"}
               color={focused ? colorApp.green_primary : colorApp.colorPlaceText}
-              size={24}
+              size={28}
             />
           ),
         }}

@@ -23,7 +23,6 @@ import { screenName } from "../../../router/screenName";
 const { space_8, space_16, size_14, size_20, width } = settingApp;
 function Profile(props) {
   const dispatch = useDispatch();
-
   const colleague = useSelector((state) => state?.app?.colleague);
 
   async function _onLogout() {
