@@ -11,7 +11,6 @@ import { colorApp, settingApp } from "../../../../public";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function HeaderHome(props) {
-  console.log("HeaderHome", props);
   const { colleague } = props || {};
   const [tilteHello, setTitle] = useState("");
   const [shortName, setShortName] = useState("");

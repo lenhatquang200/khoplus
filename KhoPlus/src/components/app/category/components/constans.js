@@ -4,4 +4,8 @@ export const CATEGORY_CONSTANT = {
   KEY_PRODUCT_GROUP: "product_type",
   KEY_PRODUCT_TYPE: "product_group",
   KEY_PRODUCT_UNIT: "product_unit",
+
+  OBJ_MANU: "manufacturings",
+  KEY_MANU_GROUP: "manufacturings_group",
+  KEY_MANU_LIST: "manufacturings_list",
 };

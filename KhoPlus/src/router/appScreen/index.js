@@ -7,9 +7,11 @@ import { settingApp } from "../../public";
 
 import AuthApp from "../../components/auth/authenScreen";
 import TabStack from "../tabStack";
-
+// PRODUCTS
 import ProductsTab from "../../components/app/screens/products";
 import UploadProducts from "../../components/app/screens/uploadProducts";
+// MANUFACTURINGS
+import ManuFactTab from "../../components/app/screens/manufacturings";
 
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();
@@ -48,6 +50,8 @@ function AppScreen(props) {
         component={UploadProducts}
         name={screenName.UPLOAD_PRODUCTS}
       />
+
+      <Stack.Screen component={ManuFactTab} name={screenName.MANU_FACT_TAB} />
     </Stack.Navigator>
   );
 }

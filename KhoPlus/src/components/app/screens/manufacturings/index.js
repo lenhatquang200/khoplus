@@ -8,10 +8,8 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import ProductsGroup from "./components/productsGroup";
-import ProductsList from "./components/productsList";
-import ProductsType from "./components/productsType";
-import ProductsUnit from "./components/productsUnit";
+import ManuGroup from "./components/manuGroup";
+import ManuList from "./components/manuList";
 import { screenName } from "../../../../router/screenName";
 import { colorApp, lang, settingApp } from "../../../../public";
 import { HeaderSearch } from "../../../../public/component";
@@ -116,42 +114,26 @@ function myTab(props) {
       tabBar={(props) => <MyTabBarRender {...props} />}
     >
       <Tabs.Screen
-        name={screenName.PRODUCTS_LIST}
-        component={ProductsList}
-        key={screenName.PRODUCTS_LIST}
+        name={screenName.MANU_LIST}
+        component={ManuList}
+        key={screenName.MANU_LIST}
         options={{
           tabBarLabel: lang.list,
         }}
       />
       <Tabs.Screen
-        name={screenName.PRODUCTS_GROUP}
-        component={ProductsGroup}
-        key={screenName.PRODUCTS_LIST}
+        name={screenName.MANU_GROUP}
+        component={ManuGroup}
+        key={screenName.MANU_GROUP}
         options={{
           tabBarLabel: lang.group,
-        }}
-      />
-      <Tabs.Screen
-        name={screenName.PRODUCTS_TYPE}
-        component={ProductsType}
-        key={screenName.PRODUCTS_LIST}
-        options={{
-          tabBarLabel: lang.type,
-        }}
-      />
-      <Tabs.Screen
-        name={screenName.PRODUCTS_UNIT}
-        component={ProductsUnit}
-        key={screenName.PRODUCTS_LIST}
-        options={{
-          tabBarLabel: lang.unit,
         }}
       />
     </Tabs.Navigator>
   );
 }
 
-function ProductsTab(props) {
+function ManuFactTab(props) {
   function goBack() {
     props?.navigation.goBack();
   }
@@ -170,7 +152,7 @@ function ProductsTab(props) {
     </View>
   );
 }
-export default ProductsTab;
+export default ManuFactTab;
 
 const styles = StyleSheet.create({
   main: { flex: 1 },

@@ -6,18 +6,16 @@ function checkActionButton(item, props) {
   switch (keyApp) {
     // check action của loại hàng hóa
     case CATEGORY_CONSTANT.KEY_PRODUCT_LIST:
-      nativeEvent(props, screenName.PRODUCTS_TAB, { initRouter: router });
-      break;
+    case CATEGORY_CONSTANT.KEY_PRODUCT_UNIT:
+    case CATEGORY_CONSTANT.KEY_PRODUCT_TYPE:
     case CATEGORY_CONSTANT.KEY_PRODUCT_GROUP:
       nativeEvent(props, screenName.PRODUCTS_TAB, { initRouter: router });
       break;
-    case CATEGORY_CONSTANT.KEY_PRODUCT_TYPE:
-      nativeEvent(props, screenName.PRODUCTS_TAB, { initRouter: router });
+    //check action manufacturings
+    case CATEGORY_CONSTANT.KEY_MANU_GROUP:
+    case CATEGORY_CONSTANT.KEY_MANU_LIST:
+      nativeEvent(props, screenName.MANU_FACT_TAB, { initRouter: router });
       break;
-    case CATEGORY_CONSTANT.KEY_PRODUCT_UNIT:
-      nativeEvent(props, screenName.PRODUCTS_TAB, { initRouter: router });
-      break;
-
     default:
       break;
   }

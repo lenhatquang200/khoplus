@@ -159,10 +159,6 @@ function Category(props) {
     }
   }
 
-  function checkActionButton(_item) {
-    props.navigation.navigate(screenName.PRODUCTS_TAB);
-  }
-
   // rende List menu main
   function renderContentMenu() {
     return (

@@ -48,7 +48,7 @@ export async function configMenu() {
     },
 
     {
-      keyObj: "manufacturings",
+      keyObj: CATEGORY_CONSTANT.OBJ_MANU,
       title: lang.manufacturings,
       groupId: 28,
       data: [
@@ -56,9 +56,9 @@ export async function configMenu() {
           icon: (
             <FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "manufacturings_menu",
+          keyApp: CATEGORY_CONSTANT.KEY_MANU_LIST,
           title: lang.list,
-          router: "",
+          router: screenName.MANU_LIST,
         },
         {
           icon: (
@@ -68,9 +68,9 @@ export async function configMenu() {
               color={colorIcon}
             />
           ),
-          keyApp: "manufacturings_group",
+          keyApp: CATEGORY_CONSTANT.KEY_MANU_GROUP,
           title: lang.manufacturings_group,
-          router: "",
+          router: screenName.MANU_GROUP,
         },
       ],
     },

@@ -9,4 +9,9 @@ export const screenName = {
   PRODUCTS_TYPE: "ProductsType",
   PRODUCTS_UNIT: "ProductsUnit",
   UPLOAD_PRODUCTS: "UploadProducts",
+
+  //Manufacturings
+  MANU_FACT_TAB: "ManuFactTab",
+  MANU_GROUP: "ManuGroup",
+  MANU_LIST: "ManuList",
 };
