@@ -144,7 +144,7 @@ function ManuFactTab(props) {
     <View style={styles.main}>
       <HeaderSearch
         goBack={goBack}
-        title={lang.product}
+        title={lang.manufacturings}
         placeholder={lang.placeSearchProduct}
         onSearch={onSearchValue}
       />

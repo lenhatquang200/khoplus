@@ -8,6 +8,7 @@ const lang = {
   forgotPass: "Quên mật khẩu ?",
   delete: "Xóa",
   edit: "Sửa",
+  callPhone: "Gọi",
 
   product: "Hàng hóa",
   manufacturings: "Nhà cung cấp",
@@ -27,7 +28,7 @@ const lang = {
 
   defaultSearch: "Tìm kiếm",
 
-  placeSearchProduct: "Tìm theo tên hoặc mã sản phẩm",
+  placeSearchProduct: "Tìm theo tên hoặc mã code",
   noData: "Không có dữ liệu",
   listEmpty: "Danh sách đang trống",
   emptyText: "--",

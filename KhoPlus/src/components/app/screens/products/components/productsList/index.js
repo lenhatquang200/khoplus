@@ -6,11 +6,9 @@ import {
   StyleSheet,
   FlatList,
   Alert,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import {
-  Component,
   ToastShow,
   colorApp,
   lang,
@@ -55,7 +53,9 @@ function ProductsList(props) {
   }, [itemUpdate]);
 
   useEffect(() => {
-    loadData();
+    if (isLoadMore || isLoading) {
+      loadData();
+    }
   }, [isLoadMore, refreshing]);
 
   async function loadData() {
