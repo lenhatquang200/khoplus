@@ -14,6 +14,8 @@ const lang = {
   customer: "Khách hàng",
   importStore: "Nhập kho",
   importFrom_Manufact: "Nhập hàng từ nhà cung cấp",
+  exportStore: "Xuất kho",
+  exportForCustomer: "Khách mua hàng",
 
   type: "Loại",
   group: "Nhóm",

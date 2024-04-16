@@ -106,7 +106,7 @@ export async function configMenu() {
     },
 
     {
-      keyObj: "Nhập kho",
+      keyObj: CATEGORY_CONSTANT.OBJ_IMPORT_STORE,
       title: lang.importStore,
       groupId: 28,
       data: [
@@ -118,13 +118,33 @@ export async function configMenu() {
               color={colorIcon}
             />
           ),
-          keyApp: "customer_list",
+          keyApp: CATEGORY_CONSTANT.KEY_IMPORT_STORE_FOMR_MANU,
           title: lang.importFrom_Manufact,
           router: "",
         },
       ],
     },
     // tessssss
+
+    {
+      keyObj: CATEGORY_CONSTANT.OBJ_EXPORT_STORE,
+      title: lang.exportStore,
+      groupId: 28,
+      data: [
+        {
+          icon: (
+            <MaterialCommunityIcons
+              name="account-cash-outline"
+              size={sizeIcon}
+              color={colorIcon}
+            />
+          ),
+          keyApp: CATEGORY_CONSTANT.KEY_EXPORT_FOR_CUSTOMER,
+          title: lang.exportForCustomer,
+          router: "",
+        },
+      ],
+    },
   ];
 
   return list_Menu;

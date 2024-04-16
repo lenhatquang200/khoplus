@@ -16,8 +16,15 @@ export const screenName = {
   MANU_LIST: "ManuList",
 
   //customer
-  CUSTOMER_TAB: "customer",
-  CUSTOMER_LIST: "customer_list",
-  CUSTOMER_GROUP: "customer_group",
-  CUSTOMER_PLANT: "customer_plant",
+  CUSTOMER_TAB: "customerTab",
+  CUSTOMER_LIST: "customerList",
+  CUSTOMER_GROUP: "customerGroup",
+  CUSTOMER_PLANT: "customerPlant",
+
+  //import store
+  IMPORT_STORE: "importStoreTab",
+  IMPORT_STORE_FROM_FACT: "importStoreFromFact",
+
+  //import store
+  EXPORT_FOR_CUSTOMER: "exportForCustomer",
 };
