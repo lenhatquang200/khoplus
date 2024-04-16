@@ -76,7 +76,7 @@ export async function configMenu() {
     },
 
     {
-      keyObj: "customer",
+      keyObj: CATEGORY_CONSTANT.OBJ_CUSTOMER,
       title: lang.customer,
       groupId: 28,
       data: [
@@ -84,23 +84,23 @@ export async function configMenu() {
           icon: (
             <FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "customer_list",
+          keyApp: CATEGORY_CONSTANT.KEY_CUSTOMER_LIST,
           title: lang.list,
-          router: "",
+          router: screenName.CUSTOMER_LIST,
         },
         {
           icon: <FontAwesome name="users" size={sizeIcon} color={colorIcon} />,
-          keyApp: "customer_group",
+          keyApp: CATEGORY_CONSTANT.KEY_CUSTOMER_GROUP,
           title: lang.group,
-          router: "",
+          router: screenName.CUSTOMER_GROUP,
         },
         {
           icon: (
             <FontAwesome name="pagelines" size={sizeIcon} color={colorIcon} />
           ),
-          keyApp: "customer_plant",
+          keyApp: CATEGORY_CONSTANT.KEY_CUSTOMER_PLANT,
           title: lang.plant,
-          router: "",
+          router: screenName.CUSTOMER_PLANT,
         },
       ],
     },

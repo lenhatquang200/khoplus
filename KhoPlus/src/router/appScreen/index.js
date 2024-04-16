@@ -12,6 +12,8 @@ import ProductsTab from "../../components/app/screens/products";
 import UploadProducts from "../../components/app/screens/uploadProducts";
 // MANUFACTURINGS
 import ManuFactTab from "../../components/app/screens/manufacturings";
+// CUSTOMER
+import CustomerTab from "../../components/app/screens/customer";
 
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();
@@ -52,6 +54,7 @@ function AppScreen(props) {
       />
 
       <Stack.Screen component={ManuFactTab} name={screenName.MANU_FACT_TAB} />
+      <Stack.Screen component={CustomerTab} name={screenName.CUSTOMER_TAB} />
     </Stack.Navigator>
   );
 }

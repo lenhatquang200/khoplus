@@ -14,4 +14,10 @@ export const screenName = {
   MANU_FACT_TAB: "ManuFactTab",
   MANU_GROUP: "ManuGroup",
   MANU_LIST: "ManuList",
+
+  //customer
+  CUSTOMER_TAB: "customer",
+  CUSTOMER_LIST: "customer_list",
+  CUSTOMER_GROUP: "customer_group",
+  CUSTOMER_PLANT: "customer_plant",
 };

@@ -16,6 +16,12 @@ function checkActionButton(item, props) {
     case CATEGORY_CONSTANT.KEY_MANU_LIST:
       nativeEvent(props, screenName.MANU_FACT_TAB, { initRouter: router });
       break;
+    // check action customer
+    case CATEGORY_CONSTANT.KEY_CUSTOMER_LIST:
+    case CATEGORY_CONSTANT.KEY_CUSTOMER_GROUP:
+    case CATEGORY_CONSTANT.KEY_CUSTOMER_PLANT:
+      nativeEvent(props, screenName.CUSTOMER_TAB, { initRouter: router });
+      break;
     default:
       break;
   }
