@@ -6,35 +6,48 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import { LoadingInContent, Nonedata } from "../../../../../../public/component";
+import {
+  LoadingInContent,
+  Loadmore,
+  Nonedata,
+} from "../../../../../../public/component";
 import { ApiCall } from "../../../../../../KhoPlus";
 import Item from "./componentList/item";
 import { colorApp, settingApp } from "../../../../../../public";
 import { MaterialIcons } from "@expo/vector-icons";
 
+export interface Iprops {
+}
+
 let current_page = 1;
-export default function ManuList(props) {
+let page = 1;
+export default function ManuList(props:Iprops) {
   const limit = 10;
   const [listData, setListData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoadMore, setIsLoadmore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    loadData();
-  }, [isLoadMore, refreshing]);
+    if (isLoadMore || isLoading) {
+      loadData();
+    }
+  }, [isLoadMore, isLoading]);
 
   async function loadData() {
-    let newList = listData;
+    let newList:any = [];
+    newList = listData
     const result = await ApiCall.getManufacturingList(current_page, limit);
     if (result?.data?.length != 0) {
       if (current_page == 1) {
         newList = result?.data;
       } else {
-        result?.data?.map((item) => {
-          const index_ = newList.findIndex((e) => e?.id == item?.id);
+        result?.data?.map((item: any) => {
+          const index_ = newList.findIndex((e:any) => e?.id == item?.id);
           if (index_ < 0) {
-            newList.push(item);
+            let newItem:any = {}
+            newItem = item
+            newList.push(newItem);
           }
         });
       }
@@ -45,6 +58,11 @@ export default function ManuList(props) {
     setIsLoading(false);
     setIsLoadmore(false);
     setRefreshing(false);
+  }
+
+  function onLoadMore() {
+    current_page += 1;
+    setIsLoadmore(true);
   }
 
   function renderAddItem() {
@@ -60,22 +78,27 @@ export default function ManuList(props) {
 
   return (
     <View style={styles.container}>
-      {isLoading && <LoadingInContent />}
+      {isLoading && <LoadingInContent/>}
       {!isLoading && listData?.length == 0 ? (
         <Nonedata />
       ) : (
         <FlatList
           data={listData}
-          keyExtractor={(item, index) => item?.id}
-          renderItem={(obj) => <Item obj={obj} />}
+          keyExtractor={(item?:any, index?:any) => item?.id}
+          renderItem={(obj?:Object) => <Item obj={obj} />}
           style={{ paddingTop: 12 }}
           ListFooterComponent={() =>
             !isLoadMore ? (
               <View style={styles.footer} />
             ) : (
-              <Loadmore width={settingApp.width_32} height={80} />
+              <Loadmore width={settingApp.width} height={80} />
             )
           }
+          onEndReachedThreshold={0.1}
+          initialNumToRender={10}
+          maxToRenderPerBatch={20}
+          removeClippedSubviews={true}
+          onEndReached={() => onLoadMore()}
         />
       )}
       {!isLoading && renderAddItem()}

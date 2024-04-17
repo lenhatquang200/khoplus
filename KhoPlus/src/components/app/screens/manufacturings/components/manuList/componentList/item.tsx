@@ -10,7 +10,8 @@ import { colorApp, lang, settingApp } from "../../../../../../../public";
 
 const { width } = settingApp;
 const WIDTH_CONTENT = width - 100;
-const Item = memo((props) => {
+
+const Item = memo((props:any) => {
   const { obj } = props || {};
   const { item } = obj || {};
 

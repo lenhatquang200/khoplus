@@ -5,7 +5,8 @@ import settingApp from "../settingApp";
 import lang from "../locate";
 import LinearBackGround from "./LinearBackground";
 
-export default function Nonedata({ isLinear, lable }) {
+export default function Nonedata(props:any) {
+   let { isLinear, lable } = props || {}
   lable = lable || lang.noData;
   return (
     <View style={styles.main}>

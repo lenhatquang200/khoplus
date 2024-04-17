@@ -53,7 +53,7 @@ function ProductsList(props) {
   }, [itemUpdate]);
 
   useEffect(() => {
-    if (isLoadMore || isLoading) {
+    if (isLoadMore || isLoading || refreshing) {
       loadData();
     }
   }, [isLoadMore, refreshing]);
@@ -119,7 +119,7 @@ function ProductsList(props) {
   }
 
   function onLoadMore() {
-    current_page = current_page + 1;
+    current_page += 1;
     setIsLoadmore(true);
   }
 
@@ -158,7 +158,7 @@ function ProductsList(props) {
             !isLoadMore ? (
               <View style={styles.footer} />
             ) : (
-              <Loadmore width={settingApp.width_32} height={80} />
+              <Loadmore width={settingApp.width} height={80} />
             )
           }
           onEndReached={() => onLoadMore()}
