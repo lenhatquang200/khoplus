@@ -5,47 +5,46 @@ import colorApp from "../colorApp";
 import LottieView from "lottie-react-native";
 import lottiesJson from "../lottiesJson";
 
-interface Iprops{
-    width:Number,
-    height:Number,
-    color:any,
-    backgroundColor:String,
-    size:Number,
-    style:StyleProp<ViewStyle>
+type Iprops = {
+    width:number,
+    height:number,
+    color:string,
+    backgroundColor:string,
+    size:number,
 }
 
-type Style = {
-    container:ViewStyle,
-    lottier:ViewStyle
-}
 
-function LoadingInContent(props:any) {
-    const  {
+function LoadingInContent(props:Partial<Iprops>) {
+    const {
         width = settingApp.width,
         height = settingApp.height,
-        color,
-        backgroundColor,
+        color = colorApp.white,
+        backgroundColor = "transparent",
         size = 120,
-      } = props || {}
-  color || colorApp.white;
-  backgroundColor || "transparent";
+      } = props
   return (
     <View
-      style={{
-        backgroundColor: backgroundColor,
-        width: width,
-        height: height,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={Container(backgroundColor, width, height)}
     >
       <LottieView
         autoPlay
         source={lottiesJson.loading}
-        style={{ width: size, height: size,}}
+        style={Lottie(size)}
         speed={1.5}
       />
     </View>
   );
 }
 export default LoadingInContent;
+const Lottie = (size:number):ViewStyle => ({
+    width: size, 
+    height: size,
+})
+
+const Container=(backgroundColor:string, width:number, height:number):ViewStyle =>({
+    backgroundColor: backgroundColor,
+    width: width,
+    height: height,
+    justifyContent: "center",
+    alignItems: "center",
+})

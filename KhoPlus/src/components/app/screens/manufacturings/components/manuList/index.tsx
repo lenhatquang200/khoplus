@@ -85,7 +85,7 @@ export default function ManuList(props:Iprops) {
         <FlatList
           data={listData}
           keyExtractor={(item?:any, index?:any) => item?.id}
-          renderItem={(obj?:Object) => <Item obj={obj} />}
+          renderItem={({item, index}) => <Item item={item} />}
           style={{ paddingTop: 12 }}
           ListFooterComponent={() =>
             !isLoadMore ? (

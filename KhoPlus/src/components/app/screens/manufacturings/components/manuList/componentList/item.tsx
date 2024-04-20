@@ -7,15 +7,18 @@ import {
   Linking,
 } from "react-native";
 import { colorApp, lang, settingApp } from "../../../../../../../public";
+import { Iprops, DataItemProps } from "./common";
 
 const { width } = settingApp;
 const WIDTH_CONTENT = width - 100;
 
-const Item = memo((props:any) => {
-  const { obj } = props || {};
-  const { item } = obj || {};
 
-  const [dataItem, setDataItem] = useState(item);
+
+
+const Item = memo((props:Iprops) => {
+  const { item } = props || {};
+
+  const [dataItem, setDataItem] = useState<DataItemProps>(item);
 
   useEffect(() => {
     if (item) {
