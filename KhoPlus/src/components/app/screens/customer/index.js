@@ -5,16 +5,15 @@ import {
   StyleSheet,
   Animated,
   TouchableOpacity,
-  ScrollView,
   FlatList,
 } from "react-native";
 import CustomerGroups from "./component/customerGroup";
 import CustomerList from "./component/customerList";
 import CustomerPlant from "./component/customerPlant";
 
-import { screenName } from "../../../../router/screenName";
-import { colorApp, lang, settingApp } from "../../../../public";
-import { HeaderSearch } from "../../../../public/component";
+import { screenName } from "router/screenName";
+import { colorApp, lang, settingApp } from "public";
+import { HeaderSearch } from "public/component";
 
 const Tabs = createMaterialTopTabNavigator();
 

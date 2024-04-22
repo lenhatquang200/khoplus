@@ -1,12 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import {
-  colorApp,
-  settingApp,
-  Component,
-  lang,
-  Icon,
-} from "../../../../../../../public";
+import { colorApp, settingApp, lang } from "public";
 
 const { width, height } = settingApp;
 

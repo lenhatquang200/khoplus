@@ -1,5 +1,6 @@
 const lang = {
   login: "Đăng nhập",
+  logout: "Đăng xuất",
   rememberLogin: "Ghi nhớ đăng nhập",
   placeHolderUserName: "Nhập số điện thoại nhân viên",
   placeHolderPass: "Nhập mật khẩu",

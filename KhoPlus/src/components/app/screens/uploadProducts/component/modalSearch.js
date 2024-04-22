@@ -7,8 +7,8 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { colorApp, lang, settingApp } from "../../../../../public";
-import { HeaderName } from "../../../../../public/component";
+import { colorApp, lang, settingApp } from "public";
+import { HeaderName } from "public/component";
 import Constanst from "./constans";
 
 export default function ModalSearch(props) {

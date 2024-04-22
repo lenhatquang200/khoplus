@@ -9,13 +9,12 @@ import {
   Platform,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { ToastShow, colorApp, lang, settingApp } from "../../../../public";
-import { HeaderName, Loading } from "../../../../public/component";
-import { ApiCall } from "../../../../KhoPlus";
+import { ToastShow, colorApp, lang, settingApp } from "public";
+import { HeaderName, Loading } from "public/component";
+import { ApiCall } from "KhoPlus";
 import ModalSearch from "./component/modalSearch";
 import Constanst from "./component/constans";
-import actions from "../../../../state/actions";
-import { set } from "immutable";
+import actions from "state/actions";
 
 const SPACE_TOP = 32;
 let typeModal = null;

@@ -1,25 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from "react-native";
-import {
-  ToastShow,
-  colorApp,
-  lang,
-  settingApp,
-} from "../../../../../../public";
-import {
-  LoadingInContent,
-  Loadmore,
-  Nonedata,
-} from "../../../../../../public/component";
-import { ApiCall } from "../../../../../../KhoPlus";
+import { View, StyleSheet, FlatList } from "react-native";
+import { lang, settingApp } from "public";
+import { LoadingInContent, Loadmore, Nonedata } from "public/component";
+import { ApiCall } from "KhoPlus";
 import Item from "./component/item";
 
 let current_page = 1;

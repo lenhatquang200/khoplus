@@ -1,18 +1,6 @@
-import React, { useEffect, useState, useRef, memo } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-  StyleSheet,
-} from "react-native";
-import {
-  colorApp,
-  settingApp,
-  Component,
-  lang,
-  Icon,
-} from "../../../../../../../public";
+import React, { useEffect, useState, memo } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { colorApp, settingApp, Component, lang, Icon } from "public";
 
 const { height, width } = settingApp;
 const WIDTH_IMGE = 80;

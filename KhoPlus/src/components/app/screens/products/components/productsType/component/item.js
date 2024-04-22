@@ -1,16 +1,9 @@
 import React, { memo, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import {
-  colorApp,
-  settingApp,
-  Component,
-  lang,
-  Icon,
-} from "../../../../../../../public";
+import { colorApp, settingApp, lang } from "public";
 
 const { width, height } = settingApp;
 
-const WIDTH_IMGE = 80;
 const WIDTH_CONTENT = width - 100;
 
 const Item = memo((props) => {

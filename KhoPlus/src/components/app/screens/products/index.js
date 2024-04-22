@@ -12,9 +12,9 @@ import ProductsGroup from "./components/productsGroup";
 import ProductsList from "./components/productsList";
 import ProductsType from "./components/productsType";
 import ProductsUnit from "./components/productsUnit";
-import { screenName } from "../../../../router/screenName";
-import { colorApp, lang, settingApp } from "../../../../public";
-import { HeaderSearch } from "../../../../public/component";
+import { screenName } from "router/screenName";
+import { colorApp, lang, settingApp } from "public";
+import { HeaderSearch } from "public/component";
 
 const Tabs = createMaterialTopTabNavigator();
 

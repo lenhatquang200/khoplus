@@ -8,21 +8,12 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import {
-  ToastShow,
-  colorApp,
-  lang,
-  settingApp,
-} from "../../../../../../public";
-import {
-  LoadingInContent,
-  Loadmore,
-  Nonedata,
-} from "../../../../../../public/component";
-import { ApiCall } from "../../../../../../KhoPlus";
+import { ToastShow, colorApp, lang, settingApp } from "public";
+import { LoadingInContent, Loadmore, Nonedata } from "public/component";
+import { ApiCall } from "KhoPlus";
 import Item from "./component/item";
-import { screenName } from "../../../../../../router/screenName";
-import actions from "../../../../../../state/actions";
+import { screenName } from "router/screenName";
+import actions from "state/actions";
 
 let current_page = 1;
 

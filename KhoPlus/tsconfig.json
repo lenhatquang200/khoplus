@@ -22,6 +22,9 @@
         ],
         "@components/*": ["./src/components/*"],
         "@public": ["./src/public"],
+        "@state" : ["./src/state"],
+        "@KhoPlus":["./src/KhoPlus"],
+        "@router": ["./src/router"],
       }
     },
     "exclude": [

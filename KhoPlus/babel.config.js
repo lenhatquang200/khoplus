@@ -12,6 +12,9 @@ module.exports = function (api) {
           alias: {
             "@components": "./src/components",
             "@public": "./src/public",
+            "@router": "./src/router",
+            "@state": "./src/state",
+            "@KhoPlus": "./src/KhoPlus",
           },
         },
       ],

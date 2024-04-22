@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { settingApp, lang } from "../../../../../../public";
-import {
-  LoadingInContent,
-  Nonedata,
-  Loadmore,
-} from "../../../../../../public/component";
-import { ApiCall } from "../../../../../../KhoPlus";
+import { settingApp, lang } from "public";
+import { LoadingInContent, Nonedata, Loadmore } from "public/component";
+import { ApiCall } from "KhoPlus";
 import Item from "./component/item";
 
 let current_page = 1;

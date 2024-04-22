@@ -8,17 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import {
-  settingApp,
-  colorApp,
-  CONSTANTS_APP,
-  Component,
-} from "../../../public";
+import { settingApp, colorApp, CONSTANTS_APP, Component, lang } from "public";
 import { HeaderProfile } from "./components";
-import KhoPlus from "../../../KhoPlus/api/khoplusApi";
-import { StackActions } from "@react-navigation/native";
+import KhoPlus from "KhoPlus/api/khoplusApi";
 import CONSTANTS from "./components/CONSTANTS";
-import { screenName } from "../../../router/screenName";
+import { screenName } from "router/screenName";
 
 const { space_8, space_16, size_14, size_20, width } = settingApp;
 function Profile(props) {
@@ -37,7 +31,7 @@ function Profile(props) {
   function buttonLogout() {
     return (
       <TouchableOpacity onPress={_onLogout} style={styles.bt_logout}>
-        <Text style={styles.txt_logout}>{"Đăng xuất"}</Text>
+        <Text style={styles.txt_logout}>{lang.logout}</Text>
         <MaterialIcons name="logout" color={colorApp.red} size={size_20} />
       </TouchableOpacity>
     );
