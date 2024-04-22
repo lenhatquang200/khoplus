@@ -11,8 +11,10 @@ import {
 import ManuGroup from "./components/manuGroup";
 import ManuList from "./components/manuList";
 import { screenName } from "../../../../router/screenName";
-import { colorApp, lang, settingApp } from "../../../../public";
-import { HeaderSearch } from "../../../../public/component";
+// import { colorApp, lang, settingApp } from "../../../../public";
+//import { HeaderSearch } from "../../../../public/component";
+import { HeaderSearch } from "public/component";
+import { colorApp, lang, settingApp } from "public";
 
 const Tabs = createMaterialTopTabNavigator();
 

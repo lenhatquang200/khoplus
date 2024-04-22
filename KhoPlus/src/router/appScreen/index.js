@@ -5,15 +5,17 @@ import {
 } from "@react-navigation/stack";
 import { settingApp } from "../../public";
 
-import AuthApp from "../../components/auth/authenScreen";
+import AuthApp from "components/auth/authenScreen";
 import TabStack from "../tabStack";
+
 // PRODUCTS
-import ProductsTab from "../../components/app/screens/products";
-import UploadProducts from "../../components/app/screens/uploadProducts";
+import ProductsTab from "components/app/screens/products";
+import UploadProducts from "components/app/screens/uploadProducts";
+
 // MANUFACTURINGS
-import ManuFactTab from "../../components/app/screens/manufacturings";
+import ManuFactTab from "components/app/screens/manufacturings";
 // CUSTOMER
-import CustomerTab from "../../components/app/screens/customer";
+import CustomerTab from "components/app/screens/customer";
 
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();

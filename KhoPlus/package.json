@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "all": "rm -rf node_modules && npm cache clean --force && npm install && watchman watch-del-all && del %localappdata%Temphaste-map-* && del %localappdata%Tempmetro-cache && npx expo start --clear",
-    "ts:check": "tsc"
+    "ts:check": "tsc",
+    "update": "eas update"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.1.3",
