@@ -9,4 +9,5 @@ export interface DataItemProps{
 
 export interface Iprops {
     item:DataItemProps,
+    propsItem: any
 }

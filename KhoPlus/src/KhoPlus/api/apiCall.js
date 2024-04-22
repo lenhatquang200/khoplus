@@ -76,7 +76,6 @@ export async function getUnitProduct(page, limit, name, search, code) {
 }
 
 export async function getManufacturingList(page, limit, name, search, code) {
-  console.log("getManufacturingList", page);
   page || "";
   limit || 10;
   name || "";

@@ -14,6 +14,7 @@ export const screenName = {
   MANU_FACT_TAB: "ManuFactTab",
   MANU_GROUP: "ManuGroup",
   MANU_LIST: "ManuList",
+  MANU_FACT_DETAIL: "ManuFactDetail",
 
   //customer
   CUSTOMER_TAB: "customerTab",

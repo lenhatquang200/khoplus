@@ -8,15 +8,14 @@ import {
 } from "react-native";
 import { colorApp, lang, settingApp } from "../../../../../../../public";
 import { Iprops, DataItemProps } from "./common";
+import { screenName } from "router/screenName";
 
 const { width } = settingApp;
 const WIDTH_CONTENT = width - 100;
 
 
-
-
 const Item = memo((props:Iprops) => {
-  const { item } = props || {};
+  const { item, propsItem } = props || {};
 
   const [dataItem, setDataItem] = useState<DataItemProps>(item);
 
@@ -27,7 +26,9 @@ const Item = memo((props:Iprops) => {
   }, [item]);
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+    onPress={() => propsItem?.navigation?.navigate(screenName.MANU_FACT_DETAIL, {item:item})}
+    style={styles.container}>
       <View style={styles.view_item}>
         <View style={styles.view_content}>
           <Text style={styles.txt_name}>
@@ -49,7 +50,7 @@ const Item = memo((props:Iprops) => {
 
         <View style={styles.view_Action}>
           <TouchableOpacity
-            onPress={() => Linking.canOpenURL(`tel:${dataItem?.phone}`)}
+            onPress={() => Linking.openURL(`tel:${dataItem?.phone}`)}
             style={styles.bt_edit}
           >
             <Text style={styles.txt_call}>{lang.callPhone}</Text>
@@ -64,7 +65,7 @@ const Item = memo((props:Iprops) => {
       </View>
 
       <View style={styles.line} />
-    </View>
+    </TouchableOpacity>
   );
 });
 

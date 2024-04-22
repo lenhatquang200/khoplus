@@ -10,28 +10,32 @@ import {
 import settingApp from "../settingApp";
 import colorApp from "../colorApp";
 import * as Icon from "../icon";
-import { debounce } from "lodash";
 import lang from "../locate";
 
 const { width } = settingApp;
 
-export default function HeaderName({ goBack, title = "" }) {
-  return (
-    <View style={styles.container}>
-      {Platform.OS === "ios" && <View style={styles.statusBar} />}
+interface Iprops{
+    goBack?:() => void,
+    title?:string
+}
 
-      <View style={styles.view_main}>
-        <TouchableOpacity onPress={goBack} style={styles.bt_goback}>
-          <Icon.arrow_Left size={24} color={colorApp.colorText} />
-        </TouchableOpacity>
-        <Text style={styles.txt_title}>{title}</Text>
-      </View>
-    </View>
-  );
+export default function HeaderName(props:Iprops) {
+    const { goBack, title } = props
+    return (
+        <View style={styles.container}>
+        {Platform.OS === "ios" && <View style={styles.statusBar} />}
+
+        <View style={styles.view_main}>
+            <TouchableOpacity onPress={goBack} style={styles.bt_goback}>
+            <Icon.arrow_Left size={24} color={colorApp.colorText} />
+            </TouchableOpacity>
+            <Text style={styles.txt_title}>{title}</Text>
+        </View>
+        </View>
+    );
 }
 const styles = StyleSheet.create({
   container: {
-    paddingTop: settingApp,
     backgroundColor: colorApp.white,
     minHeight: 100,
     justifyContent: "center",

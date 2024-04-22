@@ -10,10 +10,12 @@ import TabStack from "../tabStack";
 
 // PRODUCTS
 import ProductsTab from "components/app/screens/products";
-import UploadProducts from "components/app/screens/uploadProducts";
+import UploadProducts from "components/app/screens/products/components/uploadProducts";
 
 // MANUFACTURINGS
 import ManuFactTab from "components/app/screens/manufacturings";
+import ManufactDetail from "components/app/screens/manufacturings/components/manufactDetail";
+
 // CUSTOMER
 import CustomerTab from "components/app/screens/customer";
 
@@ -56,6 +58,11 @@ function AppScreen(props) {
       />
 
       <Stack.Screen component={ManuFactTab} name={screenName.MANU_FACT_TAB} />
+      <Stack.Screen
+        component={ManufactDetail}
+        name={screenName.MANU_FACT_DETAIL}
+      />
+
       <Stack.Screen component={CustomerTab} name={screenName.CUSTOMER_TAB} />
     </Stack.Navigator>
   );

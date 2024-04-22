@@ -1,14 +1,26 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Animated, View, Image } from "react-native";
+import { Animated, View } from "react-native";
 
 import { FontAwesome } from "@expo/vector-icons";
-import settingApp from "../settingApp";
 import colorApp from "../colorApp";
 import LoadingInContent from "./LoadingInContent";
 
 const thumbnailAnimated = new Animated.Value(0);
 const imageAnimated = new Animated.Value(0);
-export default function AsyncImage({ source, style, resizeMode, type }) {
+
+interface Iprops{
+    source?:{
+        uri:string
+    },
+    style?:Object,
+    resizeMode?: string | any,
+    type?:string | number,
+    size?:number
+}
+
+export default function AsyncImage(props:Iprops) {
+
+   let { source, style, resizeMode, type, size =60 } = props
   const [isLoadEnd, setLoadEnd] = useState(false);
 
   const handleThumbnailLoad = () => {
@@ -62,7 +74,7 @@ export default function AsyncImage({ source, style, resizeMode, type }) {
           />
         </>
       ) : (
-        <FontAwesome name="image" color={colorApp.colorPlaceText} size={60} />
+        <FontAwesome name="image" color={colorApp.colorPlaceText} size={size} />
       )}
     </View>
   );
