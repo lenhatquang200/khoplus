@@ -30,6 +30,10 @@ export default function HeaderSearch({
     onSearch && onSearch(value);
   }
 
+  const handleKeyPress = ({ nativeEvent: { key: keyValue } }) => {
+    console.log("enter", keyValue);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.statusBar} />
@@ -46,6 +50,7 @@ export default function HeaderSearch({
             defaultValue={text}
             onChangeText={searchBox}
             placeholder={placeholder}
+            onKeyPress={handleKeyPress}
           />
         </View>
       </View>

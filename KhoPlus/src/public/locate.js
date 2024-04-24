@@ -40,6 +40,13 @@ const lang = {
   save: "Lưu",
   succees: "thành công",
   failed: "thất bại",
+
+  address: "Địa chỉ",
+  timeCreate: "Thời gian tạo",
+  node: "Ghi chú",
+  bankName: "Ngân hàng",
+  bankNumber: "STK",
+  cancel: "Hủy",
 };
 
 export default lang;

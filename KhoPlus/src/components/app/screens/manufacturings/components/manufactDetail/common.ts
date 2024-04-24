@@ -13,3 +13,13 @@ export interface Iprops{
     navigation?:ProfileScreenNavigation,
     route: ProfileScreenRouteProp,
 }
+
+export enum TYPE_INPUT{
+    NAME,
+    PHONE,
+    GROUP,
+    ADDRESS,
+    BANK_NAME,
+    BANN_NUMBER,
+    NOTE,
+}

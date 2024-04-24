@@ -1,73 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleProp, StyleSheet } from 'react-native';
-import { HeaderName, AsyncImage } from "public/component"
-import { colorApp, lang, settingApp } from 'public';
-import { IObjectItem, Iprops } from './common';
+import React, { useState, useEffect, useRef } from "react";
+import {
+    View,
+    Text,
+    ScrollView,
+    Linking,
+    TouchableOpacity,
+    TextInput,
+    KeyboardAvoidingView,
+    Platform
+} from "react-native";
+import { HeaderName, Loading, } from "public/component";
+import { Icon, ToastShow, colorApp, lang, settingApp } from "public";
 
-export default function ManufactDetail(props:Iprops){
-    console.log('ManufactDetail', props);
-    const { navigation, route } = props
-    const { params } = route || {}
+import { Iprops } from "./common";
+import styles from "./styles";
+import ContentForm from "./component/contentForm";
+import ButtonOptionEdit from "./component/buttonOptionEdit";
+import ButtonUpdate from "./component/buttonUpdate";
+import { ApiCall } from "KhoPlus";
 
-    const [dataItem, setDataItem] = useState(params?.item)
-    
-    useEffect(() =>{
-        console.log('dataItem', dataItem);
-        if(params?.item){
-            setDataItem(params?.item)
+export default function ManufactDetail(props: Iprops) {
+    const contentRef = useRef<any>()
+    const { navigation, route } = props;
+    const { params } = route || {};
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [dataItem, setDataItem] = useState(params?.item);
+    const [isEdit, setEdit] = useState(false);
+    const [listGroupManu, setListGroupManu] = useState([])
+
+    useEffect(() => {
+        console.log("dataItem", dataItem);
+        if (params?.item) {
+            setDataItem(params?.item);
         }
-    },[])
+        loadListGroup()
+    }, []);
 
-    return(
+    async function loadListGroup() {
+        const results = await ApiCall.getManufacturingGroup()
+        if (results?.data?.length != 0) {
+            setListGroupManu(results?.data)
+        }
+    }
+
+    function getNewDataUpdate() {
+        setIsLoading(true)
+        contentRef?.current?.refNe()
+    }
+
+    async function setNewData(newVal: any) {
+        const { code, name, address, note, account_number, bank_name, manufacturing_group_id, phone, id } = newVal
+        let body = {
+            code: code,
+            name: name,
+            phone: phone,
+            address: address,
+            note: note,
+            account_number: account_number,
+            bank_name: bank_name,
+            manufacturing_group_id: manufacturing_group_id,
+        }
+        const result = await ApiCall.updateManufacturing(id, body)
+        if (result && result.data) {
+            setDataItem(result.data)
+            ToastShow(result?.message)
+        }
+        else {
+            ToastShow(result?.message)
+        }
+        setEdit(false)
+        setIsLoading(false)
+    }
+
+    return (
         <View style={styles.container}>
-            <HeaderName title={lang?.manufacturings} goBack={() => navigation?.goBack()}/>
+            {isLoading && <Loading />}
+            <HeaderName
+                title={lang?.manufacturings}
+                goBack={() => navigation?.goBack()}
+            />
             <ScrollView
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}
             >
-
-                {dataItem?.uri && <View style={styles.imageManu}>
-                    <AsyncImage size={100}/>
-                </View>}
-
-                <Text style={styles.txt_name}>{dataItem?.name || lang.emptyText}</Text>
-                <View
-                    style={styles.viewPhone}
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
-                    <Text style={styles.txt_phone}>{dataItem?.phone || lang.emptyText}</Text>
-
-                    
-                </View>
+                    <ContentForm
+                        ref={contentRef}
+                        dataItem={dataItem}
+                        isEdit={isEdit}
+                        listGroupManu={listGroupManu}
+                        setNewData={setNewData}
+                    />
+                </KeyboardAvoidingView>
             </ScrollView>
-        </View>
-    )
-}
 
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:colorApp.white
-    },
-    scrollView:{
-        paddingLeft:settingApp.space_16, paddingRight:settingApp.space_16
-    },
-    imageManu:{
-        width: 120,
-        height:120,
-    },
-    txt_name:{
-        fontSize:settingApp.size_20,
-        fontWeight:"600",
-        color:colorApp.colorText
-    },
-    viewPhone:{
-        width:settingApp.width_32,
-        height:30,
-        justifyContent:'center'
-    },
-    txt_phone:{
-        fontSize:settingApp.size_16,
-    }
-})
+            {!isEdit ? <ButtonOptionEdit onEdit={() => setEdit(true)} onDelete={() => setEdit(false)} />
+                :
+                <ButtonUpdate
+                    onCancel={() => setEdit(false)}
+                    updateManufact={getNewDataUpdate}
+                />
+            }
+        </View>
+    );
+}
 

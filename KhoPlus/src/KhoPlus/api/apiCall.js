@@ -86,3 +86,23 @@ export async function getManufacturingList(page, limit, name, search, code) {
   );
   return result;
 }
+
+export async function getManufacturingGroup(page, limit, name, search, code) {
+  page || "";
+  limit || 10;
+  name || "";
+  search || false;
+  code || "";
+  const result = await KhoPlusApi.CallApi(`${uri}/manufacturing-groups`);
+  return result;
+}
+
+export async function updateManufacturing(id, body) {
+  const method = "PUT";
+  const result = await KhoPlusApi.CallApi(
+    `${uri}/manufacturings/${id}`,
+    method,
+    body
+  );
+  return result;
+}

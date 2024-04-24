@@ -26,7 +26,6 @@ export default function UploadProducts(props) {
 
   const [dataItem, setDataItem] = useState(route?.params?.item);
   const [isLoading, setIsloading] = useState(true);
-  const [valueSearch, setValueSearch] = useState("");
 
   const [listUnit, setListUnit] = useState([]);
   const [listType, setListType] = useState([]);
