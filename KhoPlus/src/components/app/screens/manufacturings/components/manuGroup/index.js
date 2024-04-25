@@ -5,6 +5,7 @@ import { ApiCall } from "KhoPlus";
 import { LoadingInContent, Loadmore, Nonedata } from "public/component";
 import Item from "./component/item";
 import { ToastShow, colorApp, lang, settingApp } from "public";
+import ModalUpdate from "./component/modalUpdate";
 
 let current_page = 1
 export default function ManuGroup(props) {
@@ -102,6 +103,8 @@ export default function ManuGroup(props) {
                 />
             )}
             {/* {!isLoading && renderAddItem()} */}
+
+            <ModalUpdate />
         </View>)
 }
 const styles = StyleSheet.create({

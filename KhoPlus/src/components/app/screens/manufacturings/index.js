@@ -142,7 +142,7 @@ function ManuFactTab(props) {
 
     return (
         <View style={styles.main}>
-            <HeaderName title={lang.product} goBack={goBack} />
+            <HeaderName title={lang.manufacturings} goBack={goBack} />
             {myTab(props)}
         </View>
     );
