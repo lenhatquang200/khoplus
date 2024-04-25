@@ -14,6 +14,7 @@ const WIDTH_CONTENT = width - 100;
 
 const Item = memo(({ obj, props, onDelete }) => {
     const [dataItem, setDataItem] = useState(null);
+
     useEffect(() => {
         const { item, index } = obj || {};
         if (item?.id) {
@@ -21,13 +22,9 @@ const Item = memo(({ obj, props, onDelete }) => {
         }
     }, [obj]);
 
+
     return (
         <TouchableOpacity
-            onPress={() =>
-                props?.navigation?.navigate(screenName.MANU_FACT_DETAIL, {
-                    item: dataItem,
-                })
-            }
             style={styles.container}
         >
             <View style={styles.view_item}>
