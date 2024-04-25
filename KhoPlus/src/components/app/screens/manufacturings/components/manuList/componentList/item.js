@@ -25,6 +25,11 @@ const Item = memo(({ obj, props, onDelete }) => {
 
     return (
         <TouchableOpacity
+            onPress={() =>
+                props?.navigation?.navigate(screenName.MANU_FACT_DETAIL, {
+                    item: dataItem,
+                })
+            }
             style={styles.container}
         >
             <View style={styles.view_item}>

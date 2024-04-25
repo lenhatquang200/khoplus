@@ -9,7 +9,7 @@ const Item = memo(({
     const { item } = obj
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container}>
             <View style={styles.view_txt}>
                 <Text style={styles.txt_name}>{item?.name}</Text>
                 <Text style={styles.txt_time}>{item?.formatted_created_at}</Text>
@@ -22,7 +22,7 @@ const Item = memo(({
                 <Text style={styles.txt_delete}>{lang.delete}</Text>
             </TouchableOpacity>
             <View style={styles.line} />
-        </View>
+        </TouchableOpacity>
     )
 })
 
