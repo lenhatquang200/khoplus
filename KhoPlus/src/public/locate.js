@@ -49,6 +49,10 @@ const lang = {
     bankName: "Ngân hàng",
     bankNumber: "STK",
     cancel: "Hủy",
+
+    aler: "Thông báo",
+    deleteManu: "Bạn chắc chắn muốn xóa nhà cung cấp này",
+    accept: "Đồng ý"
 };
 
 export default lang;

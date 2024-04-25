@@ -83,7 +83,7 @@ export default function ManufactDetail(props) {
     async function setNewData(newVal) {
         const result = await checkApi(newVal)
         if (result && result.data) {
-            dispatch(actions.updateItemManuFact(result?.data))
+            dispatch(actions.updateItemManuFact({ ...result?.data, isDelete: false }))
             setDataItem(result.data)
             ToastShow(result?.message)
         }
@@ -94,9 +94,20 @@ export default function ManufactDetail(props) {
         setIsLoading(false)
     }
 
+    async function onDelete() {
+        const result = await ApiCall.deleteManufacturing(dataItem?.id)
+        if (result?.success) {
+            dispatch(actions.updateItemManuFact({ ...dataItem, isDelete: true }))
+            ToastShow(result?.message)
+            props?.navigation?.pop()
+        }
+        else {
+            ToastShow(`${lang.delete} ${lang.failed}`)
+        }
+    }
+
     async function checkApi(newVal) {
         let result = null
-
         const { code, name, address, note, account_number, bank_name, manufacturing_group_id, phone, id } = newVal
         let body = {
             code: code + "",
@@ -142,7 +153,7 @@ export default function ManufactDetail(props) {
                 </KeyboardAvoidingView>
             </ScrollView>
 
-            {!isEdit ? <ButtonOptionEdit onEdit={() => setEdit(true)} onDelete={() => setEdit(false)} />
+            {!isEdit ? <ButtonOptionEdit onEdit={() => setEdit(true)} onDelete={onDelete} />
                 :
                 !isLoading && <ButtonUpdate
                     onCancel={() => setEdit(false)}

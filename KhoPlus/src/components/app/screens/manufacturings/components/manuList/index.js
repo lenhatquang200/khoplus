@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { View, TouchableOpacity, StyleSheet, FlatList, Alert } from "react-native";
 import {
     LoadingInContent,
     Loadmore,
@@ -8,9 +8,10 @@ import {
 } from "../../../../../../public/component";
 import { ApiCall } from "../../../../../../KhoPlus";
 import Item from "./componentList/item";
-import { colorApp, settingApp } from "../../../../../../public";
+import { ToastShow, colorApp, lang, settingApp } from "../../../../../../public";
 import { MaterialIcons } from "@expo/vector-icons";
 import { screenName } from "router/screenName";
+import actions from "state/actions";
 
 let current_page = 1;
 let page = 1;
@@ -37,7 +38,11 @@ export default function ManuList(props) {
         let newList = [...listData];
         const _index = newList.findIndex((item) => item?.id == newItemUpdate?.id);
         if (_index !== -1) {
-            newList[_index] = newItemUpdate;
+            if (newItemUpdate?.isDelete) {
+                newList.splice(_index, 1)
+            } else {
+                newList[_index] = newItemUpdate;
+            }
         }
         else {
             newList.unshift(newItemUpdate)
@@ -75,6 +80,33 @@ export default function ManuList(props) {
         setIsLoadmore(true);
     }
 
+    function confirmDelete(item) {
+        Alert.alert(lang.aler, lang.deleteManu, [
+            {
+                text: lang.cancel,
+                onPress: () => null,
+                style: "cancel",
+            },
+            { text: lang.accept, onPress: () => _onDeleteItem(item) },
+        ])
+    }
+
+    async function _onDeleteItem(item) {
+        const result = await ApiCall.deleteManufacturing(item?.id)
+        if (result?.success) {
+            let newListDelelte = [...listData];
+            const index_delete = newListDelelte.findIndex((e) => e.id == item?.id);
+            if (index_delete > -1) {
+                newListDelelte.splice(index_delete, 1);
+                setListData(newListDelelte);
+                ToastShow(result?.message)
+            }
+        }
+        else {
+            ToastShow(`${lang.delete} ${lang.failed}`)
+        }
+    }
+
     function renderAddItem() {
         return (
             <TouchableOpacity
@@ -95,7 +127,7 @@ export default function ManuList(props) {
                     extraData={listData}
                     data={listData}
                     keyExtractor={(item, index) => item?.id}
-                    renderItem={(obj) => <Item obj={obj} props={props} />}
+                    renderItem={(obj) => <Item obj={obj} props={props} onDelete={confirmDelete} />}
                     style={{ paddingTop: 12 }}
                     ListFooterComponent={() =>
                         !isLoadMore ? (

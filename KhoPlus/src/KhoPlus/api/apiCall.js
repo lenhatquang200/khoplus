@@ -116,3 +116,14 @@ export async function cretaeManufacturing(body) {
     );
     return result;
 }
+
+
+export async function deleteManufacturing(id) {
+    const method = "DELETE";
+    const result = await KhoPlusApi.CallApi(
+        `${uri}/manufacturings/${id}`,
+        method,
+    );
+    return result;
+}
+
