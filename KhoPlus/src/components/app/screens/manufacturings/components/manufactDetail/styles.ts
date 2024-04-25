@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     },
     txt_phone: {
         fontSize: settingApp.size_16,
+        width:settingApp.width_32 - 80
     },
     bt_edit: {
         width: 60,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     },
     title_group: {
         fontSize: settingApp.size_16,
-        color: colorApp.colorPlaceText
+        color: colorApp.colorPlaceText,
     },
     name_group: {
         fontSize: settingApp.size_18,

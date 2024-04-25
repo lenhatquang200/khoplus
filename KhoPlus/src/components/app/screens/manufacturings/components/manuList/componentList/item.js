@@ -7,28 +7,29 @@ import {
   Linking,
 } from "react-native";
 import { colorApp, lang, settingApp } from "../../../../../../../public";
-import { Iprops, DataItemProps } from "./common";
 import { screenName } from "router/screenName";
 
 const { width } = settingApp;
 const WIDTH_CONTENT = width - 100;
 
-
-const Item = memo((props:Iprops) => {
-  const { item, propsItem } = props || {};
-
-  const [dataItem, setDataItem] = useState<DataItemProps>(item);
+const Item = memo(({ obj, props }) => {
+  const [dataItem, setDataItem] = useState(null);
 
   useEffect(() => {
-    if (item) {
+    const { item, index } = obj || {};
+    if (item?.id) {
       setDataItem(item);
     }
-  }, [item]);
-
+  }, [obj]);
   return (
     <TouchableOpacity
-    onPress={() => propsItem?.navigation?.navigate(screenName.MANU_FACT_DETAIL, {item:item})}
-    style={styles.container}>
+      onPress={() =>
+        props?.navigation?.navigate(screenName.MANU_FACT_DETAIL, {
+          item: dataItem,
+        })
+      }
+      style={styles.container}
+    >
       <View style={styles.view_item}>
         <View style={styles.view_content}>
           <Text style={styles.txt_name}>

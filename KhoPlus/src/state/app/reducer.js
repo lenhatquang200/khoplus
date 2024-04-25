@@ -22,4 +22,7 @@ export default createReducer(initialState, {
   [types.UPDATE_ITEM_PRODUCT_SUCCESS]: (state, data) => {
     return state.set("updateItemProduct", data.body);
   },
+  [types.UPDATE_ITEM_MANU_FACT_SUCCESS]: (state, data) => {
+    return state.set("updateItemManuFact", data.body);
+  },
 });

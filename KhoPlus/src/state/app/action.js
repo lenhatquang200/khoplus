@@ -27,3 +27,12 @@ export function updateItemProduct(data) {
     },
   };
 }
+
+export function updateItemManuFact(data) {
+  return {
+    type: types.UPDATE_ITEM_MANU_FACT,
+    payload: {
+      body: data,
+    },
+  };
+}

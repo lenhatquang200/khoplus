@@ -4,6 +4,7 @@ import styles from '../styles';
 import { colorApp, lang } from 'public';
 
 export default function ButtonUpdate(props: any) {
+
     return (
         <View
             style={styles.view_bottom_button}
@@ -19,7 +20,7 @@ export default function ButtonUpdate(props: any) {
                 <Text style={[styles.txt_button, {
                     color: colorApp.white
 
-                }]}>{lang.update}</Text>
+                }]}>{props?.isData ? lang.update : lang.create}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity

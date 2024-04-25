@@ -9,16 +9,18 @@ import * as Component from "./component";
 import CONSTANTS_APP from "./CONSTANTS";
 import * as Icon from "./icon";
 import ToastShow from "./toastShow";
+import * as Utils from './Utils'
 
 export {
-  settingApp,
-  imageApp,
-  keyStore,
-  lang,
-  Component,
-  colorApp,
-  CONSTANTS_APP,
-  lottiesJson,
-  Icon,
-  ToastShow,
+    settingApp,
+    imageApp,
+    keyStore,
+    lang,
+    Component,
+    colorApp,
+    CONSTANTS_APP,
+    lottiesJson,
+    Icon,
+    ToastShow,
+    Utils
 };

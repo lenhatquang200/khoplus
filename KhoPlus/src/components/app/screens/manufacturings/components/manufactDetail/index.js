@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
     View,
-    Text,
     ScrollView,
-    Linking,
-    TouchableOpacity,
-    TextInput,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    Alert
 } from "react-native";
+import { useDispatch } from "react-redux";
 import { HeaderName, Loading, } from "public/component";
-import { Icon, ToastShow, colorApp, lang, settingApp } from "public";
-
+import { ToastShow, Utils, lang, } from "public";
 import { Iprops } from "./common";
 import styles from "./styles";
 import ContentForm from "./component/contentForm";
 import ButtonOptionEdit from "./component/buttonOptionEdit";
 import ButtonUpdate from "./component/buttonUpdate";
 import { ApiCall } from "KhoPlus";
+import actions from "state/actions";
 
-export default function ManufactDetail(props: Iprops) {
-    const contentRef = useRef<any>()
+
+export default function ManufactDetail(props) {
+    const dispatch = useDispatch()
+    const contentRef = useRef()
     const { navigation, route } = props;
     const { params } = route || {};
 
@@ -30,9 +30,11 @@ export default function ManufactDetail(props: Iprops) {
     const [listGroupManu, setListGroupManu] = useState([])
 
     useEffect(() => {
-        console.log("dataItem", dataItem);
-        if (params?.item) {
+        if (params?.item?.id) {
             setDataItem(params?.item);
+        }
+        else {
+            setEdit(true)
         }
         loadListGroup()
     }, []);
@@ -46,23 +48,42 @@ export default function ManufactDetail(props: Iprops) {
 
     function getNewDataUpdate() {
         setIsLoading(true)
-        contentRef?.current?.refNe()
+        contentRef?.current?.updateNewData()
     }
 
-    async function setNewData(newVal: any) {
-        const { code, name, address, note, account_number, bank_name, manufacturing_group_id, phone, id } = newVal
-        let body = {
-            code: code,
-            name: name,
-            phone: phone,
-            address: address,
-            note: note,
-            account_number: account_number,
-            bank_name: bank_name,
-            manufacturing_group_id: manufacturing_group_id,
+    function validateData(newVal) {
+        if (newVal?.name && newVal?.phone && newVal?.address && newVal?.manufacturing_group_id) {
+            if (newVal?.phone) {
+                const isPhoneNumber = Utils.isPhoneNumber(newVal?.phone)
+                if (!isPhoneNumber) {
+                    alertWrongFrom("Sai thông tin", "Số điện thoại không đúng")
+                    setIsLoading(false)
+                }
+                else {
+                    setNewData(newVal)
+                }
+            }
         }
-        const result = await ApiCall.updateManufacturing(id, body)
+        else {
+            alertWrongFrom()
+            setIsLoading(false)
+        }
+    }
+
+    function alertWrongFrom(title = "Thiếu thông tin", message = "Vui lòng điền đầy đủ các thông tin bắt buộc") {
+        Alert.alert(title, message, [
+            {
+                text: "Đóng",
+                onPress: () => null,
+                style: "cancel",
+            },
+        ])
+    }
+
+    async function setNewData(newVal) {
+        const result = await checkApi(newVal)
         if (result && result.data) {
+            dispatch(actions.updateItemManuFact(result?.data))
             setDataItem(result.data)
             ToastShow(result?.message)
         }
@@ -72,6 +93,30 @@ export default function ManufactDetail(props: Iprops) {
         setEdit(false)
         setIsLoading(false)
     }
+
+    async function checkApi(newVal) {
+        let result = null
+
+        const { code, name, address, note, account_number, bank_name, manufacturing_group_id, phone, id } = newVal
+        let body = {
+            code: code + "",
+            name: name,
+            phone: phone,
+            address: address,
+            note: note,
+            account_number: account_number,
+            bank_name: bank_name,
+            manufacturing_group_id: manufacturing_group_id,
+        }
+        if (newVal?.id) {
+            result = await ApiCall.updateManufacturing(id, body)
+        }
+        else {
+            result = await ApiCall.cretaeManufacturing(body)
+        }
+        return result
+    }
+
 
     return (
         <View style={styles.container}>
@@ -85,24 +130,24 @@ export default function ManufactDetail(props: Iprops) {
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}
             >
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                <KeyboardAvoidingView behavior={Platform.OS === "android" ? "height" : "padding"}
                 >
                     <ContentForm
                         ref={contentRef}
                         dataItem={dataItem}
                         isEdit={isEdit}
                         listGroupManu={listGroupManu}
-                        setNewData={setNewData}
+                        setNewData={validateData}
                     />
                 </KeyboardAvoidingView>
             </ScrollView>
 
             {!isEdit ? <ButtonOptionEdit onEdit={() => setEdit(true)} onDelete={() => setEdit(false)} />
                 :
-                <ButtonUpdate
+                !isLoading && <ButtonUpdate
                     onCancel={() => setEdit(false)}
                     updateManufact={getNewDataUpdate}
+                    isData={dataItem?.id}
                 />
             }
         </View>
