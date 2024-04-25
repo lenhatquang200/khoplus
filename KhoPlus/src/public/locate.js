@@ -12,6 +12,10 @@ const lang = {
     callPhone: "Gọi",
     phoneNumner: "Số điện thoại",
     name: "Tên",
+    wrongNumberPhone: "Số điện thoại không đúng định dạng",
+    missingInfo: "Thiếu thông tin",
+    wrongInfo: "Sai thông tin",
+    messInfoRequire: "Vui lòng điền đầy đủ các thông tin bắt buộc",
 
     product: "Hàng hóa",
     manufacturings: "Nhà cung cấp",
@@ -52,7 +56,8 @@ const lang = {
 
     aler: "Thông báo",
     deleteManu: "Bạn chắc chắn muốn xóa nhà cung cấp này",
-    accept: "Đồng ý"
+    accept: "Đồng ý",
+    close: "Đóng"
 };
 
 export default lang;

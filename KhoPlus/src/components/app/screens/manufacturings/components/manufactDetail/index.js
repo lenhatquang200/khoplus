@@ -9,7 +9,6 @@ import {
 import { useDispatch } from "react-redux";
 import { HeaderName, Loading, } from "public/component";
 import { ToastShow, Utils, lang, } from "public";
-import { Iprops } from "./common";
 import styles from "./styles";
 import ContentForm from "./component/contentForm";
 import ButtonOptionEdit from "./component/buttonOptionEdit";
@@ -56,7 +55,7 @@ export default function ManufactDetail(props) {
             if (newVal?.phone) {
                 const isPhoneNumber = Utils.isPhoneNumber(newVal?.phone)
                 if (!isPhoneNumber) {
-                    alertWrongFrom("Sai thông tin", "Số điện thoại không đúng")
+                    alertWrongFrom(lang.wrongInfo, lang.wrongNumberPhone)
                     setIsLoading(false)
                 }
                 else {
@@ -70,10 +69,10 @@ export default function ManufactDetail(props) {
         }
     }
 
-    function alertWrongFrom(title = "Thiếu thông tin", message = "Vui lòng điền đầy đủ các thông tin bắt buộc") {
+    function alertWrongFrom(title = lang.missingInfo, message = lang.messInfoRequire) {
         Alert.alert(title, message, [
             {
-                text: "Đóng",
+                text: lang.close,
                 onPress: () => null,
                 style: "cancel",
             },
