@@ -3,13 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet, } from 'react-native';
 import { colorApp, lang, settingApp } from 'public'
 
 const { width } = settingApp
-const Item = memo(({
-    obj, onDelete, props
-}) => {
+const Item = memo((props) => {
+    const { obj, onDelete, onUpdate } = props
     const { item } = obj
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            onPress={onUpdate}
+            style={styles.container}>
             <View style={styles.view_txt}>
                 <Text style={styles.txt_name}>{item?.name}</Text>
                 <Text style={styles.txt_time}>{item?.formatted_created_at}</Text>

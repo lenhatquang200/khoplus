@@ -15,6 +15,8 @@ export default function ManuGroup(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadMore, setIsLoadmore] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [isVisible, setIsVisible] = useState(false)
+    const [dataUpdate, setDataUpdate] = useState(null)
 
     useEffect(() => {
         loadData()
@@ -45,6 +47,11 @@ export default function ManuGroup(props) {
         setRefreshing(false);
     }
 
+    function onLoadMore() {
+
+    }
+
+
     function confirmDelete(item) {
         Alert.alert(lang.aler, lang.deleteManu, [
             {
@@ -73,12 +80,14 @@ export default function ManuGroup(props) {
         }
     }
 
-    function onLoadMore() {
+    function updateManuFact() {
 
     }
 
+
     return (
-        <View style={styles.container}>
+        <View
+            style={styles.container}>
             {isLoading && <LoadingInContent />}
             {!isLoading && listData?.length == 0 ? (
                 <Nonedata />
@@ -87,7 +96,13 @@ export default function ManuGroup(props) {
                     extraData={listData}
                     data={listData}
                     keyExtractor={(item, index) => item?.id}
-                    renderItem={(obj) => <Item obj={obj} props={props} onDelete={confirmDelete} />}
+                    renderItem={(obj) =>
+                        <Item
+                            obj={obj}
+                            props={props}
+                            onDelete={confirmDelete}
+                            onUpdate={() => setIsVisible(true)}
+                        />}
                     ListFooterComponent={() =>
                         !isLoadMore ? (
                             <View style={styles.footer} />
@@ -104,7 +119,11 @@ export default function ManuGroup(props) {
             )}
             {/* {!isLoading && renderAddItem()} */}
 
-            <ModalUpdate />
+            <ModalUpdate
+                isVisible={isVisible}
+                onClose={() => setIsVisible(false)}
+                dataUpdate={dataUpdate}
+            />
         </View>)
 }
 const styles = StyleSheet.create({

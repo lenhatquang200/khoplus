@@ -17,6 +17,14 @@ export default function ModalUpdate(props) {
     return (
         <Modal visible={props?.isVisible} transparent={false} animationType="slide">
             <HeaderName goBack={() => props?.onClose()} title={titleHaeder} />
+
+            <View
+                style={{
+
+                }}
+            >
+
+            </View>
         </Modal>
     );
 }
@@ -26,5 +34,8 @@ const styles = StyleSheet.create({
         height: settingApp.height,
         backgroundColor: colorApp.white,
     },
+    view_content_update: {
+        width: settingApp.width
+    }
 
 });
