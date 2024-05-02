@@ -8,6 +8,7 @@ import AsyncImage from "./ImageCustom";
 import Loadmore from "./Loadmore";
 import HeaderName from "./HeaderName";
 import FloatButtonAdd from "./FloatButtonAdd";
+import ButtonUpdate from "./ButtonUpdate";
 
 export {
     Loading,
@@ -19,5 +20,6 @@ export {
     AsyncImage,
     Loadmore,
     HeaderName,
-    FloatButtonAdd
+    FloatButtonAdd,
+    ButtonUpdate
 };

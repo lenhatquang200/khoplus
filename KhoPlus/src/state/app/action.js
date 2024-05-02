@@ -46,3 +46,30 @@ export function updateGroupManuFact(data) {
     };
 }
 
+export function updateGroupProduct(data) {
+    return {
+        type: types.UPDATE_GROUP_PRODUCT,
+        payload: {
+            body: data,
+        },
+    };
+}
+
+export function updateTypeProduct(data) {
+    return {
+        type: types.UPDATE_TYPE_PRODUCT,
+        payload: {
+            body: data,
+        },
+    };
+}
+
+export function updateUnitProduct(data) {
+    return {
+        type: types.UPDATE_UNIT_PRODUCT,
+        payload: {
+            body: data,
+        },
+    };
+}
+

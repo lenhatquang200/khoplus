@@ -143,3 +143,17 @@ export async function createManufact_Group(body) {
     return result;
 }
 
+
+export async function updateProduct_Group(id, body) {
+    const method = "PUT";
+    const result = await KhoPlusApi.CallApi(`${uri}/product-groups/${id}`, method, body);
+    return result;
+}
+
+export async function createProduct_Group(body) {
+    const method = "POST";
+    const result = await KhoPlusApi.CallApi(`${uri}/product-groups`, method, body);
+    return result;
+}
+
+
