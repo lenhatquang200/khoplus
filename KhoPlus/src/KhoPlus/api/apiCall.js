@@ -58,8 +58,9 @@ export async function getTypeProduct(page, limit, name, search, code) {
     name || "";
     search || false;
     code || "";
+    // ?skip=${page}&limit=${limit}
     const result = await KhoPlusApi.CallApi(
-        `${uri}/product-types?skip=${page}&limit=${limit}`
+        `${uri}/product-types`
     );
     return result;
 }

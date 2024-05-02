@@ -26,6 +26,7 @@ export default function ModalUpdate(props) {
         else {
             setValueText("")
         }
+        setIsLoading(false)
     }, [props?.dataUpdate])
 
     function _onChangeText(val) {
@@ -40,32 +41,11 @@ export default function ModalUpdate(props) {
     function _onSave() {
         setIsLoading(true)
         if (CONSTANT.GROUP_PRODUCT) {
-            _onUpdateGroup()
+            props?._onUpdateGroup({ ...props?.dataUpdate, name: valueText })
         }
     }
 
     async function _onUpdateGroup() {
-        let result = null
-        let body = {
-            name: valueText
-        }
-        if (props?.dataUpdate?.id) {
-            const { dataUpdate } = props
-            result = await ApiCall.updateProduct_Group(dataUpdate?.id, body)
-        }
-        else {
-            result = await ApiCall.createProduct_Group(body)
-        }
-
-        if (result?.success && result?.data?.id) {
-            dispatch(actions?.updateGroupProduct(result?.data))
-            ToastShow(result?.message)
-            props?.onClose()
-        }
-        else {
-            ToastShow(`${lang.save} ${lang.failed}`)
-        }
-        setIsLoading(false)
     }
 
     return (

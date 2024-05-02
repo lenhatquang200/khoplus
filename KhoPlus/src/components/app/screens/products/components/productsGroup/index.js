@@ -12,7 +12,6 @@ import actions from "state/actions";
 let current_page = 1;
 function ProductsGroup(props) {
     const dispatch = useDispatch()
-    const newItemUpdate = useSelector(state => state?.app?.updateGroupProduct)
 
     const limit = 10;
     const [isLoading, setIsLoading] = useState(true);
@@ -25,12 +24,6 @@ function ProductsGroup(props) {
     useEffect(() => {
         loadData();
     }, [isLoadMore, refreshing]);
-
-    useEffect(() => {
-        if (newItemUpdate?.id) {
-            updateListItem(newItemUpdate)
-        }
-    }, [newItemUpdate])
 
     function updateListItem(newItemUpdate) {
         let newList = [...listData];
@@ -115,6 +108,29 @@ function ProductsGroup(props) {
         }
     }
 
+    async function _onUpdateGroup(item) {
+        let result = null
+        let body = {
+            name: item?.name
+        }
+        if (item?.id) {
+            result = await ApiCall.updateProduct_Group(item?.id, body)
+        }
+        else {
+            result = await ApiCall.createProduct_Group(body)
+        }
+
+        if (result?.success && result?.data?.id) {
+            updateListItem(result?.data)
+            ToastShow(result?.message)
+            _onClose()
+        }
+        else {
+            ToastShow(`${lang.save} ${lang.failed}`)
+        }
+        setIsLoading(false)
+    }
+
     return (
         <View style={styles.container}>
             {isLoading && <LoadingInContent />}
@@ -126,7 +142,7 @@ function ProductsGroup(props) {
                     onRefresh={() => onRefresh()}
                     refreshing={refreshing}
                     extraData={listData}
-                    keyExtractor={(item, index) => item?.id + index + ""}
+                    keyExtractor={(item, index) => item?.id}
                     data={listData}
                     renderItem={(obj) => <Item
                         obj={obj}
@@ -151,6 +167,7 @@ function ProductsGroup(props) {
                 isVisible={isVisible}
                 dataUpdate={dataUpdate}
                 type={CONSTANT.GROUP_PRODUCT}
+                _onUpdateGroup={_onUpdateGroup}
             />
         </View>
     );
