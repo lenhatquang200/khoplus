@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { View, TouchableOpacity, StyleSheet, FlatList, Alert } from "react-native";
 import {
+    FloatButtonAdd,
     LoadingInContent,
     Loadmore,
     Nonedata,
@@ -107,16 +108,6 @@ export default function ManuList(props) {
         }
     }
 
-    function renderAddItem() {
-        return (
-            <TouchableOpacity
-                onPress={() => props?.navigation?.navigate(screenName.MANU_FACT_DETAIL)}
-                style={styles.view_Add}
-            >
-                <MaterialIcons name="add" color={colorApp.white} size={40} />
-            </TouchableOpacity>
-        );
-    }
     return (
         <View style={styles.container}>
             {isLoading && <LoadingInContent />}
@@ -143,7 +134,7 @@ export default function ManuList(props) {
                     onEndReached={() => onLoadMore()}
                 />
             )}
-            {!isLoading && renderAddItem()}
+            {!isLoading && <FloatButtonAdd onPress={() => props?.navigation?.navigate(screenName.MANU_FACT_DETAIL)} />}
         </View>
     );
 }
