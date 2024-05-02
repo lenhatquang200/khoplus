@@ -27,14 +27,5 @@ export default createReducer(initialState, {
     },
     [types.UPDATE_GROUP_MANU_FACT_SUCCESS]: (state, data) => {
         return state.set("updateGroupManuFact", data.body);
-    },
-    [types.UPDATE_GROUP_PRODUCT_SUCCESS]: (state, data) => {
-        return state.set("updateGroupProduct", data.body);
-    },
-    [types.UPDATE_TYPE_PRODUCT_SUCCESS]: (state, data) => {
-        return state.set("updateTypeProduct", data.body);
-    },
-    [types.UPDATE_UNIT_PRODUCT_SUCCESS]: (state, data) => {
-        return state.set("updateUnitProduct", data.body);
     }
 });

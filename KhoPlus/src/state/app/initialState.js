@@ -6,8 +6,5 @@ const InitialState = Record({
     updateItemProduct: null,
     updateItemManuFact: null,
     updateGroupManuFact: null,
-    updateGroupProduct: null,
-    updateTypeProduct: null,
-    updateUnitProduct: null
 });
 export default InitialState;
