@@ -56,6 +56,7 @@ const lang = {
 
     aler: "Thông báo",
     deleteManu: "Bạn chắc chắn muốn xóa nhà cung cấp này",
+    deleteGroupProduct: "Bạn chắc chắn muốn xóa nhóm hàng hóa này",
     accept: "Đồng ý",
     close: "Đóng"
 };

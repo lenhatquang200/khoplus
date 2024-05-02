@@ -31,7 +31,7 @@ const Item = memo((props) => {
                 {/* <Icon.icon_Edit /> */}
 
                 <TouchableOpacity
-                    //onPress={() => onDelete(dataItem)}
+                    onPress={() => props?._onDelete(dataItem)}
                     style={styles.bt_delete}
                 >
                     <Text style={styles.txt_delete}>{lang.delete}</Text>

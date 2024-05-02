@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, StyleSheet, FlatList } from "react-native";
-import { lang, settingApp } from "public";
-import { LoadingInContent, Loadmore, Nonedata } from "public/component";
+import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { ToastShow, lang, settingApp } from "public";
+import { FloatButtonAdd, LoadingInContent, Loadmore, Nonedata } from "public/component";
 import { ApiCall } from "KhoPlus";
 import Item from "./component/item";
 import ModalUpdate from "../modalUpdate/modalUpdate";
 import CONSTANT from "../../CONST";
+import actions from "state/actions";
 
 let current_page = 1;
 function ProductsGroup(props) {
+    const dispatch = useDispatch()
+    const newItemUpdate = useSelector(state => state?.app?.updateGroupProduct)
+
     const limit = 10;
     const [isLoading, setIsLoading] = useState(true);
     const [listData, setListData] = useState([]);
@@ -21,6 +25,30 @@ function ProductsGroup(props) {
     useEffect(() => {
         loadData();
     }, [isLoadMore, refreshing]);
+
+    useEffect(() => {
+        if (newItemUpdate?.id) {
+            updateListItem(newItemUpdate)
+        }
+    }, [newItemUpdate])
+
+    function updateListItem(newItemUpdate) {
+        let newList = [...listData];
+        const _index = newList.findIndex((item) => item?.id == newItemUpdate?.id);
+        if (_index !== -1) {
+            if (newItemUpdate?.isDelete) {
+                newList.splice(_index, 1)
+            } else {
+                newList[_index] = newItemUpdate;
+            }
+        }
+        else {
+            newList.unshift(newItemUpdate)
+        }
+        dispatch(actions.updateGroupProduct(null))
+        setListData(newList);
+
+    }
 
     async function loadData() {
         let newList = listData;
@@ -64,6 +92,29 @@ function ProductsGroup(props) {
         setVisible(false)
     }
 
+    function confirmDelete(item) {
+        Alert.alert(lang.aler, lang.deleteGroupProduct, [
+            {
+                text: lang.cancel,
+                onPress: () => null,
+                style: "cancel",
+            },
+            { text: lang.accept, onPress: () => _onDelete(item) },
+        ])
+    }
+
+
+    async function _onDelete(item) {
+        const result = await ApiCall.deleteProduct_Group(item?.id)
+        if (result?.success) {
+            updateListItem({ ...item, isDelete: true })
+            ToastShow(result?.message)
+        }
+        else {
+            ToastShow(`${lang.delete} ${lang.failed}`)
+        }
+    }
+
     return (
         <View style={styles.container}>
             {isLoading && <LoadingInContent />}
@@ -77,7 +128,11 @@ function ProductsGroup(props) {
                     extraData={listData}
                     keyExtractor={(item, index) => item?.id + index + ""}
                     data={listData}
-                    renderItem={(obj) => <Item obj={obj} _onUpdate={_onUpdate} />}
+                    renderItem={(obj) => <Item
+                        obj={obj}
+                        _onUpdate={_onUpdate}
+                        _onDelete={confirmDelete}
+                    />}
                     style={{ paddingTop: 12 }}
                     ListFooterComponent={() =>
                         !isLoadMore ? (
@@ -90,7 +145,7 @@ function ProductsGroup(props) {
                     onEndReachedThreshold={0.1}
                 />
             )}
-
+            {!isLoading && <FloatButtonAdd onPress={() => setVisible(true)} />}
             <ModalUpdate
                 onClose={() => _onClose()}
                 isVisible={isVisible}
@@ -109,7 +164,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         width: settingApp.width_32,
-        height: 60,
+        height: 120,
         backgroundColor: "transparent",
     },
 });

@@ -45,8 +45,9 @@ export async function getGroupProduct(page, limit, name, search, code) {
     name || "";
     search || false;
     code || "";
+    // ?skip=${page}&limit=${limit}
     const result = await KhoPlusApi.CallApi(
-        `${uri}/product-groups?skip=${page}&limit=${limit}`
+        `${uri}/product-groups`
     );
     return result;
 }
@@ -153,6 +154,12 @@ export async function updateProduct_Group(id, body) {
 export async function createProduct_Group(body) {
     const method = "POST";
     const result = await KhoPlusApi.CallApi(`${uri}/product-groups`, method, body);
+    return result;
+}
+
+export async function deleteProduct_Group(id) {
+    const method = "DELETE";
+    const result = await KhoPlusApi.CallApi(`${uri}/product-groups/${id}`, method);
     return result;
 }
 

@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { View, Modal, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
 import { ButtonUpdate, HeaderName, Loading } from 'public/component';
 import { lang, settingApp, colorApp, Icon, ToastShow } from 'public';
 import { debounce } from 'lodash';
 import CONSTANT from '../../CONST';
 import { ApiCall } from 'KhoPlus';
+import actions from 'state/actions';
 
 
 export default function ModalUpdate(props) {
+    const dispatch = useDispatch()
+
     const titleHeader = CONSTANT.GROUP_PRODUCT ? lang.group : CONSTANT.TYPE_PRODUCT ? lang.type : lang.unit;
     const titleInput = lang.name + " " + titleHeader
     const textInputRef = useRef()
@@ -53,9 +57,10 @@ export default function ModalUpdate(props) {
             result = await ApiCall.createProduct_Group(body)
         }
 
-        console.log("reasulr", result);
         if (result?.success && result?.data?.id) {
-
+            dispatch(actions?.updateGroupProduct(result?.data))
+            ToastShow(result?.message)
+            props?.onClose()
         }
         else {
             ToastShow(`${lang.save} ${lang.failed}`)
