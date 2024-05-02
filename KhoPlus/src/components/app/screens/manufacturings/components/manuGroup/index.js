@@ -6,9 +6,11 @@ import { FloatButtonAdd, LoadingInContent, Loadmore, Nonedata } from "public/com
 import Item from "./component/item";
 import { ToastShow, colorApp, lang, settingApp } from "public";
 import ModalUpdate from "./component/modalUpdate";
+import actions from "state/actions";
 
 let current_page = 1
 export default function ManuGroup(props) {
+    const dispatch = useDispatch()
     const newItemUpdate = useSelector((state) => state?.app?.updateGroupManuFact);
     const limit = 10;
     const [listData, setListData] = useState([]);
@@ -23,7 +25,9 @@ export default function ManuGroup(props) {
     }, [])
 
     useEffect(() => {
-        updateListItem(newItemUpdate);
+        if (newItemUpdate?.id) {
+            updateListItem(newItemUpdate);
+        }
     }, [newItemUpdate]);
 
     function updateListItem(newItemUpdate) {
@@ -37,6 +41,7 @@ export default function ManuGroup(props) {
         }
         setDataUpdate(null)
         setListData(newList);
+        dispatch(actions.updateGroupManuFact(null))
     }
 
     async function loadData() {

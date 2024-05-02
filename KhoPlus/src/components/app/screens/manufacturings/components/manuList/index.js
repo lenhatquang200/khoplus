@@ -32,7 +32,9 @@ export default function ManuList(props) {
     }, [isLoadMore, isLoading]);
 
     useEffect(() => {
-        updateListItem(newItemUpdate);
+        if (newItemUpdate?.id) {
+            updateListItem(newItemUpdate);
+        }
     }, [newItemUpdate]);
 
     function updateListItem(newItemUpdate) {
@@ -48,6 +50,7 @@ export default function ManuList(props) {
         else {
             newList.unshift(newItemUpdate)
         }
+        dispatch(actions.updateItemManuFact(null))
         setListData(newList);
     }
 
