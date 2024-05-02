@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Alert } from "react-native";
 import { ApiCall } from "KhoPlus";
-import { LoadingInContent, Loadmore, Nonedata } from "public/component";
+import { FloatButtonAdd, LoadingInContent, Loadmore, Nonedata } from "public/component";
 import Item from "./component/item";
 import { ToastShow, colorApp, lang, settingApp } from "public";
 import ModalUpdate from "./component/modalUpdate";
 
 let current_page = 1
 export default function ManuGroup(props) {
-    const newItemUpdate = useSelector((state) => state?.app?.updateItemManuFact);
+    const newItemUpdate = useSelector((state) => state?.app?.updateGroupManuFact);
     const limit = 10;
     const [listData, setListData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +21,23 @@ export default function ManuGroup(props) {
     useEffect(() => {
         loadData()
     }, [])
+
+    useEffect(() => {
+        updateListItem(newItemUpdate);
+    }, [newItemUpdate]);
+
+    function updateListItem(newItemUpdate) {
+        let newList = [...listData];
+        const _index = newList.findIndex((item) => item?.id == newItemUpdate?.id);
+        if (_index !== -1) {
+            newList[_index] = newItemUpdate;
+        }
+        else {
+            newList.unshift(newItemUpdate)
+        }
+        setDataUpdate(null)
+        setListData(newList);
+    }
 
     async function loadData() {
         let newList = listData;
@@ -80,8 +97,14 @@ export default function ManuGroup(props) {
         }
     }
 
-    function updateManuFact() {
+    function _onUpdateManuFact(item) {
+        setDataUpdate(item)
+        setIsVisible(true)
+    }
 
+    function _onClosemodal() {
+        setDataUpdate(null)
+        setIsVisible(false)
     }
 
 
@@ -101,7 +124,7 @@ export default function ManuGroup(props) {
                             obj={obj}
                             props={props}
                             onDelete={confirmDelete}
-                            onUpdate={() => setIsVisible(true)}
+                            onUpdate={(item) => _onUpdateManuFact(item)}
                         />}
                     ListFooterComponent={() =>
                         !isLoadMore ? (
@@ -117,11 +140,11 @@ export default function ManuGroup(props) {
                     onEndReached={() => onLoadMore()}
                 />
             )}
-            {/* {!isLoading && renderAddItem()} */}
+            {!isLoading && <FloatButtonAdd onPress={() => setIsVisible(true)} />}
 
             <ModalUpdate
                 isVisible={isVisible}
-                onClose={() => setIsVisible(false)}
+                onClose={() => _onClosemodal()}
                 dataUpdate={dataUpdate}
             />
         </View>)

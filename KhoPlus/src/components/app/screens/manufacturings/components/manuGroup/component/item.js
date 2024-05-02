@@ -9,7 +9,7 @@ const Item = memo((props) => {
 
     return (
         <TouchableOpacity
-            onPress={onUpdate}
+            onPress={() => onUpdate(item)}
             style={styles.container}>
             <View style={styles.view_txt}>
                 <Text style={styles.txt_name}>{item?.name}</Text>

@@ -7,15 +7,17 @@ import Nonedata from "./NoneData";
 import AsyncImage from "./ImageCustom";
 import Loadmore from "./Loadmore";
 import HeaderName from "./HeaderName";
+import FloatButtonAdd from "./FloatButtonAdd";
 
 export {
-  Loading,
-  LinearBackGround,
-  AvatarCustom,
-  HeaderSearch,
-  LoadingInContent,
-  Nonedata,
-  AsyncImage,
-  Loadmore,
-  HeaderName,
+    Loading,
+    LinearBackGround,
+    AvatarCustom,
+    HeaderSearch,
+    LoadingInContent,
+    Nonedata,
+    AsyncImage,
+    Loadmore,
+    HeaderName,
+    FloatButtonAdd
 };
