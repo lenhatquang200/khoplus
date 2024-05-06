@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "Kho Plus",
+    "slug": "KhoPlus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "khoplus",
+    "extra": {
+      "apiHost": "api.khoplus.com",
+      "clientid": "khoplus.mobile",
+      "eas": {
+        "projectId": "1f464ed1-76be-4543-8c1b-d31984f882a5"
+      }
+    },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.khoplus.khoplusapp"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.khoplus.khoplusapp",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "CAMERA"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-localization",
+      ["expo-build-properties", {
+        "android": {
+            "usesCleartextTraffic": true
+        }
+        
+      }]
+    ],
+    "updates": {
+      "url": "https://u.expo.dev/1f464ed1-76be-4543-8c1b-d31984f882a5"
+    }
+  }
+}
