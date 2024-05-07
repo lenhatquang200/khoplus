@@ -25,6 +25,10 @@ const lang = {
     exportStore: "Xuất kho",
     exportForCustomer: "Khách mua hàng",
 
+    collect_spend: "Thu Chi",
+    collect: "Thu",
+    spend: "Chi",
+
     type: "Loại",
     group: "Nhóm",
     menu: "Danh mục",

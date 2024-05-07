@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
     FontAwesome,
     MaterialCommunityIcons,
@@ -9,12 +10,16 @@ import { screenName } from "../../../../router/screenName";
 import { CATEGORY_CONSTANT } from "./constans";
 const colorIcon = colorApp.green_primary;
 const sizeIcon = settingApp.scale(24);
-export async function configMenu() {
+
+
+export async function configMenu(colleague) {
+    let listConfig = []
+    const user_role = colleague?.role
+
     const list_Menu = [
         {
             keyObj: CATEGORY_CONSTANT.OBJ_PRODUCT,
             title: lang.product,
-            groupId: 28,
             data: [
                 {
                     icon: (<FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />),
@@ -48,7 +53,6 @@ export async function configMenu() {
         {
             keyObj: CATEGORY_CONSTANT.OBJ_MANU,
             title: lang.manufacturings,
-            groupId: 28,
             data: [
                 {
                     icon: (<FontAwesome name="th-list" size={sizeIcon} color={colorIcon} />),
@@ -68,7 +72,6 @@ export async function configMenu() {
         {
             keyObj: CATEGORY_CONSTANT.OBJ_CUSTOMER,
             title: lang.customer,
-            groupId: 28,
             data: [
                 {
                     icon: (
@@ -98,7 +101,6 @@ export async function configMenu() {
         {
             keyObj: CATEGORY_CONSTANT.OBJ_IMPORT_STORE,
             title: lang.importStore,
-            groupId: 28,
             data: [
                 {
                     icon: (
@@ -115,11 +117,9 @@ export async function configMenu() {
             ],
         },
         // tessssss
-
         {
             keyObj: CATEGORY_CONSTANT.OBJ_EXPORT_STORE,
             title: lang.exportStore,
-            groupId: 28,
             data: [
                 {
                     icon: (
@@ -135,7 +135,57 @@ export async function configMenu() {
                 },
             ],
         },
-    ];
 
-    return list_Menu;
+        {
+            keyObj: CATEGORY_CONSTANT.OBJ_COLLECT_SPEND,
+            title: lang.collect_spend,
+            data: [
+                {
+                    icon: (
+                        <MaterialCommunityIcons
+                            name="account-cash-outline"
+                            size={sizeIcon}
+                            color={colorIcon}
+                        />
+                    ),
+                    keyApp: CATEGORY_CONSTANT.KEY_COLLECT,
+                    title: lang.collect,
+                    router: "",
+                },
+                {
+                    icon: (
+                        <MaterialCommunityIcons
+                            name="account-cash-outline"
+                            size={sizeIcon}
+                            color={colorIcon}
+                        />
+                    ),
+                    keyApp: CATEGORY_CONSTANT.KEY_SPEND,
+                    title: lang.spend,
+                    router: "",
+                },
+            ],
+        },
+    ];
+    if (user_role?.links?.length != 0) {
+        list_Menu.forEach((item) => {
+            if (item?.keyObj !== CATEGORY_CONSTANT.DASHBOARD) {
+                const menuByKey = user_role?.links?.filter(n => n.key === item?.keyObj)
+                if (menuByKey?.length != 0) {
+                    let dataByKey = menuByKey[0]
+                    let newObj = {
+                        ...item,
+                        data: menuSub
+                    }
+                    let menuSub = item?.data?.filter(n => dataByKey?.sub?.filter(m => m.key == n?.keyApp))
+                    if (menuSub?.length != 0) {
+                        newObj.data = menuSub
+                    }
+                    listConfig.push(newObj)
+                }
+            }
+        })
+    }
+    console.log('listConfig', listConfig);
+    return listConfig;
 }
