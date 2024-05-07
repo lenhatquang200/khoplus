@@ -1,7 +1,8 @@
 import Configs from "../config";
 import KhoPlusApi from "./khoplusApi";
 
-const uri = `https://${Configs.apiHost}/api`;
+// https://api.khoplus.com/v1
+const uri = `https://${Configs.apiHost}/v1/`;
 
 export async function getListProduct(page, limit, name, search, code) {
     page || 1;

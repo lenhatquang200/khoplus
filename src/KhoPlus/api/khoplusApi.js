@@ -31,13 +31,12 @@ async function GetAuthInfo() {
 }
 
 async function LoginAuth(param) {
-    let response = await fetch(`https://${Config.apiHost}/api/auth/login`, {
+    let response = await fetch(`https://${Config.apiHost}/v1/auth/login`, {
         method: "POST",
         body: JSON.stringify(param),
-        credentials: "omit",
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json/x-www-form-urlencoded",
+            "Content-Type": "application/json",
         },
     });
     if (response?.status === 403) {
@@ -47,22 +46,39 @@ async function LoginAuth(param) {
             status: 403,
         };
         return data;
-    } else {
+    }
+    else if (response?.status === "error") {
+        let data = {
+            error: true,
+            message: "Đăng nhập thất bại",
+            status: 400,
+        };
+        return data
+    }
+    else if (response?.status === 200) {
         const dataJson = await response.json();
-        if (dataJson?.data && dataJson?.success) {
-            const { data } = dataJson || {};
+        if (dataJson?.data) {
+            const { user, token } = dataJson?.data || {};
             const infoLogin = {
-                auth: { access_token: data.access_token, token_type: data.token_type },
-                userInfo: data.user,
+                auth: { access_token: token, token_type: "Bearer" },
+                userInfo: user,
                 login: {
-                    phone: param?.phone,
+                    phone: user?.phone,
                 },
             };
             await AsyncStorage.setItem(AuthStorageKey, JSON.stringify(infoLogin));
-            return data;
+            return user;
         } else {
             return dataJson;
         }
+    }
+    else {
+        let data = {
+            error: true,
+            message: "Đăng nhập thất bại",
+            status: 400,
+        };
+        return data
     }
     //return response.json()
 }

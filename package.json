@@ -10,7 +10,8 @@
       "all": "rm -rf node_modules && npm cache clean --force && npm install && watchman watch-del-all && del %localappdata%Temphaste-map-* && del %localappdata%Tempmetro-cache && npx expo start --clear",
       "ts:check": "tsc",
       "update": "eas update",
-      "build-local" : "eas build --profile preview —local"
+      "build-local" : "eas build --profile preview --local",
+      "build" : "eas build --profile preview"
     },
     "dependencies": {
       "@expo/metro-runtime": "~3.1.3",

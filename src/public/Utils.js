@@ -11,3 +11,7 @@ export function isPhoneNumber(number) {
         return /([\+84|84|0|1]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/.test(number);
     }
 }
+
+export function formatPhoneNumber(phoneNumber) {
+    return phoneNumber.replace(/^(\d{4})(\d)/, '$1-$2').replace(/^(\d{4}-\d{3})(\d)/, '$1-$2');
+}
