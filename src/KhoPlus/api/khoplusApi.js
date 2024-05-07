@@ -39,6 +39,9 @@ async function LoginAuth(param) {
             "Content-Type": "application/json",
         },
     });
+    console.log(
+        ` => ${response.status} ------------------------- ${response.url}`
+    );
     if (response?.status === 403) {
         let data = {
             error: true,
@@ -67,12 +70,13 @@ async function LoginAuth(param) {
                 },
             };
             await AsyncStorage.setItem(AuthStorageKey, JSON.stringify(infoLogin));
-            return user;
+            return infoLogin;
         } else {
             return dataJson;
         }
     }
     else {
+
         let data = {
             error: true,
             message: "Đăng nhập thất bại",
@@ -122,7 +126,7 @@ async function CallApi(url, method, body) {
         },
     };
     let response = await fetch(url, header);
-    if (response.status !== 200 && isDev) {
+    if (isDev) {
         console.log(
             `-------------------------\n\u274c ${response.status} ${response.url}`
         );

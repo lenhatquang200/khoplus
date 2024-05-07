@@ -83,13 +83,13 @@ export default function AuthApp(props) {
         }
         setLoginFail(false);
         const response = await KhoPlusApi.LoginAuth(bodyLogin);
-        if (response?.access_token) {
+        if (response?.auth) {
             dispatch(actions.authApp(response));
             dispatchColluegue(response.user);
         } else {
             setInfoUser({ login: { ...param } });
             setLoginFail(true);
-            Alert.alert("", "Số điện thoại hoặc mật khẩu không đúng", [
+            Alert.alert("Sai thông tin", "Số điện thoại hoặc mật khẩu không đúng", [
                 { text: "OK", onPress: () => setLoading(false) },
             ]);
         }
