@@ -2,14 +2,14 @@ export const CATEGORY_CONSTANT = {
     DASHBOARD: "dashboard",
 
     OBJ_PRODUCT: "product",
-    KEY_PRODUCT_LIST: "list",
+    KEY_PRODUCT_LIST: "item",
     KEY_PRODUCT_GROUP: "group",
     KEY_PRODUCT_TYPE: "type",
     KEY_PRODUCT_UNIT: "unit",
 
     OBJ_MANU: "manufacturing",
     KEY_MANU_GROUP: "group",
-    KEY_MANU_LIST: "items",
+    KEY_MANU_LIST: "item",
 
     OBJ_CUSTOMER: "customer",
     KEY_CUSTOMER_GROUP: "customer_group",
