@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
-import { lottiesJson, settingApp } from "../../../public";
+import { colorApp, lottiesJson, settingApp } from "../../../public";
 import { LinearBackGround } from "../../../public/component";
 
 const { width, height } = settingApp;
@@ -62,12 +62,7 @@ export default function Splash() {
     }
   }
 
-  return (
-    <View style={styles.container}>
-      <LinearBackGround />
-      {getViewRamd()}
-    </View>
-  );
+  return <View style={styles.container}>{getViewRamd()}</View>;
 }
 const styles = StyleSheet.create({
   container: {
@@ -75,6 +70,7 @@ const styles = StyleSheet.create({
     height: settingApp.height,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: colorApp.white,
   },
   lotties: {
     width: width * 0.6,

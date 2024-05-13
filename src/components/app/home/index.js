@@ -5,12 +5,11 @@ import {
   View,
   Text,
   StyleSheet,
-  Alert,
-  BackHandler,
   Platform,
   ScrollView,
+  Image,
 } from "react-native";
-import { Component, colorApp, settingApp } from "../../../public";
+import { Component, colorApp, imageApp, settingApp } from "../../../public";
 import HeaderHome from "./component/headerHome";
 import MenuTop from "./component/menuTop";
 
