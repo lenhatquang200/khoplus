@@ -36,14 +36,11 @@ export async function createProducts(data) {
   return result;
 }
 
-export async function getGroupProduct(page, limit, name, search, code) {
+export async function getGroupProduct(page) {
   page || 1;
-  limit || 10;
-  name || "";
-  search || false;
-  code || "";
-  // ?skip=${page}&limit=${limit}
-  const result = await KhoPlusApi.CallApi(`${uri}/product-groups`);
+  const result = await KhoPlusApi.CallApi(
+    `${uri}/product/groups?limit=10&page=${page}`
+  );
   return result;
 }
 

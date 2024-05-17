@@ -28,7 +28,7 @@ export default function ModalSearch(props) {
         <ScrollView>
           {listData?.length != 0 &&
             listData.map((item, index) => {
-              let isCheck = item?.id === dataField?.id;
+              let isCheck = item?._id === dataField?._id;
               return (
                 <View style={styles.view_bt} key={index}>
                   <TouchableOpacity

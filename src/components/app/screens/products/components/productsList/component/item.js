@@ -22,7 +22,10 @@ const Item = memo((props) => {
 
   const { unit = {}, type = {}, group = {} } = dataItem || {};
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => onUpdateItem(dataItem)}
+      style={styles.container}
+    >
       <View style={styles.view_image}>
         <View style={styles.cover_image}>
           <Component.AsyncImage source={{ uri: dataItem?.image_url }} />
@@ -49,12 +52,7 @@ const Item = memo((props) => {
       </View>
 
       <View style={styles.view_Action}>
-        <TouchableOpacity
-          onPress={() => onUpdateItem(dataItem)}
-          style={styles.bt_edit}
-        >
-          <Icon.icon_Edit />
-        </TouchableOpacity>
+        <View />
 
         <TouchableOpacity
           onPress={() => onDelete(dataItem)}
