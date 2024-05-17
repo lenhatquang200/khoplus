@@ -15,7 +15,7 @@ const Item = memo((props) => {
   useEffect(() => {
     const { obj } = props || {};
     const { item, index } = obj || {};
-    if (item?.id) {
+    if (item?._id) {
       setDataItem(item);
     }
   }, [props?.obj]);

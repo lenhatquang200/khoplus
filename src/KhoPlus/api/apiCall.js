@@ -4,14 +4,10 @@ import KhoPlusApi from "./khoplusApi";
 // https://api.khoplus.com/v1
 const uri = `https://${Configs.apiHost}/v1`;
 
-export async function getListProduct(page, limit, name, search, code) {
+export async function getListProduct(page) {
   page || 1;
-  limit || 10;
-  name || "";
-  search || false;
-  code || "";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/products?skip=${page}&limit=${limit}`
+    `${uri}/product/items?limit=10&page=${page}`
   );
   return result;
 }
