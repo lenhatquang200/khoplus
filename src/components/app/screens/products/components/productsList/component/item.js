@@ -43,9 +43,9 @@ const Item = memo((props) => {
           <Text>{group?.name || lang.emptyText}</Text>
         </Text>
 
-        <Text style={styles.txt_type}>
+        {/* <Text style={styles.txt_type}>
           {dataItem?.formatted_created_at || lang.emptyText}
-        </Text>
+        </Text> */}
       </View>
 
       <View style={styles.view_Action}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   txt_code: {
     fontSize: settingApp.size_14,
-    color: colorApp.green_001,
+    color: colorApp.green_007,
   },
   txt_name: {
     fontSize: settingApp.size_18,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   text_unit: {
     fontSize: settingApp.size_14,
-    color: colorApp.green_001,
+    color: colorApp.green_007,
     textTransform: "uppercase",
     marginLeft: 5,
     fontWeight: "800",
