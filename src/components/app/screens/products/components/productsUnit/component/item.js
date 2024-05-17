@@ -12,16 +12,13 @@ const Item = memo((props) => {
   useEffect(() => {
     const { obj } = props;
     const { item, index } = obj || {};
-    if (item?.id) {
+    if (item?._id) {
       setDataItem(item);
     }
   }, [props]);
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.txt_date}>
-          {dataItem?.formatted_created_at || lang?.emptyText}
-        </Text>
         <Text style={styles.txt_name}>{dataItem?.name || lang?.emptyText}</Text>
       </View>
       <View style={styles.view_Action}>
@@ -56,10 +53,11 @@ const styles = StyleSheet.create({
     width: WIDTH_CONTENT,
     minHeight: 80,
     justifyContent: "flex-start",
+    paddingTop: 20,
   },
   txt_name: {
     fontSize: settingApp.size_18,
-    color: colorApp.green_001,
+    color: colorApp.green_007,
     fontWeight: "bold",
   },
   txt_date: {

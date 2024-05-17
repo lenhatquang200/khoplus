@@ -85,7 +85,7 @@ export default function AuthApp(props) {
     const response = await KhoPlusApi.LoginAuth(bodyLogin);
     if (response?.auth) {
       dispatch(actions.authApp(response));
-      dispatchColluegue(response.user);
+      dispatchColluegue(response.userInfo);
     } else {
       setInfoUser({ login: { ...param } });
       setLoginFail(true);

@@ -7,6 +7,7 @@ import { ApiCall } from "KhoPlus";
 import Item from "./component/item";
 
 let current_page = 1;
+let total_page = null;
 function ProductsUnit(props) {
   const limit = 10;
   const [listData, setListData] = useState([]);
@@ -16,17 +17,23 @@ function ProductsUnit(props) {
 
   useEffect(() => {
     loadData();
+  }, []);
+
+  useEffect(() => {
+    if (refreshing || isLoadMore) {
+      loadData();
+    }
   }, [isLoadMore, refreshing]);
 
   async function loadData() {
     let newList = listData;
-    const result = await ApiCall.getUnitProduct(null, limit);
+    const result = await ApiCall.getUnitProduct(current_page);
     if (result?.data?.length != 0) {
       if (current_page == 1) {
         newList = result?.data;
       } else {
         result?.data?.map((item) => {
-          const index_ = newList.findIndex((e) => e?.id == item?.id);
+          const index_ = newList.findIndex((e) => e?._id == item?._id);
           if (index_ < 0) {
             newList.push(item);
           }
@@ -35,6 +42,7 @@ function ProductsUnit(props) {
     } else {
       newList = newList;
     }
+    total_page = result?.total_page;
     setListData(newList);
     setIsLoading(false);
     setRefreshing(false);
@@ -46,7 +54,14 @@ function ProductsUnit(props) {
     current_page = 1;
   }
 
-  function onLoadMore() {}
+  function onLoadMore() {
+    if (current_page == total_page) {
+      setIsLoadmore(false);
+    } else {
+      current_page += 1;
+      setIsLoadmore(true);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -59,7 +74,7 @@ function ProductsUnit(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
           extraData={listData}
-          keyExtractor={(item, index) => item?.id + index + ""}
+          keyExtractor={(item, index) => item?._id + index + ""}
           data={listData}
           renderItem={(obj) => <Item obj={obj} />}
           style={{ paddingTop: 12 }}

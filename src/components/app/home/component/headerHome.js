@@ -16,7 +16,9 @@ export default function HeaderHome(props) {
   const [shortName, setShortName] = useState("");
 
   useEffect(() => {
-    getTitle();
+    if (colleague) {
+      getTitle();
+    }
   }, []);
 
   function getTitle() {
