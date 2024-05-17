@@ -48,13 +48,10 @@ export async function getGroupProduct(page, limit, name, search, code) {
 }
 
 export async function getTypeProduct(page, limit, name, search, code) {
-  page || "";
-  limit || 10;
-  name || "";
-  search || false;
-  code || "";
   // ?skip=${page}&limit=${limit}
-  const result = await KhoPlusApi.CallApi(`${uri}/product-types`);
+  const result = await KhoPlusApi.CallApi(
+    `${uri}/product/types?limit=10&page=${page}`
+  );
   return result;
 }
 
