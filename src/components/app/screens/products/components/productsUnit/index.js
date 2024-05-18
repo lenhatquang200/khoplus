@@ -6,9 +6,9 @@ import { LoadingInContent, Nonedata, Loadmore } from "public/component";
 import { ApiCall } from "KhoPlus";
 import Item from "./component/item";
 
-let current_page = 1;
-let total_page = null;
 function ProductsUnit(props) {
+  let current_page = 1;
+  let total_page = null;
   const limit = 10;
   const [listData, setListData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,30 +19,27 @@ function ProductsUnit(props) {
     loadData();
   }, []);
 
-  useEffect(() => {
-    if (refreshing || isLoadMore) {
-      loadData();
-    }
-  }, [isLoadMore, refreshing]);
-
   async function loadData() {
     let newList = listData;
-    const result = await ApiCall.getUnitProduct(current_page);
-    if (result?.data?.length != 0) {
-      if (current_page == 1) {
-        newList = result?.data;
+    if (!total_page || (total_page && current_page <= total_page)) {
+      const result = await ApiCall.getUnitProduct(current_page);
+      if (result?.data?.length != 0) {
+        total_page = result?.total_page;
+        if (current_page == 1) {
+          newList = result?.data;
+        } else {
+          result?.data?.map((item) => {
+            const index_ = newList.findIndex((e) => e?._id == item?._id);
+            if (index_ < 0) {
+              newList.push(item);
+            }
+          });
+        }
       } else {
-        result?.data?.map((item) => {
-          const index_ = newList.findIndex((e) => e?._id == item?._id);
-          if (index_ < 0) {
-            newList.push(item);
-          }
-        });
+        newList = newList;
       }
     } else {
-      newList = newList;
     }
-    total_page = result?.total_page;
     setListData(newList);
     setIsLoading(false);
     setRefreshing(false);
@@ -52,6 +49,8 @@ function ProductsUnit(props) {
   function onRefresh() {
     setRefreshing(true);
     current_page = 1;
+
+    loadData();
   }
 
   function onLoadMore() {
@@ -61,6 +60,8 @@ function ProductsUnit(props) {
       current_page += 1;
       setIsLoadmore(true);
     }
+
+    loadData();
   }
 
   return (

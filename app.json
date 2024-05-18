@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "scheme": "khoplus",
     "extra": {
-      "apiHost": "api.khoplus.com",
+      "apiHost": "api.khoplus.com/v1",
       "clientid": "khoplus.mobile",
       "eas": {
         "projectId": "1f464ed1-76be-4543-8c1b-d31984f882a5"

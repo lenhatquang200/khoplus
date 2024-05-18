@@ -23,31 +23,28 @@ function ProductsType(props) {
     loadData();
   }, []);
 
-  useEffect(() => {
-    if (refreshing && isLoadMore) {
-      loadData();
-    }
-  }, [isLoadMore, refreshing]);
-
   async function loadData() {
     let newList = listData;
-    const result = await ApiCall.getTypeProduct(current_page);
-    console.log("loadData", result);
-    if (result?.data?.length != 0) {
-      total_page = result?.total_page;
-      if (current_page == 1) {
-        newList = result?.data;
+    if (!total_page || (total_page && current_page <= total_page)) {
+      const result = await ApiCall.getTypeProduct(current_page);
+      if (result?.data?.length != 0) {
+        total_page = result?.total_page;
+        if (current_page == 1) {
+          newList = result?.data;
+        } else {
+          result?.data?.map((item) => {
+            const index_ = newList.findIndex((e) => e?._id == item?._id);
+            if (index_ < 0) {
+              newList.push(item);
+            }
+          });
+        }
       } else {
-        result?.data?.map((item) => {
-          const index_ = newList.findIndex((e) => e?._id == item?._id);
-          if (index_ < 0) {
-            newList.push(item);
-          }
-        });
+        newList = newList;
       }
     } else {
-      newList = newList;
     }
+
     setListData(newList);
     setIsLoading(false);
     setRefreshing(false);
@@ -57,6 +54,7 @@ function ProductsType(props) {
   function onRefresh() {
     setRefreshing(true);
     current_page = 1;
+    loadData();
   }
 
   function onLoadMore() {
@@ -66,6 +64,7 @@ function ProductsType(props) {
       current_page += 1;
       setIsLoadmore(true);
     }
+    loadData();
   }
 
   function _onUpdate(item) {

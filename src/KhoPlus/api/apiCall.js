@@ -2,7 +2,7 @@ import Configs from "../config";
 import KhoPlusApi from "./khoplusApi";
 
 // https://api.khoplus.com/v1
-const uri = `https://${Configs.apiHost}/v1`;
+const uri = `https://${Configs.apiHost}`;
 
 export async function getListProduct(page) {
   page || 1;
@@ -52,11 +52,10 @@ export async function getTypeProduct(page, limit, name, search, code) {
   return result;
 }
 
-export async function getUnitProduct(page, limit) {
+export async function getUnitProduct(page) {
   page || "";
-  limit || 10;
   const result = await KhoPlusApi.CallApi(
-    `${uri}/product/units?limit=${limit}&page=${page}`
+    `${uri}/product/units?limit=10&page=${page}`
   );
   return result;
 }

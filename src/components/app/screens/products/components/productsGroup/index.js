@@ -50,22 +50,26 @@ function ProductsGroup(props) {
 
   async function loadData() {
     let newList = listData;
-    const result = await ApiCall.getGroupProduct(current_page, limit);
-    if (result?.data?.length != 0) {
-      total_page = result?.total_page;
-      if (current_page == 1) {
-        newList = result?.data;
+    if (!total_page || (total_page && current_page <= total_page)) {
+      const result = await ApiCall.getGroupProduct(current_page, limit);
+      if (result?.data?.length != 0) {
+        total_page = result?.total_page;
+        if (current_page == 1) {
+          newList = result?.data;
+        } else {
+          result?.data?.map((item) => {
+            const index_ = newList.findIndex((e) => e?.id == item?.id);
+            if (index_ < 0) {
+              newList.push(item);
+            }
+          });
+        }
       } else {
-        result?.data?.map((item) => {
-          const index_ = newList.findIndex((e) => e?.id == item?.id);
-          if (index_ < 0) {
-            newList.push(item);
-          }
-        });
+        newList = newList;
       }
     } else {
-      newList = newList;
     }
+
     setListData(newList);
     setIsLoading(false);
     setRefreshing(false);
