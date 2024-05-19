@@ -1,17 +1,34 @@
-import React, { Component } from 'react'
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
-import { MaterialIcons } from "@expo/vector-icons"
-import colorApp from 'public/colorApp';
-import settingApp from 'public/settingApp';
-import lang from 'public/locate';
+import React, { useState, useEffect } from "react";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import colorApp from "public/colorApp";
+import settingApp from "public/settingApp";
+import lang from "public/locate";
 
-export default function Buttonupdate({ onPress, style, styleText, lable, isDisable }) {
-    lable = lable || lang.update
+export default function Buttonupdate({
+    onPress,
+    style,
+    styleText,
+    lable,
+    isDisable,
+}) {
+    lable = lable || lang.update;
+
+    const [isActiveBT, setActiveBT] = useState(false);
+
+    useEffect(() => {
+        setActiveBT(isDisable)
+    }, [isDisable]);
 
     return (
-        <View style={[styles.view_bt_update, {
-            opacity: isDisable ? 0.3 : 1
-        }]}>
+        <View
+            style={[
+                styles.view_bt_update,
+                {
+                    opacity: isActiveBT ? 0.3 : 1,
+                },
+            ]}
+        >
             <TouchableOpacity
                 disabled={isDisable}
                 onPress={onPress}
@@ -30,14 +47,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        backgroundColor: colorApp.green_001,
+        backgroundColor: colorApp.blue_primary,
         borderRadius: 16,
-        ...settingApp.shadow_Item
+        ...settingApp.shadow_Item,
     },
     txt_save: {
         fontSize: settingApp.size_22,
         fontWeight: "600",
-        color: colorApp.white
+        color: colorApp.white,
     },
     view_bt_update: {
         width: settingApp.width,
@@ -46,6 +63,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "absolute",
         bottom: 32,
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
     },
-})
+});

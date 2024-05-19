@@ -27,5 +27,5 @@ export default createReducer(initialState, {
     },
     [types.UPDATE_GROUP_MANU_FACT_SUCCESS]: (state, data) => {
         return state.set("updateGroupManuFact", data.body);
-    }
+    },
 });

@@ -19,8 +19,12 @@ export function formatPhoneNumber(phoneNumber) {
 }
 
 export function formatMoney(number) {
-  number = number + "";
-  return new Intl.NumberFormat("vi-VN", {
-    currency: "VND",
-  }).format(number);
+  if (number && Number(number) != NaN) {
+    number = number + "";
+    return new Intl.NumberFormat("vi-VN", {
+      currency: "VND",
+    }).format(number);
+  } else {
+    return 0;
+  }
 }

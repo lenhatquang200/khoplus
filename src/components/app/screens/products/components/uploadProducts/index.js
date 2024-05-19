@@ -291,6 +291,10 @@ export default function UploadProducts(props) {
                 keyboardType="numeric"
               />
             </View>
+
+            <Text style={styles.txt_formatMoney}>
+              {`${Utils.formatMoney(dataItem?.price_cost)}đ` || ""}
+            </Text>
           </View>
         </ScrollView>
       </KeyboardAwareScrollView>
@@ -379,5 +383,11 @@ const styles = StyleSheet.create({
   is_require: {
     color: colorApp.red,
     fontSize: 16,
+  },
+  txt_formatMoney: {
+    fontSize: settingApp.size_16,
+    marginLeft: settingApp.space_16,
+    marginTop: 5,
+    color: colorApp.colorPlaceText,
   },
 });
