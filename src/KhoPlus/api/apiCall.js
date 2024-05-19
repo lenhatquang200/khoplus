@@ -44,6 +44,11 @@ export async function getGroupProduct(page) {
     return result;
 }
 
+export async function getDetailData(id) {
+    const result = await KhoPlusApi.CallApi(`${uri}//product/items/${id}`);
+    return result;
+}
+
 export async function getTypeProduct(page, limit, name, search, code) {
     // ?skip=${page}&limit=${limit}
     const result = await KhoPlusApi.CallApi(
