@@ -62,6 +62,7 @@ const lang = {
     deleteManu: "Bạn chắc chắn muốn xóa nhà cung cấp này",
     deleteGroupProduct: "Bạn chắc chắn muốn xóa nhóm hàng hóa này",
     deleteTypeProduct: "Bạn chắc chắn muốn xóa loại hàng hóa này",
+    deleteUnitProduct: "Bạn chắc chắn muốn xóa đơn vị hàng hóa này",
     accept: "Đồng ý",
     close: "Đóng",
     specifications: "Quy cách",
