@@ -25,7 +25,7 @@ export default function Buttonupdate({
             style={[
                 styles.view_bt_update,
                 {
-                    opacity: isActiveBT ? 0.3 : 1,
+                    opacity: isDisable ? 0.3 : 1,
                 },
             ]}
         >

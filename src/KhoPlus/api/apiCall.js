@@ -140,30 +140,30 @@ export async function createManufact_Group(body) {
     return result;
 }
 
-export async function updateProduct_Group(id, body) {
+export async function updateProduct(id, body, type) {
     const method = "PUT";
     const result = await KhoPlusApi.CallApi(
-        `${uri}/product/groups/${id}`,
+        `${uri}/product/${type}/${id}`,
         method,
         body
     );
     return result;
 }
 
-export async function createProduct_Group(body) {
+export async function createProduct(body, type) {
     const method = "POST";
     const result = await KhoPlusApi.CallApi(
-        `${uri}/product/groups`,
+        `${uri}/product/${type}`,
         method,
         body
     );
     return result;
 }
 
-export async function deleteProduct_Group(id) {
+export async function deleteProduct(id, type) {
     const method = "DELETE";
     const result = await KhoPlusApi.CallApi(
-        `${uri}/product/groups/${id}`,
+        `${uri}/product/${type}/${id}`,
         method
     );
     return result;

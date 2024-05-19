@@ -1,7 +1,7 @@
 const CONSTANT = {
-    TYPE_PRODUCT: "type",
-    GROUP_PRODUCT: "group",
-    UNIT_PRODUCT: "unit"
+    TYPE_PRODUCT: "types",
+    GROUP_PRODUCT: "groups",
+    UNIT_PRODUCT: "units"
 }
 
 export default CONSTANT

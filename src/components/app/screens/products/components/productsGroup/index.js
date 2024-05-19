@@ -110,7 +110,7 @@ function ProductsGroup(props) {
     }
 
     async function _onDelete(item) {
-        const result = await ApiCall.deleteProduct_Group(item?._id);
+        const result = await ApiCall.deleteProduct(item?._id, CONSTANT.GROUP_PRODUCT);
         if (result?.data?.acknowledged) {
             updateListItem({ ...item, isDelete: true });
             ToastShow(result?.message);
@@ -125,9 +125,9 @@ function ProductsGroup(props) {
             name: item?.name,
         };
         if (item?._id) {
-            result = await ApiCall.updateProduct_Group(item?._id, { ...body, _id: item?._id, });
+            result = await ApiCall.updateProduct(item?._id, { ...body, _id: item?._id, }, CONSTANT.GROUP_PRODUCT);
         } else {
-            result = await ApiCall.createProduct_Group(body);
+            result = await ApiCall.createProduct(body, CONSTANT.GROUP_PRODUCT);
         }
         if (result?.data?._id) {
             updateListItem(result?.data);
@@ -174,6 +174,7 @@ function ProductsGroup(props) {
                 dataUpdate={dataUpdate}
                 type={CONSTANT.GROUP_PRODUCT}
                 _onUpdateGroup={_onUpdateGroup}
+                title={lang.group}
             />
         </View>
     );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import {
     View,
     Modal,
@@ -9,20 +8,13 @@ import {
     TextInput,
 } from "react-native";
 import { ButtonUpdate, HeaderName, Loading } from "public/component";
-import { lang, settingApp, colorApp, Icon, ToastShow } from "public";
+import { lang, settingApp, colorApp, Icon } from "public";
 import { debounce } from "lodash";
 import CONSTANT from "../../CONST";
-import { ApiCall } from "KhoPlus";
-import actions from "state/actions";
 
 export default function ModalUpdate(props) {
-    const dispatch = useDispatch();
 
-    const titleHeader = CONSTANT.GROUP_PRODUCT
-        ? lang.group
-        : CONSTANT.TYPE_PRODUCT
-            ? lang.type
-            : lang.unit;
+    const titleHeader = props?.title || lang.create
     const titleInput = lang.name + " " + titleHeader;
     const textInputRef = useRef();
     const _onChangeTextDebounce = debounce(_onChangeText, 500);
