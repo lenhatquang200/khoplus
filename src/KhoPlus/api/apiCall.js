@@ -14,7 +14,7 @@ export async function getListProduct(page) {
 
 export async function deleteOneProductsGroup(id) {
   const method = "DELETE";
-  const result = await KhoPlusApi.CallApi(`${uri}/products/${id}`, method);
+  const result = await KhoPlusApi.CallApi(`${uri}/product/items/${id}`, method);
   return result;
 }
 
@@ -22,7 +22,7 @@ export async function updateOneProductsGroup(id, data) {
   const method = "PUT";
   const body = { ...data };
   const result = await KhoPlusApi.CallApi(
-    `${uri}/products/${id}`,
+    `${uri}/product/items/${id}`,
     method,
     body
   );
@@ -32,7 +32,7 @@ export async function updateOneProductsGroup(id, data) {
 export async function createProducts(data) {
   const method = "POST";
   const body = { ...data };
-  const result = await KhoPlusApi.CallApi(`${uri}/products`, method, body);
+  const result = await KhoPlusApi.CallApi(`${uri}/product/items`, method, body);
   return result;
 }
 

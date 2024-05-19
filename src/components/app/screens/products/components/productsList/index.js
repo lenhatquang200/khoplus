@@ -35,9 +35,9 @@ function ProductsList(props) {
   const [visibleEdit, setVisibleEdit] = useState(false);
 
   useEffect(() => {
-    if (itemUpdate?.id) {
+    if (itemUpdate?._id) {
       let newList = listData;
-      const _index = newList?.findIndex((item) => item?.id == itemUpdate?.id);
+      const _index = newList?.findIndex((item) => item?._id == itemUpdate?._id);
       if (_index !== -1) {
         newList[_index] = itemUpdate;
       } else {
@@ -93,11 +93,11 @@ function ProductsList(props) {
   }
 
   async function onDelete(item) {
-    const { id } = item;
-    const result = await ApiCall.deleteOneProductsGroup(id);
-    if (result?.success) {
+    const { _id } = item;
+    const result = await ApiCall.deleteOneProductsGroup(_id);
+    if (result?.data?.acknowledged) {
       let newListDelelte = [...listData];
-      const index_delete = newListDelelte.findIndex((e) => e.id == id);
+      const index_delete = newListDelelte.findIndex((e) => e._id == _id);
       if (index_delete > -1) {
         newListDelelte.splice(index_delete, 1);
         setListData(newListDelelte);
@@ -140,7 +140,7 @@ function ProductsList(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
           extraData={listData}
-          keyExtractor={(item, index) => item?.id}
+          keyExtractor={(item, index) => item?._id + index + ""}
           data={listData}
           renderItem={(obj) => (
             <Item

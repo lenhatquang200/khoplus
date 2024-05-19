@@ -19,6 +19,7 @@ const Item = memo((props) => {
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.content}>
+        <Text style={styles.txt_date}>{"Đơn vị tính: "}</Text>
         <Text style={styles.txt_name}>{dataItem?.name || lang?.emptyText}</Text>
       </View>
       <View style={styles.view_Action}>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   txt_date: {
     fontSize: settingApp.size_14,
-    color: colorApp.colorPlaceText,
+    color: colorApp.blue_primary,
   },
   txt_delete: {
     fontSize: settingApp.size_14,

@@ -8,7 +8,6 @@ const WIDTH_CONTENT = width - 80 - 80; // 80 là rộng của imgae, 60 là rộ
 
 const Item = memo((props) => {
   const { obj, onDelete, onUpdateItem } = props || {};
-  const { item, index } = obj || {};
 
   const [dataItem, setDataItem] = useState(null);
 
