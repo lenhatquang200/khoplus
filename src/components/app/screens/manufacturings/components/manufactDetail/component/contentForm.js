@@ -41,7 +41,7 @@ const ContentForm = React.forwardRef((props, ref) => {
     }
 
     function _onChangeText(val, type) {
-        if (dataItem?.id) {
+        if (dataItem?._id) {
             if (type === TYPE_INPUT.NAME) {
                 setDataItem({
                     ...dataItem, name: val
@@ -115,7 +115,7 @@ const ContentForm = React.forwardRef((props, ref) => {
             setDataItem({
                 ...dataItem,
                 manufacturing_group: data,
-                manufacturing_group_id: data?.id
+                manufacturing_group_id: data?._id
             })
         }
         else if (typeModal == TYPE_INPUT.BANK_NAME) {
@@ -134,14 +134,21 @@ const ContentForm = React.forwardRef((props, ref) => {
 
 
     function inputValue(defaultValue, type, styles) {
-        if (dataItem?.id) {
+        if (dataItem?._id) {
             return (
                 <TextInput
                     editable={isEdit}
                     defaultValue={defaultValue}
                     placeholder={lang.emptyText}
                     onChangeText={(val) => onChangeCallback(val, type)}
-                    style={styles}
+                    style={[styles, {
+                        padding: 5,
+                        borderBottomColor: colorApp.white,
+                        marginTop: 8,
+                        backgroundColor: colorApp.border_color,
+                        borderRadius: 6,
+                    }]}
+                    scrollEnabled={false}
                 />
             )
         }
@@ -153,12 +160,12 @@ const ContentForm = React.forwardRef((props, ref) => {
                     placeholder={lang.emptyText}
                     onChangeText={(val) => onChangeCallback(val, type)}
                     style={[styles, {
-                        backgroundColor: colorApp.green_opacity_01,
                         padding: 5,
-                        borderBottomColor: colorApp.colorText,
-                        borderBottomWidth: 0.5,
                         marginTop: 8,
+                        backgroundColor: colorApp.border_color,
+                        borderRadius: 6,
                     }]}
+                    scrollEnabled={false}
                 />
             )
         }
@@ -184,7 +191,7 @@ const ContentForm = React.forwardRef((props, ref) => {
             <View style={styles.viewPhone}>
                 {inputValue(dataItem?.phone, TYPE_INPUT.PHONE, styles.txt_phone)}
 
-                {dataItem?.id && dataItem?.phone && <TouchableOpacity
+                {dataItem?._id && dataItem?.phone && <TouchableOpacity
                     onPress={() => Linking.openURL(`tel:${dataItem?.phone}`)}
                     style={styles.bt_edit}
                 >
@@ -230,7 +237,7 @@ const ContentForm = React.forwardRef((props, ref) => {
                 <Text style={[styles.account_number, { marginTop: 8 }]}>{lang.bankNumber + ":"}</Text>
                 {inputValue(dataItem?.account_number, TYPE_INPUT.BANN_NUMBER, styles.account_number)}
 
-                {dataItem?.id && dataItem?.account_number && < TouchableOpacity
+                {dataItem?._id && dataItem?.account_number && < TouchableOpacity
                     onPress={copyToClipboard}
                     style={styles.bt_copy}
                 >

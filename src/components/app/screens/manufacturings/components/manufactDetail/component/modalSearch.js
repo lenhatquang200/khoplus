@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     },
     txt_item_fullname: {
         fontSize: settingApp.size_16,
-        color: colorApp.green_002,
+        color: colorApp.green_004,
         marginTop: 5
     }
 });

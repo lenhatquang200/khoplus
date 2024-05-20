@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     txt_phone: {
         fontSize: settingApp.size_16,
-        width:settingApp.width_32 - 80
+        width: settingApp.width_32 - 80
     },
     bt_edit: {
         width: 60,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     txt_call: {
         fontSize: settingApp.size_14,
         fontWeight: "500",
-        color: colorApp.green_002,
+        color: colorApp.green_005,
     },
     title_group: {
         fontSize: settingApp.size_16,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     txt_lable: {
         fontSize: 18,
-        color: colorApp.green_001
+        color: colorApp.colorText
     },
     view_bottom_button: {
         width: settingApp.width,

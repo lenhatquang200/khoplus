@@ -25,14 +25,14 @@ export default function ManuGroup(props) {
     }, [])
 
     useEffect(() => {
-        if (newItemUpdate?.id) {
+        if (newItemUpdate?._id) {
             updateListItem(newItemUpdate);
         }
     }, [newItemUpdate]);
 
     function updateListItem(newItemUpdate) {
         let newList = [...listData];
-        const _index = newList.findIndex((item) => item?.id == newItemUpdate?.id);
+        const _index = newList.findIndex((item) => item?._id == newItemUpdate?._id);
         if (_index !== -1) {
             newList[_index] = newItemUpdate;
         }
@@ -52,7 +52,7 @@ export default function ManuGroup(props) {
                 newList = result?.data;
             } else {
                 result?.data?.map((item) => {
-                    const index_ = newList.findIndex((e) => e?.id == item?.id);
+                    const index_ = newList.findIndex((e) => e?._id == item?._id);
                     if (index_ < 0) {
                         let newItem = {};
                         newItem = item;
@@ -86,10 +86,10 @@ export default function ManuGroup(props) {
     }
 
     async function _onDeleteItem(item) {
-        const result = await ApiCall.deleteManufact_Group(item?.id)
+        const result = await ApiCall.deleteManufact_Group(item?._id)
         if (result?.success) {
             let newListDelelte = [...listData];
-            const index_delete = newListDelelte.findIndex((e) => e.id == item?.id);
+            const index_delete = newListDelelte.findIndex((e) => e._id == item?._id);
             if (index_delete > -1) {
                 newListDelelte.splice(index_delete, 1);
                 setListData(newListDelelte);
@@ -123,7 +123,7 @@ export default function ManuGroup(props) {
                 <FlatList
                     extraData={listData}
                     data={listData}
-                    keyExtractor={(item, index) => item?.id}
+                    keyExtractor={(item, index) => item?._id}
                     renderItem={(obj) =>
                         <Item
                             obj={obj}

@@ -14,9 +14,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { screenName } from "router/screenName";
 import actions from "state/actions";
 
-let current_page = 1;
-let page = 1;
+
 export default function ManuList(props) {
+    let current_page = 1;
+    let total_page = null;
     const dispatch = useDispatch();
     const newItemUpdate = useSelector((state) => state?.app?.updateItemManuFact);
     const limit = 10;
@@ -26,20 +27,20 @@ export default function ManuList(props) {
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        if (isLoadMore || isLoading) {
+        if (isLoading) {
             loadData();
         }
-    }, [isLoadMore, isLoading]);
+    }, [isLoading]);
 
     useEffect(() => {
-        if (newItemUpdate?.id) {
+        if (newItemUpdate?._id) {
             updateListItem(newItemUpdate);
         }
     }, [newItemUpdate]);
 
     function updateListItem(newItemUpdate) {
         let newList = [...listData];
-        const _index = newList.findIndex((item) => item?.id == newItemUpdate?.id);
+        const _index = newList.findIndex((item) => item?._id == newItemUpdate?._id);
         if (_index !== -1) {
             if (newItemUpdate?.isDelete) {
                 newList.splice(_index, 1)
@@ -58,11 +59,12 @@ export default function ManuList(props) {
         let newList = listData;
         const result = await ApiCall.getManufacturingList(current_page, limit);
         if (result?.data?.length != 0) {
+            total_page = result?.total_page
             if (current_page == 1) {
                 newList = result?.data;
             } else {
                 result?.data?.map((item) => {
-                    const index_ = newList.findIndex((e) => e?.id == item?.id);
+                    const index_ = newList.findIndex((e) => e?._id == item?._id);
                     if (index_ < 0) {
                         let newItem = {};
                         newItem = item;
@@ -80,8 +82,15 @@ export default function ManuList(props) {
     }
 
     function onLoadMore() {
-        current_page += 1;
-        setIsLoadmore(true);
+        if (!total_page || (total_page && (current_page == total_page))) {
+            setIsLoadmore(false);
+        }
+        else {
+            current_page += 1;
+            setIsLoadmore(true);
+            loadData();
+        }
+
     }
 
     function confirmDelete(item) {
@@ -96,10 +105,10 @@ export default function ManuList(props) {
     }
 
     async function _onDeleteItem(item) {
-        const result = await ApiCall.deleteManufacturing(item?.id)
+        const result = await ApiCall.deleteManufacturing(item?._id)
         if (result?.success) {
             let newListDelelte = [...listData];
-            const index_delete = newListDelelte.findIndex((e) => e.id == item?.id);
+            const index_delete = newListDelelte.findIndex((e) => e._id == item?._id);
             if (index_delete > -1) {
                 newListDelelte.splice(index_delete, 1);
                 setListData(newListDelelte);
@@ -120,7 +129,7 @@ export default function ManuList(props) {
                 <FlatList
                     extraData={listData}
                     data={listData}
-                    keyExtractor={(item, index) => item?.id}
+                    keyExtractor={(item, index) => item?._id}
                     renderItem={(obj) => <Item obj={obj} props={props} onDelete={confirmDelete} />}
                     style={{ paddingTop: 12 }}
                     ListFooterComponent={() =>

@@ -79,7 +79,7 @@ export async function getManufacturingGroup(page, limit, name, search, code) {
     name || "";
     search || false;
     code || "";
-    const result = await KhoPlusApi.CallApi(`${uri}/manufacturing-groups`);
+    const result = await KhoPlusApi.CallApi(`${uri}/manufacturing/groups`);
     return result;
 }
 

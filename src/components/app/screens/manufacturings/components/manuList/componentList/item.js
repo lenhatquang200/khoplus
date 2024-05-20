@@ -17,7 +17,8 @@ const Item = memo(({ obj, props, onDelete }) => {
 
     useEffect(() => {
         const { item, index } = obj || {};
-        if (item?.id) {
+        console.log('itemmm', item);
+        if (item?._id) {
             setDataItem(item);
         }
     }, [obj]);
@@ -43,21 +44,13 @@ const Item = memo(({ obj, props, onDelete }) => {
                     </Text>
 
                     <Text style={styles.txt_groupName}>
-                        {dataItem?.manufacturing_group?.name || lang.emptyText}
+                        {dataItem?.group?.name || lang.emptyText}
                     </Text>
-
-                    <View style={styles.view_phone}>
-                        <Text style={styles.txt_phone}>{dataItem?.phone}</Text>
-                    </View>
+                    <Text style={styles.txt_phone}>{dataItem?.phone}</Text>
                 </View>
 
                 <View style={styles.view_Action}>
-                    <TouchableOpacity
-                        onPress={() => Linking.openURL(`tel:${dataItem?.phone}`)}
-                        style={styles.bt_edit}
-                    >
-                        <Text style={styles.txt_call}>{lang.callPhone}</Text>
-                    </TouchableOpacity>
+                    <View />
                     <TouchableOpacity
                         onPress={() => onDelete(dataItem)}
                         style={styles.bt_delete}
@@ -84,6 +77,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingLeft: 16,
         paddingRight: 16,
+        minHeight: 100,
+        paddingBottom: 8
     },
     view_content: {
         width: WIDTH_CONTENT,
@@ -136,11 +131,11 @@ const styles = StyleSheet.create({
         fontSize: settingApp.size_22,
         color: colorApp.colorText,
         fontWeight: "600",
-        marginBottom: 16,
+        marginBottom: 6,
     },
     txt_groupName: {
-        fontSize: settingApp.size_14,
-        color: colorApp.green_001,
+        fontSize: settingApp.size_16,
+        color: colorApp.green_005,
     },
     view_phone: {
         position: "absolute",
@@ -150,5 +145,6 @@ const styles = StyleSheet.create({
     txt_phone: {
         fontSize: settingApp.size_14,
         color: colorApp.colorPlaceText,
+        marginTop: 8
     },
 });

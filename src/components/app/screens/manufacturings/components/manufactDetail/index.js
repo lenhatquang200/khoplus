@@ -157,7 +157,7 @@ export default function ManufactDetail(props) {
                 !isLoading && <ButtonUpdate
                     onCancel={() => setEdit(false)}
                     updateManufact={getNewDataUpdate}
-                    isData={dataItem?.id}
+                    isData={dataItem?._id}
                 />
             }
         </View>

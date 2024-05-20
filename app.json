@@ -53,7 +53,8 @@
             "usesCleartextTraffic": true
           }
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "updates": {
       "url": "https://u.expo.dev/1f464ed1-76be-4543-8c1b-d31984f882a5"
