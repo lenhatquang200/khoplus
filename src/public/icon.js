@@ -1,4 +1,4 @@
-import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, Feather, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import colorApp from "./colorApp";
 
 export const arrow_Left = (props) => {
@@ -69,4 +69,19 @@ export const icon_Store = (props) => {
         />
     );
 };
+
+
+export const icon_Info = (props) => {
+    let { size, color } = props;
+    size = size || 24;
+    color = color || colorApp.colorText;
+    return (
+        <Ionicons
+            name="alert-circle-outline"
+            size={size}
+            color={colorApp.black_opacity_05}
+        />
+    );
+};
+
 

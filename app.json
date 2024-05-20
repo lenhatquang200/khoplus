@@ -46,15 +46,20 @@
     },
     "plugins": [
       "expo-localization",
-      ["expo-build-properties", {
-        "android": {
+      [
+        "expo-build-properties",
+        {
+          "android": {
             "usesCleartextTraffic": true
+          }
         }
-        
-      }]
+      ]
     ],
     "updates": {
       "url": "https://u.expo.dev/1f464ed1-76be-4543-8c1b-d31984f882a5"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

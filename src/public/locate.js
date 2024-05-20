@@ -67,6 +67,7 @@ const lang = {
     close: "Đóng",
     specifications: "Quy cách",
     priceCost: "Giá vốn",
+    emptyProduct: "Hiện tại sản phẩm đang tạm hết !!"
 };
 
 export default lang;
