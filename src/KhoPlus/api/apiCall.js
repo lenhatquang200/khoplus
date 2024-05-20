@@ -67,12 +67,8 @@ export async function getUnitProduct(page) {
 
 export async function getManufacturingList(page, limit, name, search, code) {
     page || "";
-    limit || 10;
-    name || "";
-    search || false;
-    code || "";
     const result = await KhoPlusApi.CallApi(
-        `${uri}/manufacturings?skip=${page}&limit=${limit}`
+        `${uri}/manufacturing/items?limit=${limit}&page=${page}`
     );
     return result;
 }

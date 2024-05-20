@@ -5,23 +5,23 @@ import { lang } from "public";
 
 function checkActionButton(item, props) {
     const { keyApp, router } = item;
-    switch (keyApp) {
+    switch (router) {
         // check action của loại hàng hóa
-        case CATEGORY_CONSTANT.KEY_PRODUCT_LIST:
-        case CATEGORY_CONSTANT.KEY_PRODUCT_UNIT:
-        case CATEGORY_CONSTANT.KEY_PRODUCT_TYPE:
-        case CATEGORY_CONSTANT.KEY_PRODUCT_GROUP:
+        case screenName.PRODUCTS_LIST:
+        case screenName.PRODUCTS_UNIT:
+        case screenName.PRODUCTS_TYPE:
+        case screenName.PRODUCTS_UNIT:
             nativeEvent(props, screenName.PRODUCTS_TAB, { initRouter: router });
             break;
         //check action manufacturings
-        case CATEGORY_CONSTANT.KEY_MANU_GROUP:
-        case CATEGORY_CONSTANT.KEY_MANU_LIST:
+        case screenName.MANU_GROUP:
+        case screenName.MANU_LIST:
             nativeEvent(props, screenName.MANU_FACT_TAB, { initRouter: router });
             break;
         // check action customer
-        case CATEGORY_CONSTANT.KEY_CUSTOMER_LIST:
-        case CATEGORY_CONSTANT.KEY_CUSTOMER_GROUP:
-        case CATEGORY_CONSTANT.KEY_CUSTOMER_PLANT:
+        case screenName.CUSTOMER_LIST:
+        case screenName.CUSTOMER_GROUP:
+        case screenName.CUSTOMER_PLANT:
             nativeEvent(props, screenName.CUSTOMER_TAB, { initRouter: router });
             break;
         default: Alert.alert(lang.aler, "Tính năng đang được phát triển. Bạn hãy quay lại sau nhé", [
