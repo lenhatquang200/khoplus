@@ -15,7 +15,6 @@ const COVER_ICON_MENU_SIZE = tablet
   : settingApp.scale(42);
 export default function ItemList(props) {
   const { item, actions } = props || {};
-
   const [listIcon, setListIcon] = useState([]);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function ItemList(props) {
       ]}
     >
       <View style={[styles.view_menu]}>
-        <Text style={styles.text_title_menu}>{item.title}</Text>
+        <Text style={styles.text_title_menu}>{item?.title}</Text>
       </View>
       <FlatList
         scrollEnabled={false}

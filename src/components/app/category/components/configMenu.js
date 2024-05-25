@@ -15,7 +15,6 @@ const sizeIcon = settingApp.scale(24);
 export async function configMenu(colleague) {
   let listConfig = [];
   const user_role = colleague?.role;
-  console.log("user_role", user_role);
   const list_Menu = [
     {
       keyObj: CATEGORY_CONSTANT.OBJ_PRODUCT,
@@ -126,21 +125,33 @@ export async function configMenu(colleague) {
         },
       ],
     },
-    // tessssss
+
     {
-      keyObj: CATEGORY_CONSTANT.OBJ_EXPORT_STORE,
+      keyObj: CATEGORY_CONSTANT.OBJ_EXPORT_IMPORT,
       title: lang.exportStore,
       data: [
         {
           icon: (
             <MaterialCommunityIcons
-              name="account-cash-outline"
-              size={sizeIcon}
+              name="home-minus"
+              size={30}
               color={colorIcon}
             />
           ),
-          keyApp: CATEGORY_CONSTANT.KEY_EXPORT_FOR_CUSTOMER,
-          title: lang.exportForCustomer,
+          keyApp: CATEGORY_CONSTANT.KEY_EXPORT,
+          title: "Xuất",
+          router: "",
+        },
+        {
+          icon: (
+            <MaterialCommunityIcons
+              name="home-plus"
+              size={30}
+              color={colorIcon}
+            />
+          ),
+          keyApp: CATEGORY_CONSTANT.KEY_IMPORT,
+          title: lang.importStore,
           router: "",
         },
       ],
@@ -153,8 +164,8 @@ export async function configMenu(colleague) {
         {
           icon: (
             <MaterialCommunityIcons
-              name="account-cash-outline"
-              size={sizeIcon}
+              name="cash-plus"
+              size={30}
               color={colorIcon}
             />
           ),
@@ -165,13 +176,57 @@ export async function configMenu(colleague) {
         {
           icon: (
             <MaterialCommunityIcons
-              name="account-cash-outline"
-              size={sizeIcon}
+              name="cash-minus"
+              size={30}
               color={colorIcon}
             />
           ),
           keyApp: CATEGORY_CONSTANT.KEY_SPEND,
           title: lang.spend,
+          router: "",
+        },
+        {
+          icon: <FontAwesome name="tags" size={sizeIcon} color={colorIcon} />,
+          keyApp: CATEGORY_CONSTANT.KEY_SPEND,
+          title: lang.type,
+          router: "",
+        },
+      ],
+    },
+
+    {
+      keyObj: CATEGORY_CONSTANT.OBJ_STORE,
+      title: lang.store,
+      data: [
+        {
+          icon: (
+            <MaterialCommunityIcons
+              name="warehouse"
+              size={sizeIcon}
+              color={colorIcon}
+            />
+          ),
+          keyApp: CATEGORY_CONSTANT.KEY_STORE_ITEM,
+          title: lang.list,
+          router: "",
+        },
+      ],
+    },
+
+    {
+      keyObj: CATEGORY_CONSTANT.OBJ_STAFF,
+      title: lang.staff,
+      data: [
+        {
+          icon: (
+            <MaterialCommunityIcons
+              name="account-group"
+              size={sizeIcon}
+              color={colorIcon}
+            />
+          ),
+          keyApp: CATEGORY_CONSTANT.KEY_STAFF_ITEM,
+          title: lang.list,
           router: "",
         },
       ],
@@ -201,6 +256,5 @@ export async function configMenu(colleague) {
       }
     });
   }
-  console.log("listConfig", listConfig);
   return listConfig;
 }

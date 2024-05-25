@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { settingApp, colorApp } from "../../../../public";
+import { settingApp, colorApp, Component } from "../../../../public";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CONSTANTS from "./CONSTANTS";
-const { width, height, space_16, size_20, size_24, space_8, size_14 } =
+const { width, height, space_16, size_20, size_24, space_8, width_32 } =
   settingApp;
 
 function HeaderProfile(props) {
   const { colleague, onLogout } = props;
-
+  console.log("HeaderProfile", colleague);
   return (
     <View style={styles.container}>
       <View style={styles.view_title}>
@@ -18,13 +18,7 @@ function HeaderProfile(props) {
       {/* view profile */}
       <View style={styles.view_info}>
         {/* image */}
-        <View style={styles.img_profile}>
-          <MaterialCommunityIcons
-            name="face-man-profile"
-            color={colorApp.colorPlaceText}
-            size={100}
-          />
-        </View>
+        <Component.AvatarCustom name={colleague?.name} size={60} />
         {/* info */}
         <View style={styles.view_info_name}>
           <Text style={styles.txt_name}>
@@ -34,7 +28,7 @@ function HeaderProfile(props) {
             {colleague?.phone || CONSTANTS.NONE_DATA}
           </Text>
           <Text style={styles.txt_mail}>
-            {colleague?.email || CONSTANTS.NONE_DATA}
+            {colleague?.role?.name || CONSTANTS.NONE_DATA}
           </Text>
         </View>
       </View>
@@ -44,7 +38,7 @@ function HeaderProfile(props) {
 export default HeaderProfile;
 const styles = StyleSheet.create({
   container: {
-    width,
+    width: width_32,
     minHeight: 150,
     paddingTop: settingApp.statusBarHeight,
   },
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
   },
   txt_name: {
     fontSize: size_20,
-    color: colorApp.colorText,
+    color: colorApp.gold,
     fontWeight: "600",
   },
   txt_mail: {

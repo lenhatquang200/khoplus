@@ -4,8 +4,8 @@ import settingApp from "../settingApp";
 
 export default function AvatarCustom({ size, name = "", picture = "" }) {
   let avatar = (name) => {
-    let fontSize = size - 4;
-    fontSize = fontSize || 30;
+    let fontSize = size - 24;
+    fontSize = fontSize;
     if (name && name.length > 0) {
       const arr_color = ["#536DFE", "#5AC8FA", "#FFCC00", "#22C993", "#666AD1"];
       let listName = name.trim().split(" ");
