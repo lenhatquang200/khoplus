@@ -21,16 +21,18 @@ async function GetAuthInfo() {
 
     if (refresh_token?.status == 200) {
       refresh_token = await refresh_token.json();
-      const { token, user } = refresh_token?.data;
-      const infoLogin = {
-        auth: { access_token: token, token_type: "Bearer" },
-        userInfo: user,
-        login: {
-          phone: user?.phone,
-        },
-      };
-      await AsyncStorage.setItem(AuthStorageKey, JSON.stringify(infoLogin));
-      return infoLogin;
+      if (refresh_token?.data?.token) {
+        const { token, user } = refresh_token?.data;
+        const infoLogin = {
+          auth: { access_token: token, token_type: "Bearer" },
+          userInfo: user,
+          login: {
+            phone: user?.phone,
+          },
+        };
+        await AsyncStorage.setItem(AuthStorageKey, JSON.stringify(infoLogin));
+        return infoLogin;
+      }
     } else {
       AsyncStorage.removeItem(AsyncStorage);
       let data = {

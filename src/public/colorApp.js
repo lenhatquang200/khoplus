@@ -34,7 +34,7 @@ const colorApp = {
 
   disable: "#ccc",
   placeholder: "#767676",
-  border_color: "#dee2e6",
+  border_color: "#E8E8E8",
 
   black_opacity_05: "rgba(0,0,0,0.5)",
   black_opacity_01: "rgba(0,0,0,0.1)",
