@@ -33,7 +33,6 @@ export default function UploadProducts(props) {
   const [activeBt, setActive] = useState(false);
 
   useEffect(() => {
-    console.log("dataItem", dataItem);
     if (dataItem?._id) {
       setActive(true);
     } else {
@@ -180,7 +179,6 @@ export default function UploadProducts(props) {
       price_cost: dataItem?.price_cost,
     };
     const result = await ApiCall.createProducts(dataUpdate);
-    console.log("result", result);
     if (result?.data?._id) {
       let toast = `${lang.create} ${lang.succees}`;
       dispatch(actions?.updateItemProduct(result?.data));
