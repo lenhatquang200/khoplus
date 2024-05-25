@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   Alert,
+  RefreshControl,
 } from "react-native";
 import {
   FloatButtonAdd,
@@ -90,6 +91,13 @@ export default function ManuList(props) {
     setRefreshing(false);
   }
 
+  function onRefresh() {
+    setRefreshing(true);
+    total_page = null;
+    current_page = 1;
+    loadData();
+  }
+
   function onLoadMore() {
     if (!total_page || (total_page && current_page == total_page)) {
       setIsLoadmore(false);
@@ -152,6 +160,13 @@ export default function ManuList(props) {
           maxToRenderPerBatch={20}
           removeClippedSubviews={true}
           onEndReached={() => onLoadMore()}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => onRefresh()}
+              tintColor={colorApp.blue_primary}
+            />
+          }
         />
       )}
       {!isLoading && (

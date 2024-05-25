@@ -115,7 +115,7 @@ export async function deleteManufacturing(id) {
 export async function deleteManufact_Group(id) {
   const method = "DELETE";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturing-groups/${id}`,
+    `${uri}/manufacturing/groups/${id}`,
     method
   );
   return result;
@@ -124,7 +124,7 @@ export async function deleteManufact_Group(id) {
 export async function updateManufact_Group(id, body) {
   const method = "PUT";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturing-groups/${id}`,
+    `${uri}/manufacturing/groups/${id}`,
     method,
     body
   );
@@ -134,7 +134,7 @@ export async function updateManufact_Group(id, body) {
 export async function createManufact_Group(body) {
   const method = "POST";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturing-groups`,
+    `${uri}/manufacturing/groups`,
     method,
     body
   );
