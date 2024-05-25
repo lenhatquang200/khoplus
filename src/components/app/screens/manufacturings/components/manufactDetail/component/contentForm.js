@@ -21,7 +21,7 @@ const ContentForm = React.forwardRef((props, ref) => {
 
   const [isEdit, setEdit] = useState(props?.isEdit);
   const [dataItem, setDataItem] = useState(props?.dataItem);
-  let onChangeCallback = debounce(_onChangeText, 500);
+  let onChangeCallback = debounce(_onChangeText, 300);
   const [isVisible, setIsVisible] = useState(false);
   const [listDataModal, setListDataModal] = useState([]);
 
@@ -31,7 +31,7 @@ const ContentForm = React.forwardRef((props, ref) => {
     }
 
     setEdit(props?.isEdit);
-  }, [props]);
+  }, [props?.dataItem, props?.isEdit]);
 
   function updateNewData() {
     if (dataItem?.code) {
@@ -110,8 +110,9 @@ const ContentForm = React.forwardRef((props, ref) => {
     if (typeModal == TYPE_INPUT.GROUP) {
       setDataItem({
         ...dataItem,
-        manufacturing_group: data,
-        manufacturing_group_id: data?._id,
+        group: {
+          ...data,
+        },
       });
     } else if (typeModal == TYPE_INPUT.BANK_NAME) {
       setDataItem({
@@ -146,6 +147,7 @@ const ContentForm = React.forwardRef((props, ref) => {
             },
           ]}
           scrollEnabled={false}
+          multiline={type === TYPE_INPUT.ADDRESS}
         />
       );
     } else {
@@ -165,6 +167,7 @@ const ContentForm = React.forwardRef((props, ref) => {
             },
           ]}
           scrollEnabled={false}
+          multiline={type === TYPE_INPUT.ADDRESS}
         />
       );
     }
@@ -211,7 +214,7 @@ const ContentForm = React.forwardRef((props, ref) => {
           <Text style={{ color: colorApp.red }}>{" *"}</Text>
         </Text>
         <Text style={styles.name_group}>
-          {dataItem?.manufacturing_group?.name || lang?.emptyText}
+          {dataItem?.group?.name || lang?.emptyText}
         </Text>
       </TouchableOpacity>
 
@@ -222,11 +225,11 @@ const ContentForm = React.forwardRef((props, ref) => {
           <Text style={{ color: colorApp.red }}>{" *"}</Text>
         </Text>
 
-        {inputValue(dataItem?.address, TYPE_INPUT.ADDRESS, styles.name_group)}
+        {inputValue(dataItem?.address, TYPE_INPUT.ADDRESS, styles.address)}
       </View>
 
       {/* Thông tin ngân hàng */}
-      <View style={styles.styles_line_view}>
+      {/* <View style={styles.styles_line_view}>
         <TouchableOpacity
           onPress={() => _obPressModal(TYPE_INPUT.BANK_NAME)}
           disabled={!isEdit}
@@ -237,8 +240,6 @@ const ContentForm = React.forwardRef((props, ref) => {
             {dataItem?.bank_name || lang?.emptyText}
           </Text>
         </TouchableOpacity>
-
-        {/* {inputValue(dataItem?.bank_name, TYPE_INPUT.BANK_NAME, styles.name_group)} */}
 
         <Text style={[styles.account_number, { marginTop: 8 }]}>
           {lang.bankNumber + ":"}
@@ -258,9 +259,9 @@ const ContentForm = React.forwardRef((props, ref) => {
             />
           </TouchableOpacity>
         )}
-      </View>
+      </View> */}
 
-      {/* Ghie chú */}
+      {/* Ghi chú */}
       <View style={styles.styles_line_view}>
         <Text style={styles.title_group}>{lang.node + ":"}</Text>
         {inputValue(dataItem?.note, TYPE_INPUT.NOTE, styles.txt_lable)}
@@ -278,7 +279,7 @@ const ContentForm = React.forwardRef((props, ref) => {
         onClose={() => setIsVisible(false)}
         isVisible={isVisible}
         listData={listDataModal}
-        dataField={dataItem?.manufacturing_group}
+        dataField={dataItem?.group}
         onUpdateGroup={onUpdateGroup}
         typeModal={typeModal}
       />

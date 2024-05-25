@@ -13,8 +13,8 @@ export default function ButtonUpdate(props: any) {
             <TouchableOpacity
                 onPress={() => props?.updateManufact()}
                 style={[styles.bt_update, {
-                    borderColor: colorApp.green_001,
-                    backgroundColor: colorApp.green_001
+                    borderColor: colorApp.green_004,
+                    backgroundColor: colorApp.green_004
                 }]}
             >
                 <Text style={[styles.txt_button, {

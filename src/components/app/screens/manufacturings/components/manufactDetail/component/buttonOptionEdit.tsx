@@ -9,11 +9,11 @@ export default function ButtonOptionEdit(props: any) {
             <TouchableOpacity
                 onPress={() => props?.onEdit(true)}
                 style={[styles.bt_update, {
-                    borderColor: colorApp.green_001,
+                    borderColor: colorApp.green_004,
                 }]}
             >
                 <Text style={[styles.txt_button, {
-                    color: colorApp.green_001
+                    color: colorApp.green_004
 
                 }]}>{lang.edit}</Text>
             </TouchableOpacity>

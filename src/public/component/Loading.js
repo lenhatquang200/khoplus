@@ -14,6 +14,7 @@ function Loading() {
         height: settingApp.height,
         justifyContent: "center",
         alignItems: "center",
+        zIndex: 99,
       }}
     >
       <ActivityIndicator size={"large"} color={colorApp.white} />

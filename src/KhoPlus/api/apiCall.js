@@ -86,7 +86,7 @@ export async function getManufacturingGroup(page, limit, name, search, code) {
 export async function updateManufacturing(id, body) {
   const method = "PUT";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturings/${id}`,
+    `${uri}/manufacturing/items/${id}`,
     method,
     body
   );
@@ -96,7 +96,7 @@ export async function updateManufacturing(id, body) {
 export async function cretaeManufacturing(body) {
   const method = "POST";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturings`,
+    `${uri}/manufacturing/items`,
     method,
     body
   );
@@ -106,7 +106,7 @@ export async function cretaeManufacturing(body) {
 export async function deleteManufacturing(id) {
   const method = "DELETE";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturings/${id}`,
+    `${uri}/manufacturing/items/${id}`,
     method
   );
   return result;
