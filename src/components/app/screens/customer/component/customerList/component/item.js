@@ -31,6 +31,12 @@ const Item = memo((props) => {
           </Text>
         </View>
       </View>
+      <TouchableOpacity
+        //onPress={() => onUpdateItem(dataItem)}
+        style={styles.bt_edit}
+      >
+        <Text style={styles.txt_call}>{lang.callPhone}</Text>
+      </TouchableOpacity>
     </View>
   );
 });
@@ -84,5 +90,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginLeft: 5,
     color: colorApp.colorText,
+  },
+
+  view_price: {
+    flexDirection: "row",
+    height: 25,
+    alignItems: "center",
+  },
+  bt_delete: {
+    width: 60,
+    height: 30,
+    backgroundColor: colorApp.red_opacity_03,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+  },
+  bt_edit: {
+    width: 60,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    position: "absolute",
+    right: 16,
+    backgroundColor: colorApp.green_opacity_01,
+  },
+  txt_call: {
+    fontSize: 14,
+    color: colorApp.green_005,
   },
 });
