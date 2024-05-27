@@ -169,3 +169,11 @@ export async function deleteProduct(id, type) {
   );
   return result;
 }
+
+export async function getListCustomer(page) {
+  page || 1;
+  const result = await KhoPlusApi.CallApi(
+    `${uri}/customer/items?limit=10&page=${page}`
+  );
+  return result;
+}

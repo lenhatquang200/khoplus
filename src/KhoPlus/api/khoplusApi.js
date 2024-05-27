@@ -19,7 +19,7 @@ async function GetAuthInfo() {
       },
     });
 
-    if (refresh_token?.status == 200) {
+    if (refresh_token?.status === 200) {
       refresh_token = await refresh_token.json();
       if (refresh_token?.data?.token) {
         const { token, user } = refresh_token?.data;
@@ -34,7 +34,7 @@ async function GetAuthInfo() {
         return infoLogin;
       }
     } else {
-      AsyncStorage.removeItem(AsyncStorage);
+      AsyncStorage.removeItem(AuthStorageKey);
       let data = {
         error: true,
         message: "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại",
@@ -43,7 +43,7 @@ async function GetAuthInfo() {
       return data;
     }
   } else {
-    AsyncStorage.removeItem(AsyncStorage);
+    AsyncStorage.removeItem(AuthStorageKey);
     let data = {
       error: true,
       message: "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại",
@@ -65,6 +65,7 @@ async function LoginAuth(param) {
   console.log(
     ` => ${response.status} ------------------------- ${response.url}`
   );
+  console.log("LoginAuth", response);
   if (response?.status === 403) {
     let data = {
       error: true,

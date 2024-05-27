@@ -17,7 +17,7 @@ export default function HeaderCategory(props) {
         /> */}
 
         <Component.AvatarCustom name={colleague?.name} size={24} />
-        <Ionicons name="settings-sharp" color={colorApp.colorText} size={28} />
+        <Ionicons name="settings-sharp" color={colorApp.white} size={28} />
       </View>
     </View>
   );

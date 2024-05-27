@@ -135,8 +135,6 @@ function ProductsList(props) {
         <Nonedata lable={lang.listEmpty} />
       ) : (
         <FlatList
-          onRefresh={() => onRefresh()}
-          refreshing={refreshing}
           extraData={listData}
           keyExtractor={(item, index) => item?._id + index + ""}
           data={listData}
