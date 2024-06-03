@@ -8,6 +8,7 @@ let _authInfo = null;
 
 async function GetAuthInfo() {
   let result = await AsyncStorage.getItem(AuthStorageKey);
+
   if (result) {
     result = JSON.parse(result);
     let refresh_token = await fetch(`${host_url}/auth/refresh-token`, {
@@ -65,7 +66,6 @@ async function LoginAuth(param) {
   console.log(
     ` => ${response.status} ------------------------- ${response.url}`
   );
-  console.log("LoginAuth", response);
   if (response?.status === 403) {
     let data = {
       error: true,
@@ -118,24 +118,20 @@ async function LogOut() {
 }
 
 async function GetAccessToken() {
-  let authInfo = await GetAuthInfo();
-  if (authInfo?.auth) {
-    return authInfo;
+  let result = await AsyncStorage.getItem(AuthStorageKey);
+  if (result) {
+    result = JSON.parse(result);
+    return result;
   } else {
-    // let expiredDate = new Date(authInfo.auth.created_time + (authInfo.auth.expires_in * 1000 / 2));
-    // if (expiredDate <= new Date()) {
-    //     authInfo = await renewToken(authInfo);
-    // }
     return null;
   }
 }
 
 async function CallApi(url, method, body) {
   let authInfo = await GetAccessToken();
-
   if (authInfo === null) {
     await LogOut();
-    return { error: true, message: "get access token fail" };
+    return { error: true, message: "Get access token fail" };
   }
 
   if (!method) method = "GET";

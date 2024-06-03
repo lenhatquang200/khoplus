@@ -6,7 +6,6 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 const Item = memo((props) => {
   const { item, index } = props?.obj || {};
   const [dataItem, setDataItem] = useState(item);
-  console.log("itemitem", item);
   return (
     <View style={styles.container}>
       <View style={styles.view_icon}>

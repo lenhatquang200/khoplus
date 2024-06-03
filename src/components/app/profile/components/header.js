@@ -8,7 +8,6 @@ const { width, height, space_16, size_20, size_24, space_8, width_32 } =
 
 function HeaderProfile(props) {
   const { colleague, onLogout } = props;
-  console.log("HeaderProfile", colleague);
   return (
     <View style={styles.container}>
       <View style={styles.view_title}>
