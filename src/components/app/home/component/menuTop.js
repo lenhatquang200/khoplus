@@ -1,72 +1,56 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import { colorApp, settingApp } from "../../../../public";
+import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
+import { colorApp, imageApp, lang, settingApp } from "../../../../public";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
-const WIDTH_CONTENT = (settingApp.width_32 - 62) / 3;
+const WIDTH_CONTENT = settingApp.width_32 / 3;
 export default function MenuTop(props) {
-  function renderItemSell() {
+  function renderItem(image, title) {
     return (
       <TouchableOpacity style={styles.view_item}>
-        <MaterialCommunityIcons
-          name="cart-plus"
-          color={colorApp.colorPlaceText}
-          size={30}
+        <Image
+          source={image}
+          style={{ width: 50, height: 50 }}
+          resizeMode="contain"
         />
-        <Text style={styles.txt_item}>{"Bán hàng"}</Text>
+
+        <Text style={styles.txt_item}>{title}</Text>
       </TouchableOpacity>
     );
   }
-
-  function renderItemCheckin() {
-    return (
-      <TouchableOpacity style={styles.view_item}>
-        <MaterialCommunityIcons
-          name="clock-time-three-outline"
-          color={colorApp.colorPlaceText}
-          size={30}
-        />
-        <Text style={styles.txt_item}>{"Chấm công"}</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  function renderItemView() {
-    return (
-      <TouchableOpacity style={styles.view_item}>
-        <MaterialCommunityIcons
-          name="chart-line"
-          color={colorApp.colorPlaceText}
-          size={30}
-        />
-        <Text style={styles.txt_item}>{"Báo cáo"}</Text>
-      </TouchableOpacity>
-    );
-  }
-
   return (
     <View style={styles.container}>
-      {renderItemSell()}
-      <View style={styles.line} />
-      {renderItemCheckin()}
-      <View style={styles.line} />
-      {renderItemView()}
+      <View style={styles.viewContent}>
+        {renderItem(imageApp.checkIn, lang.checkIn)}
+        {renderItem(imageApp.cashier, lang.cashier)}
+        {renderItem(imageApp.analysis, lang.analysis)}
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    width: settingApp.width_32 - 60,
-    minHeight: 120,
+    width: settingApp.width_32,
+    minHeight: 60,
     backgroundColor: colorApp.white,
-    marginLeft: 46,
-    borderRadius: 20,
+    marginLeft: 16,
+    borderRadius: 8,
     ...settingApp.shadow,
     marginTop: 16,
+    alignItems: "center",
+    overflow: "hidden",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  viewContent: {
+    width: settingApp.width_32,
+    minHeight: 60,
+    backgroundColor: colorApp.white,
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
     justifyContent: "space-between",
+    marginBottom: 8,
   },
   line: {
     width: 0.5,
@@ -74,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: colorApp.black_opacity_05,
   },
   view_item: {
-    width: WIDTH_CONTENT,
+    minWidth: WIDTH_CONTENT,
     height: 120,
     justifyContent: "center",
     alignItems: "center",

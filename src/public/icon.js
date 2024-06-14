@@ -83,3 +83,55 @@ export const icon_Info = (props) => {
     />
   );
 };
+
+export const icon_HeartOutline = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <MaterialCommunityIcons
+      name="cards-heart-outline"
+      size={size}
+      color={colorApp.black_opacity_05}
+    />
+  );
+};
+
+export const icon_Heart = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <MaterialCommunityIcons
+      name="heart"
+      size={size}
+      color={colorApp.black_opacity_05}
+    />
+  );
+};
+
+export const icon_Comment = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <MaterialCommunityIcons
+      name="comment-outline"
+      size={size}
+      color={colorApp.black_opacity_05}
+    />
+  );
+};
+
+export const icon_Share = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <MaterialCommunityIcons
+      name="share-variant-outline"
+      size={size}
+      color={colorApp.black_opacity_05}
+    />
+  );
+};

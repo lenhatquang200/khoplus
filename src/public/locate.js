@@ -71,6 +71,9 @@ const lang = {
 
   store: "Kho",
   staff: "Nhân viên",
+  checkIn: "Chấm công",
+  cashier: "Bán hàng",
+  analysis: "Báo cáo",
 };
 
 export default lang;

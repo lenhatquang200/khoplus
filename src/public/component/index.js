@@ -9,17 +9,19 @@ import Loadmore from "./Loadmore";
 import HeaderName from "./HeaderName";
 import FloatButtonAdd from "./FloatButtonAdd";
 import ButtonUpdate from "./ButtonUpdate";
+import ImageLazyload from "./ImageLazyload";
 
 export {
-    Loading,
-    LinearBackGround,
-    AvatarCustom,
-    HeaderSearch,
-    LoadingInContent,
-    Nonedata,
-    AsyncImage,
-    Loadmore,
-    HeaderName,
-    FloatButtonAdd,
-    ButtonUpdate
+  Loading,
+  LinearBackGround,
+  AvatarCustom,
+  HeaderSearch,
+  LoadingInContent,
+  Nonedata,
+  AsyncImage,
+  Loadmore,
+  HeaderName,
+  FloatButtonAdd,
+  ButtonUpdate,
+  ImageLazyload,
 };

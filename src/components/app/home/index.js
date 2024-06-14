@@ -7,15 +7,100 @@ import {
   StyleSheet,
   Platform,
   ScrollView,
-  Image,
+  FlatList,
 } from "react-native";
 import { Component, colorApp, imageApp, settingApp } from "../../../public";
 import HeaderHome from "./component/headerHome";
 import MenuTop from "./component/menuTop";
+import ItemNews from "./component/itemNews";
+import BannerSlide from "./component/bannerSlide";
+
+const listNews = [
+  { id: 1, data: "1234567890sdfghjklxcvbnm," },
+  { id: 2, data: "1234567890sdfghjklxcvbnm," },
+  { id: 3, data: "1234567890sdfghjklxcvbnm," },
+  { id: 4, data: "1234567890sdfghjklxcvbnm," },
+  { id: 5, data: "1234567890sdfghjklxcvbnm," },
+  { id: 6, data: "1234567890sdfghjklxcvbnm," },
+];
 
 function HomeScreen(props) {
   const dispatch = useDispatch();
   const colleague = useSelector((state) => state?.app?.colleague);
+  const [listNews, setListNews] = useState([]);
+
+  useEffect(() => {
+    createListNews();
+  }, []);
+
+  function createListNews() {
+    let listTest = [];
+    for (let index = 0; index < 100; index++) {
+      let txtContent = generateRandomText(3, 5);
+      let newObj = {
+        id: index + 1,
+        content: txtContent,
+        image: `https://picsum.photos/200/300${index}`,
+      };
+      listTest.push(newObj);
+    }
+    setListNews(listTest);
+  }
+
+  function generateRandomText(numParagraphs, numSentencesPerParagraph) {
+    const words = [
+      "lorem",
+      "ipsum",
+      "dolor",
+      "sit",
+      "amet",
+      "consectetur",
+      "adipiscing",
+      "elit",
+      "sed",
+      "do",
+      "eiusmod",
+      "tempor",
+      "incididunt",
+      "ut",
+      "labore",
+      "et",
+      "dolore",
+      "magna",
+      "aliqua",
+    ];
+    const paragraphs = [];
+
+    for (let p = 0; p < numParagraphs; p++) {
+      const sentences = [];
+
+      for (let i = 0; i < numSentencesPerParagraph; i++) {
+        const numWords = Math.floor(Math.random() * 10) + 5;
+        const sentenceWords = [];
+
+        for (let j = 0; j < numWords; j++) {
+          const randomIndex = Math.floor(Math.random() * words.length);
+          sentenceWords.push(words[randomIndex]);
+        }
+
+        const sentence = sentenceWords.join(" ") + ".";
+        sentences.push(sentence.charAt(0).toUpperCase() + sentence.slice(1));
+      }
+
+      paragraphs.push(sentences.join(" "));
+    }
+
+    return paragraphs.join("\n\n");
+  }
+
+  function viewTopList() {
+    return (
+      <View>
+        <MenuTop />
+        <BannerSlide />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -23,9 +108,14 @@ function HomeScreen(props) {
       <Component.LinearBackGround />
       <HeaderHome colleague={colleague} />
 
-      <ScrollView>
-        <MenuTop />
-      </ScrollView>
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={listNews}
+        keyExtractor={(item, index) => `${item?.id}`}
+        renderItem={({ item, index }) => <ItemNews item={item} />}
+        ListHeaderComponent={() => viewTopList()}
+      />
     </View>
   );
 }
@@ -36,6 +126,6 @@ const styles = StyleSheet.create({
   },
   statusBar: {
     width: settingApp.width,
-    height: settingApp.statusBarHeight + 20,
+    height: settingApp.statusBarHeight,
   },
 });
