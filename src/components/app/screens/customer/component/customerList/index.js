@@ -91,7 +91,9 @@ export default function CustomerList(props) {
               onDelete={alertDelete}
               onUpdateItem={onUpdateItem}
               gotoDetail={(item) =>
-                props?.navigation?.navigate(screenName.DETAIL_PRODUCT, { item })
+                props?.navigation?.navigate(screenName.CUSTOMER_DETAIL, {
+                  item,
+                })
               }
             />
           )}

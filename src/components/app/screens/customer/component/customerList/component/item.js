@@ -7,7 +7,10 @@ const Item = memo((props) => {
   const { item, index } = props?.obj || {};
   const [dataItem, setDataItem] = useState(item);
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => props?.gotoDetail()}
+      style={styles.container}
+    >
       <View style={styles.view_icon}>
         <FontAwesome name="user" color={colorApp.disable} size={40} />
         <View style={styles.view_name}>
@@ -36,7 +39,7 @@ const Item = memo((props) => {
       >
         <Text style={styles.txt_call}>{lang.callPhone}</Text>
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 });
 export default Item;

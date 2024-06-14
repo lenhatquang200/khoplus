@@ -19,6 +19,9 @@ async function GetAuthInfo() {
         Authorization: `Bearer ${result?.auth?.access_token}`,
       },
     });
+    if (result?.auth?.access_token) {
+      return result;
+    }
 
     if (refresh_token?.status === 200) {
       refresh_token = await refresh_token.json();
