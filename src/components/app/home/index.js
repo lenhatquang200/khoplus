@@ -14,6 +14,7 @@ import HeaderHome from "./component/headerHome";
 import MenuTop from "./component/menuTop";
 import ItemNews from "./component/itemNews";
 import BannerSlide from "./component/bannerSlide";
+import LearnProduct from "./component/learnProduct";
 
 const listNews = [
   { id: 1, data: "1234567890sdfghjklxcvbnm," },
@@ -98,6 +99,7 @@ function HomeScreen(props) {
       <View>
         <MenuTop />
         <BannerSlide />
+        <LearnProduct />
       </View>
     );
   }

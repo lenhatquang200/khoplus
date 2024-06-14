@@ -55,7 +55,7 @@ const BannerSlide = () => {
     </View>
   );
 };
-export default BannerSlide;
+export default React.memo(BannerSlide);
 
 const styles = StyleSheet.create({
   container: {
