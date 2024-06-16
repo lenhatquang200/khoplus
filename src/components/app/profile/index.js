@@ -13,7 +13,8 @@ import { HeaderProfile } from "./components";
 import KhoPlus from "KhoPlus/api/khoplusApi";
 import CONSTANTS from "./components/CONSTANTS";
 import { screenName } from "router/screenName";
-import { HeaderAction, HeaderName, HeaderSearch } from "public/component";
+import { HeaderAction } from "public/component";
+import Indvidual from "./components/individual";
 
 const { space_8, space_16, size_14, size_20, width } = settingApp;
 function Profile(props) {
@@ -43,9 +44,9 @@ function Profile(props) {
     <View style={styles.mainView}>
       <Component.LinearBackGround />
       <HeaderAction title={"Thông tin"} />
-      <ScrollView style={{ paddingLeft: space_16 }}>
+      <ScrollView>
         <HeaderProfile colleague={colleague} />
-        <View style={{ width, height: 450 }} />
+        <Indvidual colleague={colleague} />
         {buttonLogout()}
       </ScrollView>
     </View>

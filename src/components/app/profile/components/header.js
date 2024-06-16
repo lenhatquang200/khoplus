@@ -38,7 +38,8 @@ export default HeaderProfile;
 const styles = StyleSheet.create({
   container: {
     width: width_32,
-    minHeight: 150,
+    minHeight: 80,
+    marginBottom: 16,
   },
   view_title: {
     height: 60,
