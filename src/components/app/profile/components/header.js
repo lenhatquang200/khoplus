@@ -10,9 +10,9 @@ function HeaderProfile(props) {
   const { colleague, onLogout } = props;
   return (
     <View style={styles.container}>
-      <View style={styles.view_title}>
+      {/* <View style={styles.view_title}>
         <Text style={styles.txt_title}>{"Thông tin"}</Text>
-      </View>
+      </View> */}
 
       {/* view profile */}
       <View style={styles.view_info}>
@@ -27,7 +27,7 @@ function HeaderProfile(props) {
             {colleague?.phone || CONSTANTS.NONE_DATA}
           </Text>
           <Text style={styles.txt_mail}>
-            {colleague?.role?.name || CONSTANTS.NONE_DATA}
+            {colleague?.code || CONSTANTS.NONE_DATA}
           </Text>
         </View>
       </View>
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   container: {
     width: width_32,
     minHeight: 150,
-    paddingTop: settingApp.statusBarHeight,
   },
   view_title: {
     height: 60,
@@ -52,13 +51,17 @@ const styles = StyleSheet.create({
     color: colorApp.colorText,
   },
   view_info: {
-    width,
-    height: 120,
+    width: settingApp.width_32,
+    minHeight: 80,
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: colorApp.white,
+    paddingLeft: 16,
+    borderRadius: 8,
+    ...settingApp.shadow,
   },
   view_info_name: {
-    height: 120,
+    minHeight: 80,
     justifyContent: "center",
     paddingLeft: space_16,
   },
@@ -70,16 +73,16 @@ const styles = StyleSheet.create({
   },
   txt_phone: {
     fontSize: space_16,
-    color: colorApp.white,
+    color: colorApp.colorText,
     fontWeight: "600",
   },
   txt_name: {
     fontSize: size_20,
-    color: colorApp.gold,
+    color: colorApp.colorText,
     fontWeight: "600",
   },
   txt_mail: {
     fontSize: space_16,
-    color: colorApp.white,
+    color: colorApp.colorText,
   },
 });

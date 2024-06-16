@@ -10,6 +10,7 @@ import HeaderName from "./HeaderName";
 import FloatButtonAdd from "./FloatButtonAdd";
 import ButtonUpdate from "./ButtonUpdate";
 import ImageLazyload from "./ImageLazyload";
+import HeaderAction from "./HeaderAction";
 
 export {
   Loading,
@@ -24,4 +25,5 @@ export {
   FloatButtonAdd,
   ButtonUpdate,
   ImageLazyload,
+  HeaderAction,
 };

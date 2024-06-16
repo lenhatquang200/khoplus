@@ -13,11 +13,13 @@ import { HeaderProfile } from "./components";
 import KhoPlus from "KhoPlus/api/khoplusApi";
 import CONSTANTS from "./components/CONSTANTS";
 import { screenName } from "router/screenName";
+import { HeaderAction, HeaderName, HeaderSearch } from "public/component";
 
 const { space_8, space_16, size_14, size_20, width } = settingApp;
 function Profile(props) {
   const dispatch = useDispatch();
   const colleague = useSelector((state) => state?.app?.colleague);
+  console.log("colleague", colleague);
 
   async function _onLogout() {
     KhoPlus.LogOut();
@@ -38,12 +40,9 @@ function Profile(props) {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={styles.mainView}>
       <Component.LinearBackGround />
+      <HeaderAction title={"Thông tin"} />
       <ScrollView style={{ paddingLeft: space_16 }}>
         <HeaderProfile colleague={colleague} />
         <View style={{ width, height: 450 }} />
@@ -55,6 +54,10 @@ function Profile(props) {
 export default Profile;
 
 const styles = StyleSheet.create({
+  mainView: {
+    flex: 1,
+    alignItems: "center",
+  },
   background: {
     position: "absolute",
     left: 0,
@@ -77,5 +80,19 @@ const styles = StyleSheet.create({
     fontSize: size_14,
     color: colorApp.red,
     fontWeight: "600",
+  },
+  txt_titleHeader: {
+    fontSize: settingApp.size_18,
+    fontWeight: "600",
+    color: colorApp.white,
+  },
+  view_header: {
+    width: settingApp.width_32,
+    height: settingApp.statusBarHeight + 60,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: 32,
+    paddingLeft: settingApp.space_16,
   },
 });
