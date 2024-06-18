@@ -56,13 +56,13 @@ export default function HeaderHome(props) {
       </View>
 
       <View style={styles.view_option}>
-        <TouchableOpacity style={styles.bt_option}>
+        {/* <TouchableOpacity style={styles.bt_option}>
           <MaterialCommunityIcons
             name="qrcode-scan"
             color={colorApp.white}
             size={30}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.bt_option}>
           <Ionicons
