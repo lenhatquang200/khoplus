@@ -11,6 +11,7 @@ import FloatButtonAdd from "./FloatButtonAdd";
 import ButtonUpdate from "./ButtonUpdate";
 import ImageLazyload from "./ImageLazyload";
 import HeaderAction from "./HeaderAction";
+import EmptyView from "./EmptyView";
 
 export {
   Loading,
@@ -26,4 +27,5 @@ export {
   ButtonUpdate,
   ImageLazyload,
   HeaderAction,
+  EmptyView,
 };

@@ -7,6 +7,7 @@ const infomation = require("./infomation.png");
 const leave = require("./leave.png");
 const history_checkin = require("./history_checkin.png");
 const salary = require("./salary.png");
+const empty = require("./empty.png");
 
 export default {
   logoWhiteApp,
@@ -18,4 +19,5 @@ export default {
   leave,
   history_checkin,
   salary,
+  empty,
 };

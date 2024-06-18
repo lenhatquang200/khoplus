@@ -4,6 +4,7 @@ const storeJson = require("./storeJson.json");
 const settingJson = require("./settingJson.json");
 const loading = require("./loading.json");
 const qrcode = require("./qrcode.json");
+const empty = require("./empty.json");
 
 export default {
   shippingJson,
@@ -12,4 +13,5 @@ export default {
   settingJson,
   loading,
   qrcode,
+  empty,
 };

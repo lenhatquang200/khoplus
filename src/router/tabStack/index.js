@@ -15,7 +15,7 @@ import {
 
 import HomeScreen from "../../components/app/home";
 import Category from "../../components/app/category";
-import Selling from "../../components/app/selling";
+import Selling from "../../components/app/qrcode";
 import History from "../../components/app/history";
 import Profile from "../../components/app/profile";
 import { colorApp, lottiesJson, settingApp } from "../../public";
