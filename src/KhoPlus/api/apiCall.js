@@ -177,3 +177,9 @@ export async function getListCustomer(page) {
   );
   return result;
 }
+
+export async function getListCustomerAddress(page) {
+  page || 1;
+  const result = await KhoPlusApi.CallApi(`${uri}/customer/addresss`);
+  return result;
+}

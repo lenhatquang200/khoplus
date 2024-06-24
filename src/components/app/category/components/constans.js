@@ -14,7 +14,7 @@ export const CATEGORY_CONSTANT = {
   OBJ_CUSTOMER: "customer",
   KEY_CUSTOMER_GROUP: "customer_group",
   KEY_CUSTOMER_LIST: "customer_list",
-  KEY_CUSTOMER_PLANT: "customer_plant",
+  KEY_CUSTOMER_ADDRESS: "customer_address",
 
   OBJ_IMPORT_STORE: "importStore",
   KEY_IMPORT_STORE_FOMR_MANU: "importStore_form_manu",

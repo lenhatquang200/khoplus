@@ -21,7 +21,7 @@ export const screenName = {
   CUSTOMER_TAB: "customerTab",
   CUSTOMER_LIST: "customerList",
   CUSTOMER_GROUP: "customerGroup",
-  CUSTOMER_PLANT: "customerPlant",
+  CUSTOMER_ADDRESS: "customerPlant",
   CUSTOMER_DETAIL: "custimerDetail",
 
   //import store

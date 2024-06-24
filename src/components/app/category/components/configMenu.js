@@ -98,11 +98,15 @@ export async function configMenu(colleague) {
         },
         {
           icon: (
-            <FontAwesome name="pagelines" size={sizeIcon} color={colorIcon} />
+            <MaterialIcons
+              name="location-city"
+              size={sizeIcon}
+              color={colorIcon}
+            />
           ),
-          keyApp: CATEGORY_CONSTANT.KEY_CUSTOMER_PLANT,
-          title: lang.plant,
-          router: screenName.CUSTOMER_PLANT,
+          keyApp: CATEGORY_CONSTANT.KEY_CUSTOMER_ADDRESS,
+          title: lang.address,
+          router: screenName.CUSTOMER_ADDRESS,
         },
       ],
     },

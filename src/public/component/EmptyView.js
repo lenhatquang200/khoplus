@@ -8,7 +8,7 @@ import { View, Text, Image } from "react-native";
 
 export default function EmptyView({ placeEmpty, styles }) {
   const lottie = useRef();
-
+  placeEmpty = placeEmpty || "Danh sách đang trống";
   return (
     <View
       style={[
@@ -31,7 +31,7 @@ export default function EmptyView({ placeEmpty, styles }) {
           textAlign: "center",
         }}
       >
-        {"Hiện tại bạn chưa có đơn hàng nào!!"}
+        {placeEmpty}
       </Text>
     </View>
   );

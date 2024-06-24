@@ -1,17 +1,16 @@
 import { ApiCall } from "KhoPlus";
 import { colorApp, settingApp } from "public";
+import React, { useEffect, useState, useRef } from "react";
+import { View, Text, StyleSheet, FlatList, RefreshControl } from "react-native";
+import Item from "./component/item";
 import {
   FloatButtonAdd,
-  LoadingInContent,
   Loadmore,
+  LoadingInContent,
   Nonedata,
 } from "public/component";
-import React, { useEffect, useState } from "react";
-import { View, RefreshControl, StyleSheet, FlatList } from "react-native";
-import { screenName } from "router/screenName";
-import Item from "./component/item";
 
-export default function CustomerList(props) {
+export default function CustomerAddress(props) {
   let current_page = 1;
   let total_page = null;
 
@@ -28,7 +27,7 @@ export default function CustomerList(props) {
   async function loadData() {
     let newList = listData;
     if (!total_page || (total_page && current_page <= total_page)) {
-      const result = await ApiCall.getListCustomer(current_page);
+      const result = await ApiCall.getListCustomerAddress(current_page);
       if (result?.data?.length != 0) {
         total_page = result?.total_page;
         if (current_page == 1) {
