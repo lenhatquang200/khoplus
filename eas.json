@@ -1,19 +1,22 @@
 {
-    "cli": {
-      "version": ">= 8.0.0"
+  "build": {
+    "production": {
+      "releaseChannel": "production",
+      "env": {
+        "API_URL": "https://khoplus.mienphi.pro/api"
+      }
     },
-    "build": {
-      "development": {
-        "developmentClient": true,
-        "distribution": "internal"
-      },
-      "preview": {
-        "distribution": "internal"
-      },
-      "production": {}
+    "staging": {
+      "releaseChannel": "staging",
+      "env": {
+        "API_URL": "https://khoplus.mienphi.pro/api"
+      }
     },
-    "submit": {
-      "production": {}
+    "development": {
+      "releaseChannel": "dev",
+      "env": {
+        "API_URL": "https://khoplus.mienphi.pro/api"
+      }
     }
   }
-  
+}

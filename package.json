@@ -11,7 +11,10 @@
     "ts:check": "tsc",
     "update": "eas update",
     "build-local": "eas build --profile preview --local",
-    "build": "eas build --profile preview"
+    "build": "eas build --profile preview",
+    "production":"expo build:android --release-channel production",
+    "staging":"expo build:android --release-channel production",
+    "dev":"expo build:android --release-channel dev"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.1",

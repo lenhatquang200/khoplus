@@ -3,13 +3,21 @@ import Constanst from "expo-constants";
 
 let deviceName = Constanst?.deviceName;
 let version = `${Constanst?.expoConfig?.version}`
+let apiUrl = "";
+const releaseChannel = Constants.manifest.releaseChannel;
 
+if (releaseChannel === 'production') {
+    apiUrl = "https://khoplus.mienphi.pro/api" // URL cho production
+  } else if (releaseChannel === 'staging') {
+    apiUrl = 'https://khoplus.mienphi.pro/api'; // URL cho staging
+  }
+  
 const Configs = {
     timezone : "Asia/Ho_Chi_Minh",
     device_name: deviceName,
     version:version,
     clientid:Constanst?.expoConfig?.extra?.clientid,
-    apiHost:Constanst?.expoConfig?.extra?.apiHost
+    apiHost: apiUrl
 }
 
 Configs.timezone = Localization.timezone;
