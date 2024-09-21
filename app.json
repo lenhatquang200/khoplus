@@ -54,7 +54,15 @@
           }
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow KhoPlus to access your camera",
+          "microphonePermission": "Allow KhoPlus to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
     ],
     "updates": {
       "url": "https://u.expo.dev/1f464ed1-76be-4543-8c1b-d31984f882a5"
@@ -64,3 +72,4 @@
     }
   }
 }
+ 

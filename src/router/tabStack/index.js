@@ -15,7 +15,7 @@ import {
 
 import HomeScreen from "../../components/app/home";
 import Category from "../../components/app/category";
-import Selling from "../../components/app/qrcode";
+import ScanCodeQR from "../../components/app/scanCodeQR";
 import History from "../../components/app/history";
 import Profile from "../../components/app/profile";
 import { colorApp, lottiesJson, settingApp } from "../../public";
@@ -66,10 +66,10 @@ function MyTabs(props) {
       />
 
       <Tabs.Screen
-        name="Selling"
-        component={Selling}
+        name="ScanCodeQR"
+        component={ScanCodeQR}
         options={{
-          tabBarLabel: "Bán Hàng",
+          tabBarLabel: "ScanCodeQR",
           tabBarIcon: ({ focused }) => (
             <View
               style={{

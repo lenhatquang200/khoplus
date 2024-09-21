@@ -13,6 +13,7 @@ import ImageLazyload from "./ImageLazyload";
 import HeaderAction from "./HeaderAction";
 import EmptyView from "./EmptyView";
 import SafeEra from "./SafeEra";
+import QRCodeScanner from "./QRCodeScaner";
 
 export {
   SafeEra,
@@ -30,4 +31,5 @@ export {
   ImageLazyload,
   HeaderAction,
   EmptyView,
+  QRCodeScanner
 };
