@@ -9,6 +9,7 @@
     "scheme": "khoplus",
     "extra": {
       "clientid": "khoplus.mobile",
+      "defaultApiUrl":"https://khoplus.mienphi.pro/api",
       "eas": {
         "projectId": "1f464ed1-76be-4543-8c1b-d31984f882a5"
       }

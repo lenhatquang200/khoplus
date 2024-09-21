@@ -4,12 +4,16 @@ import {
   View,
   StyleSheet,
   Image,
-  ScrollView,
+  Platform,
   Keyboard,
   Alert,
   TouchableOpacity,
+  Text
 } from "react-native";
-import { settingApp, imageApp, Component, colorApp, Utils } from "../../public";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { LinearGradient } from "expo-linear-gradient";
+import { settingApp, imageApp, colorApp, Utils } from "../../public";
 import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
 import FromLogin from "./component/formLogin";
@@ -96,56 +100,65 @@ export default function AuthApp(props) {
   }
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => Keyboard.dismiss()}
-      style={[styles.container]}
+    <KeyboardAwareScrollView
+      extraScrollHeight={Platform?.OS === 'ios' ? 0 : -(height * 0.22)}
+      scrollEnabled={false}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="handled"
+      className="flex flex-1"
+      // eslint-disable-next-line react-native/no-inline-styles
+      contentContainerStyle={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      bounces={false}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
     >
-      {isLoading ? (
-        <Splash />
-      ) : (
-        <View
-          style={[
-            styles.view_scroll,
-            {
-              height: keyboardVisible ? height * 1.5 : height,
-            },
-          ]}
-        >
-          <View style={styles.view_logo}>
-            <Image
-              source={imageApp.logoWhiteApp}
-              style={{ resizeMode: "stretch" }}
-            />
-          </View>
-
+      <LinearGradient
+        // Background Linear Gradient
+        colors={[colorApp.blue_primary, colorApp.green_primary,]}
+        style={styles.background}
+        start={{ x: 0.2, y: 0.2 }}
+        end={{ x: 0.5, y: 1 }}
+      >
+        {isLoading ? (
+          <Splash />
+        ) : (
           <View
             style={[
-              styles.view_login,
-              {
-                marginBottom: keyboardVisible ? 350 : 1,
-                minHeight: keyboardVisible ? height : height * 0.8,
-              },
+              styles.view_scroll,
+              
             ]}
           >
-            <View style={styles.view_profile}>
-              <FontAwesome
-                name="user-o"
-                color={colorApp.green_primary}
-                size={35}
+            <View style={styles.view_logo}>
+              <Image
+                source={imageApp.logoWhiteApp}
+                style={{ resizeMode: "stretch" }}
               />
             </View>
-            <FromLogin
-              isLoginFail={isLoginFail}
-              infoUser={infoUser}
-              onLogin={(param) => _onLogin(param)}
-              isLogout={isLogout}
-              resetLogOut={() => setIsLogout(false)}
-            />
+            <View
+              style={[
+                styles.view_login,
+                // {
+                //   marginBottom: keyboardVisible ? 350 : 1,
+                //   minHeight: keyboardVisible ? height : height * 0.8,
+                // },
+              ]}
+            >
+              <FromLogin
+                isLoginFail={isLoginFail}
+                infoUser={infoUser}
+                onLogin={(param) => _onLogin(param)}
+                isLogout={isLogout}
+                resetLogOut={() => setIsLogout(false)}
+                navigation={props.navigation}
+              />
+            </View>
           </View>
-        </View>
-      )}
-    </TouchableOpacity>
+        )}
+      </LinearGradient>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -182,15 +195,30 @@ const styles = StyleSheet.create({
   },
   view_login: {
     width: width,
-    backgroundColor: settingApp.white,
+    backgroundColor: colorApp.white_snow,
     alignItems: "center",
-    borderRadius: 62,
-    paddingTop: 62,
+    borderRadius: 32,
+    paddingTop: 40,
     ...settingApp.shadow_Top,
+    minHeight:height
   },
   view_scroll: {
-    backgroundColor: colorApp.green_primary,
+    // backgroundColor: colorApp.green_primary,
     minHeight: settingApp.height,
     paddingTop: settingApp.statusBarHeight,
   },
+
+  viewAction:{
+        width:settingApp.width_32,
+        height:60,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        marginTop:22
+    },
+    txtFogot:{
+        fontSize:14,
+        color:colorApp.blue_primary,
+        fontWeight:"400",
+    },
 });

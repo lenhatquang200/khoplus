@@ -1,7 +1,7 @@
 import Config from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const isDev = process.env.NODE_ENV === "development";
-const host_url = `https://${Config.apiHost}`;
+const host_url = Config.apiHost;
 
 export const AuthStorageKey = "AUTH_KHOPLUS";
 let _authInfo = null;
@@ -67,7 +67,7 @@ async function LoginAuth(param) {
     },
   });
   console.log(
-    ` => ${response.status} ------------------------- ${response.url}`
+    ` => ${response.status} ---- ${response.url}`
   );
   if (response?.status === 403) {
     let data = {
