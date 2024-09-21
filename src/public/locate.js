@@ -2,6 +2,7 @@ const lang = {
   login: "Đăng nhập",
   logout: "Đăng xuất",
   rememberLogin: "Ghi nhớ đăng nhập",
+  placeHolderDomain:"Đường dẫn hệ thống",
   placeHolderUserName: "Nhập số điện thoại nhân viên",
   placeHolderPass: "Nhập mật khẩu",
   userName: "Tên đăng nhập",

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text,StyleSheet, Platform, StatusBar, AppState } from 'react-native';
+import { View, Text,StyleSheet, Platform, StatusBar, AppState, TouchableOpacity } from 'react-native';
 import { CameraView, useCameraPermissions } from "expo-camera"
 
 import { useIsFocused } from '@react-navigation/native';
 import settingApp from 'public/settingApp';
 import colorApp from 'public/colorApp';
+import NavigationRoot from 'router';
 
 const { width } = settingApp
 const qrSize = width * 0.7; // Kích thước khung quét QR
@@ -15,7 +16,12 @@ const borderRadius = 30
 const horrizon = settingApp.width * 0.2
 const vertical = settingApp.height * 0.3
 
-const QRCodeScanner = ({onResult}) => {
+const QRCodeScanner = ({
+  onResult, 
+  verticalProps = vertical, 
+  horrizonProps,
+  isBack = false
+}) => {
   
   const [permission, requestPermission] = useCameraPermissions();
   const isPremissionGranted = Boolean(permission?.granted)
@@ -37,8 +43,6 @@ const QRCodeScanner = ({onResult}) => {
   }, [isFocused])
 
   function handleQRCode(data) {
-    console.log("QRcode", data);
-    
     if(onResult){
       onResult(data)
     }
@@ -48,6 +52,7 @@ const QRCodeScanner = ({onResult}) => {
   return (
     <View style={styles.container}>
       {Platform?.OS === "android" ? <StatusBar hidden /> : null}
+      
       <CameraView
           style={StyleSheet.absoluteFillObject}
           facing='back'
@@ -60,15 +65,20 @@ const QRCodeScanner = ({onResult}) => {
             }
           }}
         >
+        <TouchableOpacity 
+        onPress={() => NavigationRoot.pop()}
+        style={styles.buttonBack}>
+          <Text style={styles.txtGoback}>{'Quay lại'}</Text>
+        </TouchableOpacity>
          <View style={styles.overlay}>
           {/* Khung quét QR */}
           {/* <View style={styles.qrContainer}>
           </View> */}
 
-          <View style={styles.top_left_radius}></View>
-          <View style={styles.top_right_radius}></View>
-          <View style={styles.bottom_left_radius}></View>
-          <View style={styles.bottom_right_radius}></View>
+          <View style={[styles.top_left_radius,]}></View>
+          <View style={[styles.top_right_radius,]}></View>
+          <View style={[styles.bottom_left_radius, { bottom: verticalProps, left: horrizonProps}]}></View>
+          <View style={[styles.bottom_right_radius, { bottom: verticalProps, right: horrizonProps} ]}></View>
 
           {/* Hướng dẫn */}
           <Text style={styles.instructionText}>
@@ -76,8 +86,6 @@ const QRCodeScanner = ({onResult}) => {
           </Text>
         </View>
         </CameraView>
-
-     
     </View>
   );
 };
@@ -158,8 +166,24 @@ const styles = StyleSheet.create({
     borderBottomWidth: thickness, 
     borderRightWidth: thickness, 
     borderBottomRightRadius: borderRadius 
+  },
+  buttonBack:{
+    width:120,
+    height:50,
+    borderRadius:25,
+    backgroundColor:colorApp.white,
+    position:"absolute",
+    left:24,
+    bottom:60,
+    justifyContent:"center",
+    alignItems:'center',
+    zIndex:2
+  },
+  txtGoback:{
+    fontSize:14,
+    color:colorApp.colorText,
+    fontWeight:"500"
   }
-
 });
 
 export default QRCodeScanner;

@@ -7,7 +7,7 @@ import { settingApp } from "../../public";
 
 import AuthApp from "components/auth/authenScreen";
 import TabStack from "../tabStack";
-
+import ScanDomain from "components/auth/component/scanDomain";
 // PRODUCTS
 import ProductsTab from "components/app/screens/products";
 import UploadProducts from "components/app/screens/products/components/uploadProducts";
@@ -48,6 +48,7 @@ function AppScreen(props) {
       initialRouteName={screenName.AUTH_APP}
     >
       <Stack.Screen component={AuthApp} name={screenName.AUTH_APP} />
+      <Stack.Screen component={ScanDomain} name={screenName.SCAN_DOMAIN} />
       <Stack.Screen
         component={TabStack}
         name={screenName.TAB_STACK}

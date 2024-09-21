@@ -135,3 +135,16 @@ export const icon_Share = (props) => {
     />
   );
 };
+
+export const icon_Back = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <Ionicons
+      name="arrow-back"
+      size={size}
+      color={colorApp.black}
+    />
+  );
+};

@@ -32,6 +32,7 @@ export default function AuthApp(props) {
   const [isLoginFail, setLoginFail] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
+  const [isScanner, setIsScanner] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
@@ -62,6 +63,7 @@ export default function AuthApp(props) {
       setIsLogout(props?.route?.params?.isLogout);
     }
   }, [props]);
+
 
   function dispatchColluegue(response) {
     setInfoUser(response);
@@ -153,6 +155,7 @@ export default function AuthApp(props) {
                 isLogout={isLogout}
                 resetLogOut={() => setIsLogout(false)}
                 navigation={props.navigation}
+                openScanner={() => setIsScanner(true)}
               />
             </View>
           </View>

@@ -14,6 +14,7 @@ module.exports = function (api) {
             "@public": "./src/public",
             "@router": "./src/router",
             "@state": "./src/state",
+            "@navigation":"./src/navigation",
             "@KhoPlus": "./src/KhoPlus",
           },
         },

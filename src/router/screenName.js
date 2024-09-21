@@ -1,6 +1,7 @@
 export const screenName = {
   AUTH_APP: "AuthApp",
   TAB_STACK: "TabStack",
+  SCAN_DOMAIN: "ScanDomain",
 
   //   productNAme
   PRODUCTS_TAB: "ProductsTab",

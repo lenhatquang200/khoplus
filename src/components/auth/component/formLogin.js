@@ -10,32 +10,32 @@ import {
     ActivityIndicator,
     KeyboardAvoidingView,
     Platform,
+    Pressable,
 } from "react-native";
 import { settingApp, lang, colorApp, Utils } from "../../../public";
 
 import { FontAwesome, Feather } from "@expo/vector-icons";
 import { screenName } from "router/screenName";
-
-const { width } = settingApp;
-const WIDTH_TEXT_INPUT = Number(width * 0.8);
-const BROWSER = "browser";
-const SUPPORT = "support";
-
-const URL_BROWSER = `https://web.khoplus.com/`;
+import { QRCodeScanner } from "public/component";
+import NavigationRoot from "router";
 
 let _user = null
 let _pass = null
 export default function FromLogin(props) {
-    const { infoUser, isLoginFail, isLogout, resetLogOut } = props || {};
+    const { infoUser, isLoginFail, isLogout, resetLogOut, openScanner } = props || {};
     const [userName, setUsername] = useState('');
     const [passWord, setPassword] = useState('')
     const [isLogin, setLogin] = useState(false);
+    const [domainUser, setDomain] = useState('')
+    const [isRepeat, setIsRepeat] = useState(false)
 
     const text_input_user = useRef()
     const text_input_pass = useRef()
 
     useEffect(() => {
-
+        if(domainUser?.trim().length !== 0){
+            setIsRepeat(true)
+        }
         return() =>{
             _user =  null;
             _pass =  null;
@@ -86,6 +86,10 @@ export default function FromLogin(props) {
         setPassword(text);
     }
 
+    const handleChangeDomain = (text) => {
+        setDomain(text)
+    }
+
     function onLogin(){
         props.navigation.replace(screenName.TAB_STACK);
         //  || !Utils.isPhoneNumber(_user)
@@ -107,7 +111,51 @@ export default function FromLogin(props) {
                 <Text style={styles.txtHeader}>{'Đăng nhập'}</Text>
                 <Text style={styles.txtHeader_des}>{'Chào mừng bạn quay lại với KhoPlus'}</Text>
             </View>
+             {/* DOMAIN */}
             <View style={styles.container}>
+                <View style={styles.viewInput}>
+                    <View style={[styles.user, {
+                        backgroundColor:"#F0FFF0"
+                    }]}>
+                        <Feather
+                            name="link"
+                            color={'#5f9EA0'}
+                            size={20}
+                        />
+                    </View>
+                    <TextInput
+                        ref={text_input_user}
+                        value={domainUser}
+                        style={[styles.text_input]}
+                        placeholder={lang?.placeHolderDomain}
+                        onChangeText={handleChangeDomain}
+                    />
+
+                    {isRepeat ? 
+                    <TouchableOpacity
+                    style={styles.buttonRepeat}>
+                        <Feather 
+                            name="repeat"
+                            color={colorApp.colorPlaceText}
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity
+                        style={styles.buttonRepeat} 
+                        onPress={() => NavigationRoot.push(screenName.SCAN_DOMAIN)}
+                    >
+                        <FontAwesome 
+                            name="qrcode"
+                            color={colorApp.colorPlaceText}
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                    }
+                </View>
+
+
+                {/* USERNAME */}
                 <View style={styles.viewInput}>
                     <View style={styles.user}>
                         <Feather
@@ -126,6 +174,8 @@ export default function FromLogin(props) {
                         maxLength={12}
                     />
                 </View>
+
+                 {/* PASS */}
                 <View style={styles.viewInput}>
                     <View style={[styles.user, { backgroundColor: '#E6E6FA' }]}>
                         <Feather
@@ -266,7 +316,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         position:'absolute',
-        bottom: -(settingApp.height *0.18)
+        bottom: -(settingApp.height *0.15)
     },
     iconButtonBottom:{
         width: 60,
@@ -276,5 +326,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft:32
+    },
+    buttonRepeat:{
+        width:40,
+        height:40,
+        justifyContent:"center",
+        alignItems:"center",
+        paddingRight:16
     }
 });
