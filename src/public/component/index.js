@@ -12,8 +12,10 @@ import ButtonUpdate from "./ButtonUpdate";
 import ImageLazyload from "./ImageLazyload";
 import HeaderAction from "./HeaderAction";
 import EmptyView from "./EmptyView";
+import SafeEra from "./SafeEra";
 
 export {
+  SafeEra,
   Loading,
   LinearBackGround,
   AvatarCustom,

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { colorApp, settingApp } from "../../../../public";
 
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 export default function HeaderHome(props) {
   const { colleague } = props || {};
@@ -16,9 +16,12 @@ export default function HeaderHome(props) {
   const [shortName, setShortName] = useState("");
 
   useEffect(() => {
+    const title_time = sayHi();
+    setTitle(title_time);
     if (colleague) {
       getTitle();
     }
+    
   }, []);
 
   function getTitle() {
@@ -49,26 +52,27 @@ export default function HeaderHome(props) {
   return (
     <View style={styles.container}>
       <View style={styles.view_hello}>
+      <View style={[styles.bt_option, {
+        marginRight:12
+      }]}>
+        <AntDesign 
+          name="user"
+          color={colorApp.black}
+          size={24}
+        />
+      </View>
         <Text style={styles.txt_hello}>
           <Text>{tilteHello + ", "}</Text>
-          <Text style={{ fontWeight: "600" }}>{shortName}</Text>
+          <Text style={{ fontWeight: "400" }}>{shortName || "Kho Plus"}</Text>
         </Text>
       </View>
 
       <View style={styles.view_option}>
-        {/* <TouchableOpacity style={styles.bt_option}>
-          <MaterialCommunityIcons
-            name="qrcode-scan"
-            color={colorApp.white}
-            size={30}
-          />
-        </TouchableOpacity> */}
-
         <TouchableOpacity style={styles.bt_option}>
           <Ionicons
-            name="notifications-sharp"
-            color={colorApp.white}
-            size={30}
+            name="notifications-outline"
+            color={colorApp.black}
+            size={24}
           />
         </TouchableOpacity>
       </View>
@@ -84,8 +88,8 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   txt_hello: {
-    fontSize: settingApp.size_20,
-    color: colorApp.white,
+    fontSize: settingApp.size_14,
+    color: colorApp.black,
   },
   view_option: {
     width: 120,
@@ -97,14 +101,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   bt_option: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
+    borderRadius:20,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor:colorApp.white_snow
   },
   view_hello: {
     height: 60,
-    width: settingApp.width_32 - 120,
-    justifyContent: "center",
+    width: settingApp.width_32,
+    justifyContent: "flex-start",
+    flexDirection:'row',
+    alignItems:'center',
   },
 });
