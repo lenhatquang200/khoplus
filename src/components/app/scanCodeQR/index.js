@@ -8,8 +8,17 @@ import { QRCodeScanner } from 'public/component';
 const { width } = settingApp
 const qrSize = width * 0.7; // Kích thước khung quét QR
 const ScannerCode = () => {
+
+
+  function handleScanner(result) {
+    console.log("handleScanner", result);
+
+  }
+
   return (
-        <QRCodeScanner />
+    <QRCodeScanner
+      onResult={handleScanner}
+    />
   );
 };
 

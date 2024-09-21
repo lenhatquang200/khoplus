@@ -15,7 +15,8 @@ const borderRadius = 30
 const horrizon = settingApp.width * 0.2
 const vertical = settingApp.height * 0.3
 
-const QRCodeScanner = () => {
+const QRCodeScanner = ({onResult}) => {
+  
   const [permission, requestPermission] = useCameraPermissions();
   const isPremissionGranted = Boolean(permission?.granted)
   const isFocused = useIsFocused()
@@ -36,7 +37,11 @@ const QRCodeScanner = () => {
   }, [isFocused])
 
   function handleQRCode(data) {
-    console.log('handleQRCode', data);
+    console.log("QRcode", data);
+    
+    if(onResult){
+      onResult(data)
+    }
     // Linking.openURL(data)
   }
 
