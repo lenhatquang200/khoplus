@@ -3,6 +3,7 @@ const colorApp = {
   red_001: "#FF6A6A",
 
   light_blue:"#87CEFA",
+  light_blue_001:"#63B8FF",
 
   colorText: "#292929",
   colorPlaceText: "#575757",

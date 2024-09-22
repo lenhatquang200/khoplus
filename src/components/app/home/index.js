@@ -11,6 +11,7 @@ import HeaderHome from "./component/headerHome";
 import { SafeEra } from "public/component";
 import { ApiCall } from "KhoPlus";
 import ChartReport from "./component/chartReport";
+import CheckinInfo from "./component/CheckinInfo";
 
 function HomeScreen(props) {
   const dispatch = useDispatch();
@@ -35,8 +36,15 @@ function HomeScreen(props) {
           <Image source={imageApp.bannerHome} style={{width:settingApp.width_32, height:160, borderRadius:8,}} resizeMode={"cover"} />
         </View>
         <HeaderHome colleague={colleague} />
-
+        <CheckinInfo  colleague={colleague} />    
         <ChartReport colleague={colleague} />
+
+        <View 
+          style={{
+            width:settingApp.width,
+            height:60
+          }}
+        />
       </ScrollView>
     </SafeEra>
 
@@ -46,7 +54,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:colorApp.white
+    backgroundColor:colorApp.white_snow
   },
   statusBar: {
     width: settingApp.width,
@@ -59,6 +67,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     borderRadius:16,
-    overflow:'hidden'
+    overflow:'hidden',
+    marginTop:24
   }
 });
