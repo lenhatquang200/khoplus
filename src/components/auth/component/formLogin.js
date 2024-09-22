@@ -6,17 +6,11 @@ import {
     TextInput,
     StyleSheet,
     Alert,
-    Linking,
-    ActivityIndicator,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
 } from "react-native";
 import { settingApp, lang, colorApp, Utils, keyStore } from "../../../public";
 
 import { FontAwesome, Feather } from "@expo/vector-icons";
 import { screenName } from "router/screenName";
-import { QRCodeScanner } from "public/component";
 import NavigationRoot from "router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

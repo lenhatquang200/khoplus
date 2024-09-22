@@ -1,16 +1,27 @@
-import Configs from "../config";
 import KhoPlusApi from "./khoplusApi";
 
-// https://api.khoplus.com/v1
-const uri = '';
+export async function getInfoCheckin(code, time) {
+  const result = await KhoPlusApi.CallApi(
+    `/staff/timekeeping/check-today/${code}?_=${time}`
+  );
+  return result;
+}
+
+export async function getReportTurnover(store_code, month,time) {
+  const result = await KhoPlusApi.CallApi(
+    `/report/turnover?store_code=${store_code}&month=${month}&_=${time}`
+  );
+  return result;
+}
 
 export async function getListProduct(page) {
   page || 1;
   const result = await KhoPlusApi.CallApi(
-    `${uri}/product/items?limit=10&page=${page}`
+    `/product/items?limit=10&page=${page}`
   );
   return result;
 }
+
 
 export async function deleteOneProductsGroup(id) {
   const method = "DELETE";
@@ -22,7 +33,7 @@ export async function updateOneProductsGroup(id, data) {
   const method = "PUT";
   const body = { ...data };
   const result = await KhoPlusApi.CallApi(
-    `${uri}/product/items/${id}`,
+    `/product/items/${id}`,
     method,
     body
   );
@@ -45,14 +56,14 @@ export async function getGroupProduct(page) {
 }
 
 export async function getDetailData(id) {
-  const result = await KhoPlusApi.CallApi(`${uri}//product/items/${id}`);
+  const result = await KhoPlusApi.CallApi(`/product/items/${id}`);
   return result;
 }
 
 export async function getTypeProduct(page, limit, name, search, code) {
   // ?skip=${page}&limit=${limit}
   const result = await KhoPlusApi.CallApi(
-    `${uri}/product/types?limit=10&page=${page}`
+    `/product/types?limit=10&page=${page}`
   );
   return result;
 }
@@ -115,7 +126,7 @@ export async function deleteManufacturing(id) {
 export async function deleteManufact_Group(id) {
   const method = "DELETE";
   const result = await KhoPlusApi.CallApi(
-    `${uri}/manufacturing/groups/${id}`,
+    `/manufacturing/groups/${id}`,
     method
   );
   return result;

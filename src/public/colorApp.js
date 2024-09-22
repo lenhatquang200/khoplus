@@ -1,5 +1,8 @@
 const colorApp = {
   red: "#F5222D",
+  red_001: "#FF6A6A",
+
+  light_blue:"#87CEFA",
 
   colorText: "#292929",
   colorPlaceText: "#575757",

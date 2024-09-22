@@ -36,7 +36,7 @@ export default function AuthApp(props) {
   useEffect(() => {
     setTimeout(() => {
       getAthenInfo();
-    }, 1500);
+    }, 500);
   }, []);
 
   useEffect(() => {

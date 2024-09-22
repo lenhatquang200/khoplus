@@ -52,7 +52,7 @@ export default function HeaderHome(props) {
   return (
     <View style={styles.container}>
       <View style={styles.view_hello}>
-      <View style={[styles.bt_option, {
+      {/* <View style={[styles.bt_option, {
         marginRight:12
       }]}>
         <AntDesign 
@@ -60,10 +60,10 @@ export default function HeaderHome(props) {
           color={colorApp.black}
           size={24}
         />
-      </View>
+      </View> */}
         <Text style={styles.txt_hello}>
           <Text>{tilteHello + ", "}</Text>
-          <Text style={{ fontWeight: "400" }}>{shortName || "Kho Plus"}</Text>
+          <Text>{shortName || "Kho Plus"}</Text>
         </Text>
       </View>
 
@@ -88,8 +88,9 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   txt_hello: {
-    fontSize: settingApp.size_14,
+    fontSize: settingApp.size_16,
     color: colorApp.black,
+    fontWeight:"600"
   },
   view_option: {
     width: 120,

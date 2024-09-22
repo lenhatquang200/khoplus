@@ -9,9 +9,11 @@ let _urlDomain = null
 
 async function getUrl() {
   const resLocal = await AsyncStorage.getItem(keyStore.domainName)
+  console.log('resLocal', resLocal);
   if(resLocal){
       const dataLogin = JSON.parse(resLocal)
       _urlDomain = dataLogin?.domainUser
+      return dataLogin?.domainUser
   }
 }
 
@@ -28,6 +30,7 @@ async function GetAuthInfo() {
         Authorization: `Bearer ${result?.auth?.access_token}`,
       },
     });
+
     if (result?.auth?.access_token) {
       return result;
     }
@@ -122,7 +125,6 @@ async function LoginAuth(param, domainUser) {
     };
     return data;
   }
-  //return response.json()
 }
 
 async function LogOut() {
@@ -161,8 +163,9 @@ async function CallApi(patch, method, body) {
     },
   };
   const url = `${urlHost}${patch}`
-  console.log('url', url);
   let response = await fetch(url, header);
+  console.log('response', response);
+  
   if (isDev) {
     console.log(`===${response.status}=== ${response.url}`);
   }
