@@ -3,7 +3,7 @@ import Constanst from "expo-constants";
 
 let deviceName = Constanst?.deviceName;
 let version = `${Constanst?.expoConfig?.version}`
-let apiUrl = Constanst?.expoConfig.extra.defaultApiUrl;;
+let apiUrl = Constanst?.expoConfig.extra.defaultApiUrl;
 
 const releaseChannel = Constanst.expoConfig.releaseChannel;
 

@@ -1,17 +1,26 @@
+import { keyStore } from "public";
 import Config from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const isDev = process.env.NODE_ENV === "development";
-const host_url = Config.apiHost;
 
 export const AuthStorageKey = "AUTH_KHOPLUS";
 let _authInfo = null;
+let _urlDomain = null
+
+async function getUrl() {
+  const resLocal = await AsyncStorage.getItem(keyStore.domainName)
+  if(resLocal){
+      const dataLogin = JSON.parse(resLocal)
+      _urlDomain = dataLogin?.domainUser
+  }
+}
 
 async function GetAuthInfo() {
+  let urlHost = _urlDomain ? _urlDomain : await getUrl()
   let result = await AsyncStorage.getItem(AuthStorageKey);
-
   if (result) {
     result = JSON.parse(result);
-    let refresh_token = await fetch(`${host_url}/auth/refresh-token`, {
+    let refresh_token = await fetch(`${urlHost}/auth/refresh-token`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -57,8 +66,8 @@ async function GetAuthInfo() {
   }
 }
 
-async function LoginAuth(param) {
-  let response = await fetch(`${host_url}/auth/login`, {
+async function LoginAuth(param, domainUser) {
+  let response = await fetch(`${domainUser}/auth/login`, {
     method: "POST",
     body: JSON.stringify(param),
     headers: {
@@ -92,6 +101,7 @@ async function LoginAuth(param) {
         userInfo: user,
         login: {
           phone: user?.phone,
+          domainUser
         },
       };
       await AsyncStorage.setItem(AuthStorageKey, JSON.stringify(infoLogin));
@@ -130,7 +140,8 @@ async function GetAccessToken() {
   }
 }
 
-async function CallApi(url, method, body) {
+async function CallApi(patch, method, body) {
+  let urlHost = _urlDomain ? _urlDomain : await getUrl()
   let authInfo = await GetAccessToken();
   if (authInfo === null) {
     await LogOut();
@@ -149,6 +160,8 @@ async function CallApi(url, method, body) {
       "Content-Type": "application/json",
     },
   };
+  const url = `${urlHost}${patch}`
+  console.log('url', url);
   let response = await fetch(url, header);
   if (isDev) {
     console.log(`===${response.status}=== ${response.url}`);

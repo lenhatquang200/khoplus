@@ -13,7 +13,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { LinearGradient } from "expo-linear-gradient";
-import { settingApp, imageApp, colorApp, Utils } from "../../public";
+import { settingApp, imageApp, colorApp, Utils, keyStore } from "../../public";
 import actions from "../../state/actions";
 import KhoPlusApi from "../../KhoPlus/api/khoplusApi";
 import FromLogin from "./component/formLogin";
@@ -21,6 +21,7 @@ import FromLogin from "./component/formLogin";
 import { FontAwesome } from "@expo/vector-icons";
 import Splash from "./component/splashScreen";
 import { screenName } from "../../router/screenName";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = settingApp;
 
@@ -30,32 +31,12 @@ export default function AuthApp(props) {
   const [isLoading, setLoading] = useState(true);
   const [infoUser, setInfoUser] = useState(colleague);
   const [isLoginFail, setLoginFail] = useState(false);
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
-  const [isScanner, setIsScanner] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
       getAthenInfo();
     }, 1500);
-
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setKeyboardVisible(true); // or some other action
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardVisible(false); // or some other action
-      }
-    );
-
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
   }, []);
 
   useEffect(() => {
@@ -83,13 +64,15 @@ export default function AuthApp(props) {
   }
 
   async function _onLogin(param) {
+    const { phone, password, domainUser } = param
     let bodyLogin = {
-      ...param,
-      phone: Utils.formatPhoneNumber(param?.phone),
+      password:password,
+      phone:phone,
     };
     setLoginFail(false);
-    const response = await KhoPlusApi.LoginAuth(bodyLogin);
+    const response = await KhoPlusApi.LoginAuth(bodyLogin, domainUser);
     if (response?.auth) {
+      await AsyncStorage.setItem(keyStore.domainName,JSON.stringify(response?.login))
       dispatch(actions.authApp(response));
       dispatchColluegue(response.userInfo);
     } else {
@@ -155,7 +138,6 @@ export default function AuthApp(props) {
                 isLogout={isLogout}
                 resetLogOut={() => setIsLogout(false)}
                 navigation={props.navigation}
-                openScanner={() => setIsScanner(true)}
               />
             </View>
           </View>

@@ -148,3 +148,16 @@ export const icon_Back = (props) => {
     />
   );
 };
+
+export const icon_Image = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <Feather
+      name="image"
+      size={size}
+      color={colorApp.black}
+    />
+  );
+};

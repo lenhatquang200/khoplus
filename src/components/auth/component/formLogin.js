@@ -12,39 +12,38 @@ import {
     Platform,
     Pressable,
 } from "react-native";
-import { settingApp, lang, colorApp, Utils } from "../../../public";
+import { settingApp, lang, colorApp, Utils, keyStore } from "../../../public";
 
 import { FontAwesome, Feather } from "@expo/vector-icons";
 import { screenName } from "router/screenName";
 import { QRCodeScanner } from "public/component";
 import NavigationRoot from "router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let _user = null
 let _pass = null
 export default function FromLogin(props) {
-    const { infoUser, isLoginFail, isLogout, resetLogOut, openScanner } = props || {};
+    const { infoUser, isLoginFail, isLogout, resetLogOut } = props || {};
     const [userName, setUsername] = useState('');
     const [passWord, setPassword] = useState('')
     const [isLogin, setLogin] = useState(false);
     const [domainUser, setDomain] = useState('')
-    const [isRepeat, setIsRepeat] = useState(false)
 
     const text_input_user = useRef()
     const text_input_pass = useRef()
 
     useEffect(() => {
-        if(domainUser?.trim().length !== 0){
-            setIsRepeat(true)
+        if (domainUser?.trim().length !== 0) {
         }
-        return() =>{
-            _user =  null;
-            _pass =  null;
+        return () => {
+            _user = null;
+            _pass = null;
             setPassword('');
             setUsername('');
             text_input_user?.current?.clear();
             text_input_pass?.current?.clear();
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         if (infoUser?.login?.phone) {
@@ -59,8 +58,20 @@ export default function FromLogin(props) {
         if (isLogout == true) {
             setLogin(false);
             resetLogOut;
+            getInfoLogin()
         }
     }, [isLogout]);
+
+
+    async function getInfoLogin() {
+        const resLocal = await AsyncStorage.getItem(keyStore.domainName)
+        if(resLocal){
+            const dataLogin = JSON.parse(resLocal)
+            dataLogin?.phone && setUsername(dataLogin?.phone)
+            dataLogin?.domainUser && setDomain(dataLogin?.domainUser)
+        }
+        
+    }
 
     function formatPhoneNumber(value) {
         // Xóa tất cả các ký tự không phải số
@@ -90,20 +101,55 @@ export default function FromLogin(props) {
         setDomain(text)
     }
 
-    function onLogin(){
-        props.navigation.replace(screenName.TAB_STACK);
-        //  || !Utils.isPhoneNumber(_user)
-        // if ( _user?.length < 10) {
-        //     Alert.alert("Số điện thoại không đúng", "", [
-        //         { text: "OK", onPress: () => setLogin(false) },
-        //     ]);
-        // } else {
-        //     props.onLogin({
-        //         phone: _user,
-        //         password: _pass,
-        //     });
-        // }
+    function onGetParams(data) {
+        if (data?.linkScan) {
+            const { linkScan, dataLogin } = data
+            setDomain(linkScan)
+            // dataLogin?.user && setUsername(dataLogin?.user)
+            // dataLogin?.pass && setPassword(dataLogin?.pass)
+        } else {
+            Alert.alert("Lỗi", "Không thể xử lý QR Code", [
+                {
+                    text: lang.close,
+                    onPress: () => null,
+                    style: "cancel",
+                },
+            ]);
+        }
+
     }
+
+    function onScan() {
+        NavigationRoot.push(screenName.SCAN_DOMAIN, {
+            onGetParams,
+            dataLogin: {
+                user: _user,
+                pass: _pass,
+            }
+        })
+    }
+
+    function onLogin() {
+        //  props.navigation.replace(screenName.TAB_STACK);
+        //|| !Utils.isPhoneNumber(_user)
+        if ( userName?.length < 10) {
+            Alert.alert("Số điện thoại không đúng", "", [
+                { text: "OK", onPress: () => setLogin(false) },
+            ]);
+        }  else if(domainUser?.trim().length == 0){
+            Alert.alert("Lỗi", "Bạn chưa nhập đường dẫn hệ thống", [
+                { text: "OK", onPress: () => setLogin(false) },
+            ]);
+        }
+        else{
+            props.onLogin({
+                phone: userName,
+                password: _pass,
+                domainUser
+            });
+        }
+        
+}
 
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -111,11 +157,11 @@ export default function FromLogin(props) {
                 <Text style={styles.txtHeader}>{'Đăng nhập'}</Text>
                 <Text style={styles.txtHeader_des}>{'Chào mừng bạn quay lại với KhoPlus'}</Text>
             </View>
-             {/* DOMAIN */}
+            {/* DOMAIN */}
             <View style={styles.container}>
                 <View style={styles.viewInput}>
                     <View style={[styles.user, {
-                        backgroundColor:"#F0FFF0"
+                        backgroundColor: "#F0FFF0"
                     }]}>
                         <Feather
                             name="link"
@@ -131,27 +177,16 @@ export default function FromLogin(props) {
                         onChangeText={handleChangeDomain}
                     />
 
-                    {isRepeat ? 
                     <TouchableOpacity
-                    style={styles.buttonRepeat}>
-                        <Feather 
-                            name="repeat"
-                            color={colorApp.colorPlaceText}
-                            size={20}
-                        />
-                    </TouchableOpacity>
-                    :
-                    <TouchableOpacity
-                        style={styles.buttonRepeat} 
-                        onPress={() => NavigationRoot.push(screenName.SCAN_DOMAIN)}
+                        style={styles.buttonRepeat}
+                        onPress={onScan}
                     >
-                        <FontAwesome 
+                        <FontAwesome
                             name="qrcode"
                             color={colorApp.colorPlaceText}
                             size={20}
                         />
                     </TouchableOpacity>
-                    }
                 </View>
 
 
@@ -175,7 +210,7 @@ export default function FromLogin(props) {
                     />
                 </View>
 
-                 {/* PASS */}
+                {/* PASS */}
                 <View style={styles.viewInput}>
                     <View style={[styles.user, { backgroundColor: '#E6E6FA' }]}>
                         <Feather
@@ -208,7 +243,7 @@ export default function FromLogin(props) {
 
 
             <View style={styles.viewAction_bottom}>
-                <TouchableOpacity style={[styles.iconButtonBottom, {marginLeft:0}]}>
+                <TouchableOpacity style={[styles.iconButtonBottom, { marginLeft: 0 }]}>
                     <FontAwesome
                         name="facebook-f"
                         color={colorApp.black}
@@ -240,7 +275,7 @@ const styles = StyleSheet.create({
         minHeight: 140,
         backgroundColor: colorApp.white,
         borderRadius: 16,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     titleHeader: {
         width: settingApp.width,
@@ -283,55 +318,55 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         backgroundColor: colorApp.transparent
     },
-    viewAction:{
-        width:settingApp.width_32,
-        height:60,
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center',
-        marginTop:22
+    viewAction: {
+        width: settingApp.width_32,
+        height: 60,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 22
     },
-    txtFogot:{
-        fontSize:14,
-        color:colorApp.blue_primary,
-        fontWeight:"400",
+    txtFogot: {
+        fontSize: 14,
+        color: colorApp.blue_primary,
+        fontWeight: "400",
     },
-    buttonLogin:{
-        width:120,
-        height:46,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:colorApp.black,
-        borderRadius:46
+    buttonLogin: {
+        width: 120,
+        height: 46,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colorApp.black,
+        borderRadius: 46
     },
-    txtLogin:{
-        fontSize:16,
-        fontWeight:'600',
-        color:colorApp.white
+    txtLogin: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: colorApp.white
     },
-    viewAction_bottom:{
-        width:settingApp.width_32,
-        height:40,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center',
-        position:'absolute',
-        bottom: -(settingApp.height *0.15)
+    viewAction_bottom: {
+        width: settingApp.width_32,
+        height: 40,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: -(settingApp.height * 0.15)
     },
-    iconButtonBottom:{
+    iconButtonBottom: {
         width: 60,
         height: 60,
         backgroundColor: colorApp.white,
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft:32
+        marginLeft: 32
     },
-    buttonRepeat:{
-        width:40,
-        height:40,
-        justifyContent:"center",
-        alignItems:"center",
-        paddingRight:16
+    buttonRepeat: {
+        width: 40,
+        height: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingRight: 16
     }
 });
