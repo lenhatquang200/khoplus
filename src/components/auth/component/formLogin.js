@@ -6,6 +6,7 @@ import {
     TextInput,
     StyleSheet,
     Alert,
+    Platform,
 } from "react-native";
 import { settingApp, lang, colorApp, Utils, keyStore } from "../../../public";
 
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-        bottom: -(settingApp.height * 0.15)
+        bottom: Platform.OS === 'ios' ? -(settingApp.height * 0.15) : -(settingApp.height * 0.1)
     },
     iconButtonBottom: {
         width: 60,
