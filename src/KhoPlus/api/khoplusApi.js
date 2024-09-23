@@ -9,7 +9,6 @@ let _urlDomain = null
 
 async function getUrl() {
   const resLocal = await AsyncStorage.getItem(keyStore.domainName)
-  console.log('resLocal', resLocal);
   if(resLocal){
       const dataLogin = JSON.parse(resLocal)
       _urlDomain = dataLogin?.domainUser
@@ -34,8 +33,6 @@ async function GetAuthInfo() {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${result?.auth?.access_token}`,
-          'Cache-Control': 'no-cache',  // Không lưu trữ cache
-          'Pragma': 'no-cache', 
         },
       })
     } catch (error) {
@@ -86,8 +83,6 @@ async function LoginAuth(param, domainUser) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          'Cache-Control': 'no-cache',  // Không lưu trữ cache
-          'Pragma': 'no-cache', 
         },
       }).catch(error => {
         console.log('error', error)
@@ -180,14 +175,10 @@ async function CallApi(patch, method, body) {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
-      'Cache-Control': 'no-cache',  // Không lưu trữ cache
-      'Pragma': 'no-cache', 
     },
   };
   const url = `${urlHost}${patch}`
   let response = await fetch(url, header);
-  console.log('response', response);
-  
   if (isDev) {
     console.log(`===${response.status}=== ${response.url}`);
   }
