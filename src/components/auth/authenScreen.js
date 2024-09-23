@@ -22,6 +22,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import Splash from "./component/splashScreen";
 import { screenName } from "../../router/screenName";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Loading, LoadingModal } from "public/component";
 
 const { width, height } = settingApp;
 
@@ -32,11 +33,18 @@ export default function AuthApp(props) {
   const [infoUser, setInfoUser] = useState(colleague);
   const [isLoginFail, setLoginFail] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
+  const [isLoginApi, setIsloginApi] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
       getAthenInfo();
     }, 500);
+
+    return() => {
+      setIsLogout(false)
+      setIsloginApi(false)
+      setLoginFail(false)
+    }
   }, []);
 
   useEffect(() => {
@@ -52,6 +60,7 @@ export default function AuthApp(props) {
     props.navigation.replace(screenName.TAB_STACK);
     setLoading(false);
     setLoginFail(false);
+    setIsloginApi(false)
   }
 
   async function getAthenInfo() {
@@ -68,7 +77,9 @@ export default function AuthApp(props) {
     let bodyLogin = {
       password:password,
       phone:phone,
+      device: 'mobile'
     };
+    setIsloginApi(true)
     setLoginFail(false);
     const response = await KhoPlusApi.LoginAuth(bodyLogin, domainUser);
     if (response?.auth) {
@@ -78,6 +89,7 @@ export default function AuthApp(props) {
     } else {
       setInfoUser({ login: { ...param } });
       setLoginFail(true);
+      setIsloginApi(false)
       Alert.alert("Sai thông tin", "Số điện thoại hoặc mật khẩu không đúng", [
         { text: "OK", onPress: () => setLoading(false) },
       ]);
@@ -86,7 +98,8 @@ export default function AuthApp(props) {
 
   return (
     <KeyboardAwareScrollView
-      extraScrollHeight={Platform?.OS === 'ios' ? 0 : -(height * 0.22)}
+    // Platform?.OS === 'ios' ? 0 : -(height * 0.22)
+      extraScrollHeight={120}
       scrollEnabled={false}
       enableOnAndroid={true}
       keyboardShouldPersistTaps="handled"
@@ -107,6 +120,7 @@ export default function AuthApp(props) {
         start={{ x: 0.2, y: 0.2 }}
         end={{ x: 0.5, y: 1 }}
       >
+        {isLoginApi && <Loading />}
         {isLoading ? (
           <Splash />
         ) : (

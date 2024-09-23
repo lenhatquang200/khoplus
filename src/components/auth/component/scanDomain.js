@@ -6,12 +6,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { colorApp, Icon, lang, settingApp } from 'public';
 import NavigationRoot from 'router';
 import { useIsFocused } from '@react-navigation/native';
+import { QRCodeScanner } from 'public/component';
 
 
 const { width } = settingApp
 const qrSize = width * 0.7; // Kích thước khung quét QR
 const borderLength = 50
-const color = colorApp.blue_primary
+const color = colorApp.white
 const thickness = 10;
 const borderRadius = 30
 const _top = settingApp.height * 0.3
@@ -107,50 +108,7 @@ const ScanDomain = (props) => {
       }
   }
 
-  return (
-    <View style={styles.container}>
-      {Platform?.OS === "android" ? <StatusBar hidden /> : null}
-      <CameraView
-          style={StyleSheet.absoluteFillObject}
-          facing='back'
-          onBarcodeScanned={({ data }) => {
-            if (data && !qrLock.current) {
-              qrLock.current = true
-              setTimeout(async () => {
-                handleScanner(data)
-              }, 500);
-            }
-          }}
-          barcodeScannerSettings={{
-            barcodeTypes: ["qr"],
-          }}
-          >
-        
-         <View style={styles.overlay}>
-            <View style={[styles.top_left_radius,]}></View>
-            <View style={[styles.top_right_radius,]}></View>
-            <View style={[styles.bottom_left_radius]}></View>
-            <View style={[styles.bottom_right_radius]}></View>
-            <Text style={styles.instructionText}>
-              {'Di chuyển mã QR vào trong khung để quét'}
-            </Text>
-        </View>
-
-        <TouchableOpacity 
-          onPress={() => NavigationRoot.pop()}
-          style={styles.buttonBack}>
-          <Text style={styles.txtGoback}>{'Quay lại'}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          onPress={onSelectImage}
-          style={styles.buttonImage}>
-          <Icon.icon_Image />
-        </TouchableOpacity>
-
-        </CameraView>
-    </View>
-  );
+  return <QRCodeScanner onResult={(res) => handleScanner(res)} isBack={true}/>;
 };
 
 const styles = StyleSheet.create({
@@ -176,10 +134,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
     color: 'white',
-    textAlign: 'center',
     position:"absolute",
     bottom:settingApp.height * 0.2,
-    width:settingApp.width
+    backgroundColor:"red"
   },
   scannedText: {
     fontSize: 16,
@@ -191,7 +148,7 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     height: borderLength, 
     width: borderLength, 
-    top: _top, 
+    top: 0, 
     left: 80, 
     borderColor: color, 
     borderTopWidth: thickness, 
@@ -202,7 +159,7 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     height: borderLength, 
     width: borderLength,
-    top: _top + 180,
+    bottom: 0,
     left: 80, 
     borderColor: color, 
     borderBottomWidth: thickness, 
@@ -213,7 +170,7 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     height: borderLength, 
     width: borderLength, 
-    top: _top, 
+    top: 0, 
     right: 80, 
     borderColor: color,
     borderTopWidth: thickness, 
@@ -224,8 +181,8 @@ const styles = StyleSheet.create({
     position: 'absolute', 
     height: borderLength, 
     width: borderLength, 
-    bottom: _top + 110, 
-    right:  80, 
+    bottom: 0, 
+    right: 80, 
     borderColor: color, 
     borderBottomWidth: thickness, 
     borderRightWidth: thickness, 

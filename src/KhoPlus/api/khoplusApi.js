@@ -19,22 +19,29 @@ async function getUrl() {
 
 async function GetAuthInfo() {
   let urlHost = _urlDomain ? _urlDomain : await getUrl()
+  
   let result = await AsyncStorage.getItem(AuthStorageKey);
   if (result) {
     result = JSON.parse(result);
-    let refresh_token = await fetch(`${urlHost}/auth/refresh-token`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${result?.auth?.access_token}`,
-      },
-    });
-
     if (result?.auth?.access_token) {
       return result;
     }
-
+    let refresh_token = null
+    try {
+      refresh_token = await fetch(`${urlHost}/auth/refresh-token`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${result?.auth?.access_token}`,
+          'Cache-Control': 'no-cache',  // Không lưu trữ cache
+          'Pragma': 'no-cache', 
+        },
+      })
+    } catch (error) {
+      console.log('GetAuthInfo error', error);
+    }
+    
     if (refresh_token?.status === 200) {
       refresh_token = await refresh_token.json();
       if (refresh_token?.data?.token) {
@@ -70,14 +77,26 @@ async function GetAuthInfo() {
 }
 
 async function LoginAuth(param, domainUser) {
-  let response = await fetch(`${domainUser}/auth/login`, {
-    method: "POST",
-    body: JSON.stringify(param),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
+     
+     let response = null
+     try {
+      response = await fetch(`${domainUser}/auth/login`, {
+        method: "POST",
+        body: JSON.stringify(param),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          'Cache-Control': 'no-cache',  // Không lưu trữ cache
+          'Pragma': 'no-cache', 
+        },
+      }).catch(error => {
+        console.log('error', error)
+        response = null  // Bắt lỗi và log ra
+      });
+     } catch (error) {
+      console.log('error', error)
+      response = null
+     }
   console.log(
     ` => ${response.status} ---- ${response.url}`
   );
@@ -130,6 +149,7 @@ async function LoginAuth(param, domainUser) {
 async function LogOut() {
   _authInfo = null;
   await AsyncStorage.removeItem(AuthStorageKey);
+  await AsyncStorage.clear()
 }
 
 async function GetAccessToken() {
@@ -160,6 +180,8 @@ async function CallApi(patch, method, body) {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      'Cache-Control': 'no-cache',  // Không lưu trữ cache
+      'Pragma': 'no-cache', 
     },
   };
   const url = `${urlHost}${patch}`
