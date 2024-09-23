@@ -144,7 +144,6 @@ async function LoginAuth(param, domainUser) {
 async function LogOut() {
   _authInfo = null;
   await AsyncStorage.removeItem(AuthStorageKey);
-  await AsyncStorage.clear()
 }
 
 async function GetAccessToken() {
