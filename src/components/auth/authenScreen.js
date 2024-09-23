@@ -115,10 +115,10 @@ export default function AuthApp(props) {
     >
       <LinearGradient
         // Background Linear Gradient
-        colors={[colorApp.blue_primary, colorApp.green_primary,]}
+        colors={['#1e6091', '#168aad', '#34a0a4', '#99d98c']}
         style={styles.background}
-        start={{ x: 0.2, y: 0.2 }}
-        end={{ x: 0.5, y: 1 }}
+        start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
       >
         {isLoginApi && <Loading />}
         {isLoading ? (
@@ -132,17 +132,17 @@ export default function AuthApp(props) {
           >
             <View style={styles.view_logo}>
               <Image
-                source={imageApp.logoWhiteApp}
-                style={{ resizeMode: "stretch" }}
+                style={{
+                  width:settingApp.width_32,
+                  height:120
+                }}
+                source={imageApp.logoHiepPhat}
+                resizeMode="contain"
               />
             </View>
             <View
               style={[
                 styles.view_login,
-                // {
-                //   marginBottom: keyboardVisible ? 350 : 1,
-                //   minHeight: keyboardVisible ? height : height * 0.8,
-                // },
               ]}
             >
               <FromLogin
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: settingApp.height * 0.3,
+    width:settingApp.width
   },
   form_login: {
     justifyContent: "center",

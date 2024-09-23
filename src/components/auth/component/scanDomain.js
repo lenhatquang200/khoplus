@@ -43,24 +43,17 @@ const ScanDomain = (props) => {
     }
   }, [isFocused])
 
-  function handleQRCode(data) {
-    if(onResult){
-      onResult(data)
-    }
-    // Linking.openURL(data)
-  }
-
-
-  function onSetParamScan(linkScan){
+  function onSetParamScan(dataQR){
     const { route } = props
     route?.params?.onGetParams && route?.params?.onGetParams({
       dataLogin,
-      linkScan
+      dataQR
     });
     NavigationRoot?.pop()
   }
     
-  function handleScanner(result) {
+  async function handleScanner(result) {
+    console.log('handleScanner', result);
     if(result){
       onSetParamScan(result)
     } else{
@@ -74,39 +67,6 @@ const ScanDomain = (props) => {
     }
   }
 
-  async function onSelectImage(){
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: false,
-        aspect: [4, 3],
-        quality: 1,
-      });
-      if (result && result.assets[0].uri) {
-        try {
-          const scannedResults = await Camera.scanFromURLAsync(result?.assets[0].uri)
-          const dataQR = scannedResults[0]?.data;
-          if(dataQR){
-            onSetParamScan(dataQR)
-          } else{
-            Alert.alert("Lỗi", "Bạn cần chọn hình ảnh có mã QR code", [
-              {
-                text: lang.close,
-                onPress: () => null,
-                style: "cancel",
-              },
-            ]);
-          }
-        } catch (error) {
-          Alert.alert("Lỗi", "Bạn cần chọn hình ảnh có mã QR code", [
-            {
-              text: lang.close,
-              onPress: () => null,
-              style: "cancel",
-            },
-          ]);
-        }
-      }
-  }
 
   return <QRCodeScanner onResult={(res) => handleScanner(res)} isBack={true}/>;
 };

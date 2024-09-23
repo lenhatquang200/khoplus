@@ -9,6 +9,7 @@ const history_checkin = require("./history_checkin.png");
 const salary = require("./salary.png");
 const empty = require("./empty.png");
 const bannerHome = require("./bannerHome.jpg")
+const logoHiepPhat = require("./logoHiepPhat.png")
 
 export default {
   logoWhiteApp,
@@ -21,5 +22,6 @@ export default {
   history_checkin,
   salary,
   empty,
-  bannerHome
+  bannerHome,
+  logoHiepPhat
 };

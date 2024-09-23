@@ -23,6 +23,10 @@ export default function FromLogin(props) {
     const [passWord, setPassword] = useState('')
     const [isLogin, setLogin] = useState(false);
     const [domainUser, setDomain] = useState('')
+    const [domainName, setDomainName] = useState('')
+    const [replaceLink, setReplaceLink] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
+    const [inputValue, setInputValue] = useState('');
 
     const text_input_user = useRef()
     const text_input_pass = useRef()
@@ -60,12 +64,12 @@ export default function FromLogin(props) {
 
     async function getInfoLogin() {
         const resLocal = await AsyncStorage.getItem(keyStore.domainName)
-        if(resLocal){
+        if (resLocal) {
             const dataLogin = JSON.parse(resLocal)
             dataLogin?.phone && setUsername(dataLogin?.phone)
             dataLogin?.domainUser && setDomain(dataLogin?.domainUser)
         }
-        
+
     }
 
     function formatPhoneNumber(value) {
@@ -96,10 +100,32 @@ export default function FromLogin(props) {
         setDomain(text)
     }
 
+    function ensureHttps(url) {
+        // Kiểm tra xem chuỗi có bắt đầu bằng 'http://' hoặc 'https://' không
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          // Thêm 'https://' vào đầu chuỗi
+          url = 'https://' + url;
+        }
+        return url;
+      }
+
+    function handleDomain(){
+        const inputUrl =  ensureHttps(inputValue)
+        const part = inputUrl.split("/")[2].split(".")[0];
+        setDomain(inputUrl)
+        setDomainName(part)
+        setIsEdit(false)
+    }
+
     function onGetParams(data) {
-        if (data?.linkScan) {
-            const { linkScan, dataLogin } = data
-            setDomain(linkScan)
+        console.log('onGetParams', data);
+        
+       
+        if (data?.dataQR) {
+            const { dataQR, dataLogin } = data
+            const resObj = JSON.parse(dataQR)
+            setDomain(resObj?.link)
+            setDomainName(resObj?.name)
             // dataLogin?.user && setUsername(dataLogin?.user)
             // dataLogin?.pass && setPassword(dataLogin?.pass)
         } else {
@@ -127,33 +153,59 @@ export default function FromLogin(props) {
     function onLogin() {
         //  props.navigation.replace(screenName.TAB_STACK);
         //|| !Utils.isPhoneNumber(_user)
-        if ( userName?.length < 10) {
+        if (userName?.length < 10) {
             Alert.alert("Số điện thoại không đúng", "", [
                 { text: "OK", onPress: () => setLogin(false) },
             ]);
-        }  else if(domainUser?.trim().length == 0){
-            Alert.alert("Lỗi", "Bạn chưa nhập đường dẫn hệ thống", [
+        } else if (domainUser?.trim().length == 0) {
+            Alert.alert("Lỗi", "Bạn chưa nhập đường dẫn hệ thống.\nBạn có thể quét QR code để xác nhận đường dẫn hệ thống.", [
                 { text: "OK", onPress: () => setLogin(false) },
             ]);
         }
-        else{
+        else {
             props.onLogin({
                 phone: userName,
                 password: _pass,
                 domainUser
             });
         }
-        
-}
 
+    }
+
+    function renderInputLink() {
+        return (
+            <View style={styles.viewInput}>
+                <View style={[styles.user, {
+                    backgroundColor: "#F0FFF0"
+                }]}>
+                    <Feather
+                        name="link"
+                        color={'#5f9EA0'}
+                        size={20}
+                    />
+                </View>
+                <TextInput
+                    ref={text_input_user}
+                    value={domainUser}
+                    style={[styles.text_input]}
+                    placeholder={lang?.placeHolderDomain}
+                    onChangeText={handleChangeDomain}
+                />
+            </View>
+        )
+    }
+
+    const _domainValue = domainName?.trim().length !== 0 ? domainName : 'Link hệ thống'
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.titleHeader}>
                 <Text style={styles.txtHeader}>{'Đăng nhập'}</Text>
-                <Text style={styles.txtHeader_des}>{'Chào mừng bạn quay lại với KhoPlus'}</Text>
+                <Text style={styles.txtHeader_des}>{'Chào mừng bạn quay lại với Hiệp Phát Agri'}</Text>
             </View>
-            {/* DOMAIN */}
+
             <View style={styles.container}>
+                {/* DOMAIN */}
+                {replaceLink && renderInputLink()}
                 <View style={styles.viewInput}>
                     <View style={[styles.user, {
                         backgroundColor: "#F0FFF0"
@@ -164,26 +216,19 @@ export default function FromLogin(props) {
                             size={20}
                         />
                     </View>
-                    <TextInput
-                        ref={text_input_user}
-                        value={domainUser}
-                        style={[styles.text_input]}
-                        placeholder={lang?.placeHolderDomain}
-                        onChangeText={handleChangeDomain}
-                    />
-
-                    <TouchableOpacity
-                        style={styles.buttonRepeat}
-                        onPress={onScan}
-                    >
-                        <FontAwesome
-                            name="qrcode"
-                            color={colorApp.colorPlaceText}
-                            size={20}
-                        />
-                    </TouchableOpacity>
+                    <Text style={styles.domainName}>{_domainValue}</Text>
                 </View>
-
+                {/* Button edit domain */}
+                {
+                <TouchableOpacity 
+                onPress={() => setIsEdit(true)}
+                style={styles.buttonEdit}>
+                    <Feather
+                        name="edit"
+                        color={colorApp.disable}
+                        size={20}
+                    />
+                </TouchableOpacity>}
 
                 {/* USERNAME */}
                 <View style={styles.viewInput}>
@@ -223,6 +268,18 @@ export default function FromLogin(props) {
                     />
                 </View>
             </View>
+
+            <TouchableOpacity
+                style={styles.buttonQR}
+                onPress={onScan}
+            >
+                <FontAwesome
+                    name="qrcode"
+                    color={colorApp.black}
+                    size={24}
+                />
+            </TouchableOpacity>
+
             <View style={styles.viewAction}>
                 <TouchableOpacity>
                     <Text style={styles.txtFogot}>{'Quên mật khẩu ?'}</Text>
@@ -235,32 +292,40 @@ export default function FromLogin(props) {
                     <Text style={styles.txtLogin}>{'Đăng nhập'}</Text>
                 </TouchableOpacity>
             </View>
-
-
             <View style={styles.viewAction_bottom}>
-                <TouchableOpacity style={[styles.iconButtonBottom, { marginLeft: 0 }]}>
-                    <FontAwesome
-                        name="facebook-f"
-                        color={colorApp.black}
-                        size={24}
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.iconButtonBottom}>
-                    <FontAwesome
-                        name="google"
-                        color={colorApp.black}
-                        size={24}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButtonBottom}>
-                    <FontAwesome
-                        name="apple"
-                        color={colorApp.black}
-                        size={24}
-                    />
-                </TouchableOpacity>
+                <Text>{`KhoPlus Version: 1.0.0`}</Text>
             </View>
+            
+            
+            {isEdit && (
+                <View style={styles.overlay}>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Nhập đường dẫn"
+                        value={inputValue}
+                        onChangeText={text => setInputValue(text)}
+                    />
+                    
+                    <View style={styles.viewBT_domain}>
+                        <TouchableOpacity
+                            onPress={handleDomain}
+                            style={styles.butActionDomain}
+                        >
+                            <Text style={styles.text_bt_domain}>{"Lưu"}</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() =>  setIsEdit(false)}
+                            style={styles.butActionDomain}
+                        >
+                            <Text style={styles.text_bt_domain}>{"Đóng"}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    
+                </View>
+                </View>
+            )}
         </View>
     );
 }
@@ -319,7 +384,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 22
+        marginTop: 24
     },
     txtFogot: {
         fontSize: 14,
@@ -363,5 +428,88 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingRight: 16
-    }
+    },
+    viewAction_domain: {
+        width: settingApp.width_32,
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "center",
+        marginTop: 12,
+    },
+    buttonQR: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: "absolute",
+        right: 16,
+        bottom: Platform?.OS === 'ios' ? -130 : 160,
+        backgroundColor: colorApp.white,
+        zIndex:2,
+        ...settingApp.shadow_Top
+    },
+    domainName:{
+        fontSize:14,
+        color:colorApp.disable,
+        marginLeft:16
+    },
+    buttonEdit:{
+        width:40,
+        height:40,
+        position:"absolute",
+        right:-12,
+        top:16
+    },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputContainer: {
+    width: settingApp.width_32 - 64,
+    padding: 20,
+    backgroundColor: colorApp.black_opacity_05,
+    borderRadius: 10,
+    elevation: 5,
+    alignItems: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingLeft: 10,
+    borderRadius: 5,
+    backgroundColor:colorApp.white
+  },
+  viewBT_domain:{
+    width: settingApp.width_32 - 64,
+    flexDirection:"row",
+    justifyContent:"space-between",
+    paddingLeft:24,
+    paddingRight:24
+  },
+  butActionDomain:{
+    width:120,
+    height:30,
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  text_bt_domain:{
+    fontSize:16,
+    color:colorApp.white,
+    fontWeight:"600"
+  }
 });
