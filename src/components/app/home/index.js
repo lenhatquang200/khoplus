@@ -17,21 +17,12 @@ function HomeScreen(props) {
   const dispatch = useDispatch();
   const colleague = useSelector((state) => state?.app?.colleague);
 
-  useEffect(() => {
-    if(colleague){
-      getChecking()
-    }
-  },[])
-
-  async function getChecking() {
-    const time = new Date().getTime()
-   // const result = await ApiCall.getInfoCheckin(colleague?.code, time)
-
-  }
-
   return (
     <SafeEra style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.viewBanner}>
           <Image source={imageApp.bannerHome} style={{width:settingApp.width_32, height:160, borderRadius:8,}} resizeMode={"cover"} />
         </View>

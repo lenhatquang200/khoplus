@@ -53,7 +53,6 @@ const ScanDomain = (props) => {
   }
     
   async function handleScanner(result) {
-    console.log('handleScanner', result);
     if(result){
       onSetParamScan(result)
     } else{
@@ -66,8 +65,6 @@ const ScanDomain = (props) => {
       ]);
     }
   }
-
-
   return <QRCodeScanner onResult={(res) => handleScanner(res)} isBack={true}/>;
 };
 

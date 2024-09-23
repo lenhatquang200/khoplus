@@ -118,9 +118,6 @@ export default function FromLogin(props) {
     }
 
     function onGetParams(data) {
-        console.log('onGetParams', data);
-        
-       
         if (data?.dataQR) {
             const { dataQR, dataLogin } = data
             const resObj = JSON.parse(dataQR)

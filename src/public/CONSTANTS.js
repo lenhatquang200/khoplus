@@ -1,6 +1,12 @@
 const CONSTANTS = {
     USER_LOGOUT: "USER_LOGOUT",
 
+    //VALUE CHECKIN
+    NON_CHECKIN: -1,
+    FULL_CHECKIN: 1,
+    MORNING_CHECKIN: 2,
+    AFTERNOON_CHECKIN: 3,
+
     // list bank name https://docs.google.com/spreadsheets/d/1mwahgewGLEZX2iRsCeug4LC9G9dx4W-Kmp2qwUd-VjY/htmlview#
     LIST_BANK_NAME: [
         { id: 1, name: "VPBank", fullName: "Ngân hàng TMCP Việt Nam Thịnh Vượng" },

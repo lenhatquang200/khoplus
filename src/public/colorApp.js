@@ -8,6 +8,11 @@ const colorApp = {
   colorText: "#292929",
   colorPlaceText: "#575757",
 
+  nonCheckin: "#9C9C9C",
+  checkinFullDay: "#1e6091",
+  checkinMorningDay: "#FFA54F",
+  checkinAffterDay: "#87CEFA",
+
   //   green_primary: "#56C596",
   green_primary: "#198754",
   blue_primary: "#1e6091",
