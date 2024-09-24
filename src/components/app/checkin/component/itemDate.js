@@ -1,4 +1,4 @@
-import { colorApp } from 'public';
+import { colorApp, Utils } from 'public';
 import CONSTANTS from 'public/CONSTANTS';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
@@ -11,15 +11,31 @@ const defaultValue ={
 export default function ItemDate(props) {
     const  { state, date, listCheckin } = props
     const [dataDate, setDataDate] = useState({...date, ...defaultValue})
+    const [isCurrent, setIscurrent] = useState(false)
 
     useEffect(() =>{
         getStateForDate()
-    },[])
+        checkCurrentDate()
+    },[listCheckin])
+
+    function checkCurrentDate(){
+        const currentD = Number(Utils.getTimeDate('dd'))
+        const currentM = Utils.getTimeDate('mm')
+        const currentY = Number(Utils.getTimeDate("yyyy"))
+        let newMonth = date?.month < 10 ? `0${date?.month}` : date?.month
+        if(currentD === date?.day && currentM === newMonth && currentY === date?.year){
+            setIscurrent(true)
+        }
+        else{
+            setIscurrent(false)
+        }
+    }
 
     function getStateForDate(){
         const { listCheckin, date } = props || {}
         if(listCheckin && listCheckin?.length !== 0){
             listCheckin.map(item =>{
+                
                 if(item?.date === date?.day && 
                     item?.month === date?.month &&
                     item?.year === date?.year
@@ -42,7 +58,11 @@ export default function ItemDate(props) {
                         colorText
                     })
                 }
+               
             })
+        }
+        else{
+            setDataDate({...defaultValue, date:date?.day})
         }
     }
 
@@ -50,7 +70,9 @@ export default function ItemDate(props) {
         <TouchableOpacity
             onPress={() => props?.handleDateSelected(dataDate)}
             style={[styles.container,{
-                backgroundColor:dataDate?.colorBackground ? dataDate?.colorBackground : colorApp.transparent
+                backgroundColor:dataDate?.colorBackground ? dataDate?.colorBackground : colorApp.transparent,
+                borderColor: isCurrent ? colorApp.red_001 : dataDate?.colorBackground,
+                borderWidth: isCurrent ? 3 : 0
             }]}
         >
             <Text style={{textAlign: 'center', 

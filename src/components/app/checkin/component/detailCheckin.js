@@ -16,7 +16,6 @@ export default function DetailCheckin(props) {
 
     useEffect(() => {
         if (dataCheckin?.date !== data?.date) {
-            console.log('dataaaaaaa', dataCheckin)
             setDataCheckin(dataCheckin)
         }
     }, [dataCheckin])
@@ -25,7 +24,6 @@ export default function DetailCheckin(props) {
         return (
             <View style={styles.container}>
                 <View style={[styles.lineStatus, { backgroundColor: data?.colorBackground ? data?.colorBackground : colorApp.disable }]} />
-
                 <View style={styles.infoUser}>
                     <AvatarCustom
                         size={24}
@@ -84,7 +82,9 @@ export default function DetailCheckin(props) {
             </View>
         )
     }
-    let timeSplit= data?.time_show.split(' ')[0]
+
+    let newMonth = data?.month < 10 ? `0${data?.month}` : data?.month
+    let timeSplit= `${data?.date}/${newMonth}/${data?.year}`
     return (
         <>
             {data?.value !== CONSTANTS.NON_CHECKIN ?

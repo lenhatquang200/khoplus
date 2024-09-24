@@ -22,9 +22,9 @@ async function GetAuthInfo() {
   let result = await AsyncStorage.getItem(AuthStorageKey);
   if (result) {
     result = JSON.parse(result);
-    if (result?.auth?.access_token) {
-      return result;
-    }
+    // if (result?.auth?.access_token) {
+    //   return result;
+    // }
     let refresh_token = null
     try {
       refresh_token = await fetch(`${urlHost}/auth/refresh-token`, {
@@ -38,7 +38,6 @@ async function GetAuthInfo() {
     } catch (error) {
       console.log('GetAuthInfo error', error);
     }
-    
     if (refresh_token?.status === 200) {
       refresh_token = await refresh_token.json();
       if (refresh_token?.data?.token) {

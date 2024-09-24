@@ -52,3 +52,24 @@ export function getDayOfWeek() {
 
   return daysOfWeek[dayOfWeek]; // Trả về tên ngày trong tuần
 }
+
+export function genarateDayLocal(year, month){
+  console.log('month', month);
+  
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const formattedDays = [];
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      formattedDays.push({
+        date: date.getDate(),    // Ngày
+        month: date.getMonth(), // Tháng (tháng trong JS bắt đầu từ 0)
+        year: date.getFullYear(), // Năm
+        value: -1,
+        name:''
+      });
+    }
+
+    return formattedDays;
+  
+}

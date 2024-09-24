@@ -14,6 +14,13 @@ export async function getReportTurnover(store_code, month,time) {
   return result;
 }
 
+export async function getListTimeKeeping(code, month, time){
+  const result = await KhoPlusApi.CallApi(
+    `/staff/timekeeping/list/${code}?month=${month}&_=${time}`
+  );
+  return result;
+}
+
 export async function getListProduct(page) {
   page || 1;
   const result = await KhoPlusApi.CallApi(

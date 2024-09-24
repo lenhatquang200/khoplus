@@ -1,9 +1,11 @@
-import { colorApp } from 'public';
-import React, { useState } from 'react';
+import { colorApp, Utils } from 'public';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import ItemDate from './itemDate';
 import DetailCheckin from './detailCheckin';
+import { ApiCall } from 'KhoPlus';
+import { useSelector } from 'react-redux';
 
 const CalendarRender = (props) => {
   LocaleConfig.locales['vi'] = {
@@ -29,7 +31,14 @@ const CalendarRender = (props) => {
   LocaleConfig.defaultLocale = 'vi';
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [itemSeleted, setItemSeleted] = useState(null)
+  const [listCheckin, setListCheckin] = useState(props?.listCheckin || []);
 
+  const colleague = useSelector((state) => state?.app?.colleague);
+
+  useEffect(() =>{
+      setListCheckin(props?.listCheckin)
+      
+  },[props?.listCheckin])
 
   const handleDateSelected = (data) => {
     const { time_show } = data || {}
@@ -38,23 +47,33 @@ const CalendarRender = (props) => {
     setItemSeleted(data)
   };
 
+  async function onMonthChange(dataMonth){
+    const{ month, year} = dataMonth
+    let newMonth = month < 10 ? `0${month}` : month
+    const { code } = colleague || {}
+    const time = new Date().getTime()
+    const patchMonth = `${newMonth}/${year}`
+    const response = await ApiCall.getListTimeKeeping(code, patchMonth ,time)
+    if (response && response?.data) {
+      const {listRollup } = response?.data || {}
+      setListCheckin(listRollup)
+    } 
+  }
+
   return (
     <View style={styles.container}>
       <Calendar
-        current={new Date().toISOString().split('T')[0]}
+        //current={new Date().toISOString().split('T')[0]}
         firstDay={1}
         dayComponent={({ date, state }) => (
           <ItemDate
             handleDateSelected={handleDateSelected}
             date={date}
             state={state}
-            listCheckin={props?.listCheckin}
+            listCheckin={listCheckin}
           />
         )}
-        onMonthChange={month => {
-          console.log('month changed', month);
-        }}
-
+        onMonthChange={(month) => onMonthChange(month)}
         theme={{
           backgroundColor: '#ffffff',
           calendarBackground: '#ffffff',
