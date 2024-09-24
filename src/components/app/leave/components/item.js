@@ -29,7 +29,7 @@ export default function Item(props) {
                 backgroundColor:colorApp.lavender
             }]}
         >
-        <View style={styles.line}/>
+            <View style={styles.line}/>
             <View style={styles.container}>
                 
             </View>
