@@ -10,6 +10,7 @@ import CONSTANTS_APP from "./CONSTANTS";
 import * as Icon from "./icon";
 import ToastShow from "./toastShow";
 import * as Utils from './Utils'
+import * as Header from './header'
 
 export {
     settingApp,
@@ -22,5 +23,6 @@ export {
     lottiesJson,
     Icon,
     ToastShow,
-    Utils
+    Utils,
+    Header
 };

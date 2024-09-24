@@ -2,6 +2,9 @@ const colorApp = {
   red: "#F5222D",
   red_001: "#FF6A6A",
 
+  colorLeave: "#FFE1FF",
+  lavender:"#E6E6FA",
+
   light_blue:"#87CEFA",
   light_blue_001:"#63B8FF",
 

@@ -7,14 +7,12 @@ import { colorApp, Icon, settingApp } from 'public';
 import { getDayOfWeek, getTimeDate } from 'public/Utils';
 import CalendarCheckin from './component/calendar';
 import NavigationRoot from 'router';
+import { HeaderDetail } from 'public/header';
 
 export default function Checkin(props) {
-    const { dataCheckin } = props?.route?.params
+    const { dataCheckin } = props?.route?.params || {}
     const [listCheckin, setListCheckin] = useState([])
-    
-    const colleague = useSelector(state => state?.app?.colleague)
     const fullDate = getTimeDate('dd/mm/yyyy');
-    const toDay = getDayOfWeek()
 
     useEffect(() =>{
         if(dataCheckin && dataCheckin?.listRollup){
@@ -24,25 +22,11 @@ export default function Checkin(props) {
 
     return (
         <SafeEra style={styles.container}>
-            <View style={styles.hearderCheckin}>
-                <TouchableOpacity
-                    onPress={() => NavigationRoot?.pop()}
-                    style={styles.buttonBack}
-                >
-                    <Icon.icon_Back/>
-                </TouchableOpacity>
-
-                <AvatarCustom 
-                    size={30} 
-                    name={colleague?.name}
-                    picture=""
+            <HeaderDetail 
+                titleHeader='Lịch sử chấm công'
+                onPress={() => NavigationRoot.pop()}
+                    description={fullDate}
                 />
-                <View style={styles.viewDate}>
-                    <Text style={styles.textTitleHeader}>{"Lịch sử chấm công"}</Text>
-                    <Text style={styles.textDateInfo}>{`${toDay} ${fullDate}`}</Text>
-                </View>
-            </View>
-            
             <CalendarCheckin listCheckin={listCheckin}/>
         </SafeEra>
     )

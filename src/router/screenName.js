@@ -32,5 +32,6 @@ export const screenName = {
   //import store
   EXPORT_FOR_CUSTOMER: "exportForCustomer",
 
-  CHECKIN:"Checkin"
+  CHECKIN:"Checkin",
+  LEAVE:"leave"
 };

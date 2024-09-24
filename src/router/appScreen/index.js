@@ -23,6 +23,7 @@ import CustomerDetail from "components/app/screens/customer/component/customerDe
 
 //Checkin
 import Checkin from "components/app/checkin";
+import LeaveList from "components/app/leave";
 
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();
@@ -79,7 +80,8 @@ function AppScreen(props) {
         name={screenName.CUSTOMER_DETAIL}
       />
 
-    <Stack.Screen component={Checkin} name={screenName.CHECKIN} />
+      <Stack.Screen component={Checkin} name={screenName.CHECKIN} />
+      <Stack.Screen component={LeaveList} name={screenName.LEAVE} />
     </Stack.Navigator>
   );
 }

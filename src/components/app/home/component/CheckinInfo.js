@@ -120,7 +120,11 @@ const CheckinInfo = (props) => {
           <Text style={styles.textCheckinCount}>{countRollup}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.infoLeave}>
+        <TouchableOpacity 
+          onPress={() => NavigationRoot.push(screenName.LEAVE, {
+            dataCheckin:dataCheckin
+          })}
+          style={styles.infoLeave}>
           <Text style={styles.textCheckinList}>{`Nghỉ phép`}</Text>
           <Text style={styles.textCheckinCount}>{countLeave}</Text>
         </TouchableOpacity>
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
   infoLeave: {
     width: infoSize,
     height: (infoSize / 2) - 12,
-    backgroundColor: "#FFE1FF",
+    backgroundColor: colorApp.colorLeave,
     marginLeft: 18,
     borderRadius: 12,
     marginTop: 16,
