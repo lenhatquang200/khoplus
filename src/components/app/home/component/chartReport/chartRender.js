@@ -40,6 +40,11 @@ const ChartRender = ({
         setDataReturn(list_Return)
     }
 
+    const allDaysInMonth = Array.from({ length: 31 }, (_, i) => ({
+        label: String(i + 1).padStart(2, '0'), // Định dạng ngày
+        value: 0 // Mặc định doanh số là 0
+      }));
+
     let totalAchieved = dataChart ? Utils.formatMoney(dataChart?.total_achieved) : 0
     let totalSale = dataChart ? Utils.formatMoney(dataChart?.total_sale) : 0
     let totalExcept = dataChart ? Utils?.formatMoney(dataChart?.total_except) : 0
@@ -103,6 +108,10 @@ const ChartRender = ({
                 trimYAxisAtTop
                 cappedBars={true}
                 hideOrigin={true}
+                yAxisMin={1} // Giá trị nhỏ nhất cho trục y
+                yAxisMax={Math.max(...allDaysInMonth.map(item => item.value)) + 50}
+                yAxisInterval={2}
+
             />
         </View>
     );

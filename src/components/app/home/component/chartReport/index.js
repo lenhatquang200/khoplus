@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { colorApp, settingApp, Utils } from "public";
 import { ApiCall } from "KhoPlus";
 import ChartRender from "./chartRender";
+import SalesChart from "./chartExam";
 
 const ChartReport = (props) => {
     const { colleague } = props
@@ -31,6 +32,7 @@ const ChartReport = (props) => {
     return (
         <View style={styles.container}>
             <ChartRender dataChart={dataStaff}/>
+            {/* <SalesChart  dataChart={dataStaff}/> */}
         </View>
     );
 };
