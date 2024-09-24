@@ -4,8 +4,6 @@ import { AvatarCustom, SafeEra } from 'public/component';
 import { settingApp } from 'public';
 
 export default function HeaderCheckin(props){
-    console.log('HeaderCheckin', props);
-    
     return (
         <View style={styles.container}>
             <AvatarCustom 

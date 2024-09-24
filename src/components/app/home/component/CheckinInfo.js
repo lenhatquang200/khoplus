@@ -15,14 +15,16 @@ import NavigationRoot from "router";
 import { screenName } from "router/screenName";
 
 const infoSize = (settingApp.width_32 / 2) - 8
+let dataCheckin = null
+
 const CheckinInfo = (props) => {
   const { colleague } = props || {};
   const [colorCheckIn, setColorCheckin] = useState(colorApp.nonCheckin)
   const [titleTime, setTitleTime] = useState('Chấm công');
   const [countLeave, setCountLeave] = useState(0)
   const [countRollup, setCountRollup] = useState('0/0')
+  const [isLoading, setIsLoading] = useState(true)
   
-  let dataCheckin = null
 
   useEffect(() => {
     if (colleague) {
@@ -41,6 +43,7 @@ const CheckinInfo = (props) => {
     const response = await ApiCall.getInfoCheckin(code, time)
     if (response && response?.data) {
       dataCheckin = response?.data
+      
       // xử lý thông tin checkin của ngày hôm nay
       const { info, listOnLeave, listRollup } = response?.data || {}
       const _leave = listOnLeave?.length ? listOnLeave?.length : 0
@@ -48,6 +51,7 @@ const CheckinInfo = (props) => {
       getCheckinToday(info)
       getlistRollup(listRollup)
     }
+    setIsLoading(false)
   }
 
   function getlistRollup(listRollup){
@@ -107,10 +111,11 @@ const CheckinInfo = (props) => {
 
       <View style={styles.infoOther}>
         <TouchableOpacity
-        onPress={() => NavigationRoot.push(screenName.CHECKIN, {
-          dataCheckin:dataCheckin
-        })}
-        style={styles.infoList}>
+          disabled={isLoading}
+          onPress={() => NavigationRoot.push(screenName.CHECKIN, {
+            dataCheckin:dataCheckin
+          })}
+          style={styles.infoList}>
           <Text style={styles.textCheckinList}>{`Lịch chấm công`}</Text>
           <Text style={styles.textCheckinCount}>{countRollup}</Text>
         </TouchableOpacity>
