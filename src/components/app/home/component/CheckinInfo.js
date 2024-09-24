@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { colorApp, Icon, settingApp, Utils } from "../../../../public";
-
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import { getInfoCheckin } from "KhoPlus/api/apiCall";
+import { colorApp, Icon, settingApp } from "../../../../public";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { ApiCall } from "KhoPlus";
 import { getTimeDate, isEmptyObject } from "public/Utils";
 import CONSTANTS from "public/CONSTANTS";
+import NavigationRoot from "router";
+import { screenName } from "router/screenName";
 
 const infoSize = (settingApp.width_32 / 2) - 8
 const CheckinInfo = (props) => {
@@ -21,6 +21,8 @@ const CheckinInfo = (props) => {
   const [titleTime, setTitleTime] = useState('Chấm công');
   const [countLeave, setCountLeave] = useState(0)
   const [countRollup, setCountRollup] = useState('0/0')
+  
+  let dataCheckin = null
 
   useEffect(() => {
     if (colleague) {
@@ -37,8 +39,8 @@ const CheckinInfo = (props) => {
     const { code } = colleague || {}
     const time = new Date().getTime()
     const response = await ApiCall.getInfoCheckin(code, time)
-    const timeTime = getTimeDate(true)
     if (response && response?.data) {
+      dataCheckin = response?.data
       // xử lý thông tin checkin của ngày hôm nay
       const { info, listOnLeave, listRollup } = response?.data || {}
       const _leave = listOnLeave?.length ? listOnLeave?.length : 0
@@ -83,10 +85,11 @@ const CheckinInfo = (props) => {
     }
   }
 
-  const today = getTimeDate('dd/mm/yyyy')  // Lấy năm
+  const today = getTimeDate('dd/mm/yyyy')
   return (
     <View style={styles.container}>
-      <View style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
+    {/* Thông tin chấm công */}
+      <TouchableOpacity style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
         <View style={styles.alarm}>
           <FontAwesome5
             name="calendar-check"
@@ -100,19 +103,22 @@ const CheckinInfo = (props) => {
           <Text style={styles.txtCheckin}>{titleTime}</Text>
           <Icon.arrow_Right color={settingApp.white} />
         </View>
-
-      </View>
+      </TouchableOpacity>
 
       <View style={styles.infoOther}>
-        <View style={styles.infoList}>
+        <TouchableOpacity
+        onPress={() => NavigationRoot.push(screenName.CHECKIN, {
+          dataCheckin:dataCheckin
+        })}
+        style={styles.infoList}>
           <Text style={styles.textCheckinList}>{`Lịch chấm công`}</Text>
           <Text style={styles.textCheckinCount}>{countRollup}</Text>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.infoLeave}>
+        <TouchableOpacity style={styles.infoLeave}>
           <Text style={styles.textCheckinList}>{`Nghỉ phép`}</Text>
           <Text style={styles.textCheckinCount}>{countLeave}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
     </View>

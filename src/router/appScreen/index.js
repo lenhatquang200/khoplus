@@ -21,6 +21,9 @@ import ManufactDetail from "components/app/screens/manufacturings/components/man
 import CustomerTab from "components/app/screens/customer";
 import CustomerDetail from "components/app/screens/customer/component/customerDetail";
 
+//Checkin
+import Checkin from "components/app/checkin";
+
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();
 const optionsHorizontal = {
@@ -75,6 +78,8 @@ function AppScreen(props) {
         component={CustomerDetail}
         name={screenName.CUSTOMER_DETAIL}
       />
+
+    <Stack.Screen component={Checkin} name={screenName.CHECKIN} />
     </Stack.Navigator>
   );
 }

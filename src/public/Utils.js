@@ -44,8 +44,11 @@ export function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-function formatDate(dateTimeStr) {
-  // Tách chuỗi dựa trên dấu cách để lấy phần ngày tháng
-  const datePart = dateTimeStr.split(' ')[0];
-  return datePart; // Chỉ trả về phần ngày tháng
+export function getDayOfWeek() {
+  const daysOfWeek = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+  
+  const today = new Date(); // Lấy ngày hiện tại
+  const dayOfWeek = today.getDay(); // Lấy chỉ số ngày trong tuần (0 - Chủ nhật, 1 - Thứ hai, ... 6 - Thứ bảy)
+
+  return daysOfWeek[dayOfWeek]; // Trả về tên ngày trong tuần
 }

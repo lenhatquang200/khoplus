@@ -6,7 +6,8 @@ import { useIsFocused } from '@react-navigation/native';
 import settingApp from 'public/settingApp';
 import colorApp from 'public/colorApp';
 import NavigationRoot from 'router';
-import { Icon, lang } from 'public';
+import * as Icon from "../icon"
+import lang from "../locate";
 
 const { width } = settingApp
 const qrSize = width * 0.7; // Kích thước khung quét QR
