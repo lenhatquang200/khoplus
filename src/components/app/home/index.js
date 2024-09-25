@@ -5,8 +5,9 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Alert,
 } from "react-native";
-import { colorApp, imageApp, settingApp } from "../../../public";
+import { colorApp, imageApp, settingApp, ToastShow } from "../../../public";
 import HeaderHome from "./component/headerHome";
 import { AttendanceBottomSheet, SafeEra } from "public/component";
 import { ApiCall } from "KhoPlus";
@@ -16,19 +17,27 @@ import CheckinInfo from "./component/CheckinInfo";
 function HomeScreen(props) {
   const dispatch = useDispatch();
   const colleague = useSelector((state) => state?.app?.colleague);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [infoCheckToday, setInfoToday] = useState(null)
+
   const bottomSheetRef = useRef(null);
 
 
-  const handleSelectOption = (option) => {
-    setSelectedOption(option);
-    bottomSheetRef.current?.close(); // Đóng BottomSheet khi chọn xong
+  const handleSelectOption = async (option) => {
+    const { value, timekeeping } = option;
+    const { code } = colleague
+    const response = await ApiCall.timekeepingToday(code, value, timekeeping )
+    if(response && response?.data?.info){
+      setInfoToday(response?.data?.info)
+      bottomSheetRef.current?.close(); 
+    }
+    else{
+      ToastShow("Chấm công thất bại. Vui lòng thử lại")
+    }
+    // setSelectedOption(option);
+    // bottomSheetRef.current?.close(); 
   };
 
-  function openSheet(){
-    console.log('openSheet');
-    bottomSheetRef?.current?.open()
-  }
+ 
 
   return (
     <SafeEra style={styles.container}>
@@ -42,7 +51,8 @@ function HomeScreen(props) {
         <HeaderHome colleague={colleague} />
         <CheckinInfo  
           colleague={colleague} 
-          showBottomCheckin={() => openSheet()}  
+          showBottomCheckin={() => bottomSheetRef?.current?.open()}
+          infoCheckToday={infoCheckToday}
         />    
         <ChartReport colleague={colleague} />
 

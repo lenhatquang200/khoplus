@@ -4,19 +4,27 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import settingApp from 'public/settingApp';
 import colorApp from 'public/colorApp';
 import { Icon } from 'public';
+import RealTimeClock from './RealTimeClock';
+import CONSTANTS from 'public/CONSTANTS';
 
 const AttendanceBottomSheet = forwardRef(({ onSelect, colleague }, ref) => {
-  console.log("colleague", colleague);
-  
   const bottomSheetRef = useRef(null);
 
   // Snap points cho BottomSheet
-  const snapPoints = useMemo(() => ['60%'], []);
+  const snapPoints = useMemo(() => ['65%'], []);
 
   useImperativeHandle(ref, () => ({
     open: () => bottomSheetRef.current?.expand(),
     close: () => bottomSheetRef.current?.close(),
   }));
+
+  function onPressCheckIn(value){
+    const timekeeping = new Date().getTime();
+    onSelect({
+      value:value,
+      timekeeping:timekeeping
+    })
+  }
 
   return (
     <BottomSheet
@@ -33,17 +41,19 @@ const AttendanceBottomSheet = forwardRef(({ onSelect, colleague }, ref) => {
       <View style={styles.inforStore}>
           <Text style={styles.titleHeader}>{"Bạn đang thực hiện chấm công tại"}</Text>
           <Text style={styles.nameStore}>{colleague?.store?.name || "--"}</Text>
+          <RealTimeClock 
+            styleTime={styles.styleTime}
+        />
       </View>
-
       <View style={styles.container}>
-        <TouchableOpacity style={styles.buttonFullDay} onPress={() => onSelect('Cả ngày')}>
+        <TouchableOpacity style={styles.buttonFullDay} onPress={() => onPressCheckIn(CONSTANTS.FULL_CHECKIN)}>
           <Text style={styles.buttonTextFullDay}>Cả ngày</Text>
         </TouchableOpacity>
 
       <View style={styles.viewOption}>
         <TouchableOpacity style={[styles.buttonOption,{
           borderColor:colorApp.checkinMorningDay
-        }]} onPress={() => onSelect('Ca Sáng')}>
+        }]} onPress={() => onPressCheckIn(CONSTANTS.MORNING_CHECKIN)}>
         
             <Text style={[styles.buttonTextOption,{
               color:colorApp.checkinMorningDay
@@ -54,7 +64,7 @@ const AttendanceBottomSheet = forwardRef(({ onSelect, colleague }, ref) => {
         
           <TouchableOpacity style={[styles.buttonOption,{
             borderColor: colorApp.checkinAffterDay
-          }]} onPress={() => onSelect('Ca Chiều')}>
+          }]} onPress={() => onPressCheckIn(CONSTANTS.AFTERNOON_CHECKIN)}>
            
             <Text style={[styles.buttonTextOption,{
               color:colorApp.checkinAffterDay
@@ -62,6 +72,7 @@ const AttendanceBottomSheet = forwardRef(({ onSelect, colleague }, ref) => {
           
           </TouchableOpacity>
       </View>
+       
        
       </View>
     </BottomSheet>
@@ -144,6 +155,11 @@ const styles = StyleSheet.create({
     width:40,
     height:40,
     zIndex:5
+  },
+  styleTime:{
+    marginTop:12,
+    fontSize:18,
+    color:colorApp.deepSkyBlue
   }
 });
 

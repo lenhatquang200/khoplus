@@ -18,24 +18,27 @@ const infoSize = (settingApp.width_32 / 2) - 8
 let dataCheckin = null
 
 const CheckinInfo = (props) => {
-  const { colleague , showBottomCheckin } = props || {};
+  const { colleague , showBottomCheckin, infoCheckToday } = props || {};
   const [colorCheckIn, setColorCheckin] = useState(colorApp.nonCheckin)
   const [titleTime, setTitleTime] = useState('Chấm công');
   const [countLeave, setCountLeave] = useState(0)
   const [countRollup, setCountRollup] = useState('0/0')
   const [isLoading, setIsLoading] = useState(true)
+  const [disabledCheckin, setDisableCheckin] = useState(false)
   
 
   useEffect(() => {
     if (colleague) {
       getCheckin()
     }
-    getColorCheckin()
   }, []);
 
-  function getColorCheckin() {
-
-  }
+  useEffect(() =>{
+    if(infoCheckToday?.value){
+      // getCheckinToday(infoCheckToday)
+      getCheckin()
+    }
+  },[infoCheckToday])
 
   async function getCheckin() {
     const { code } = colleague || {}
@@ -86,6 +89,7 @@ const CheckinInfo = (props) => {
           break;
       }
       setTitleTime(timeTitle)
+      setDisableCheckin(true)
     }
   }
 
@@ -94,6 +98,7 @@ const CheckinInfo = (props) => {
     <View style={styles.container}>
     {/* Thông tin chấm công */}
       <TouchableOpacity 
+      disabled={disabledCheckin}
       onPress={() => showBottomCheckin()}
       style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
         <View style={styles.alarm}>
@@ -105,10 +110,15 @@ const CheckinInfo = (props) => {
         </View>
         <Text style={styles.dayMonth}>{today}</Text>
 
-        <View style={styles.view_txt_checkin}>
+        {disabledCheckin && <Text style={styles.txtCheckinToday}>{"Bạn đã chấm công hôm nay"}</Text>}
+
+        <View style={[styles.view_txt_checkin,{
+            marginTop: disabledCheckin ? 0 : 20,
+        }]}>
           <Text style={styles.txtCheckin}>{titleTime}</Text>
-          <Icon.arrow_Right color={settingApp.white} />
+          {!disabledCheckin && <Icon.arrow_Right color={settingApp.white} />}
         </View>
+        
       </TouchableOpacity>
 
       <View style={styles.infoOther}>
@@ -188,7 +198,7 @@ const styles = StyleSheet.create({
   },
   dayMonth: {
     fontSize: 16,
-    marginTop: 12,
+    marginTop: 8,
     color: colorApp.white,
     fontWeight: "600"
   },
@@ -197,7 +207,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: infoSize,
     height: 40,
-    marginTop: 20,
+    
   },
   textCheckinList: {
     fontSize: 16,
@@ -208,5 +218,10 @@ const styles = StyleSheet.create({
     color: colorApp.colorText,
     fontWeight: "600",
     marginTop:5
+  },
+  txtCheckinToday:{
+    fontSize:16,
+    color:colorApp.white,
+    fontWeight:"500"
   }
 });

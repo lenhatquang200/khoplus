@@ -14,6 +14,8 @@ import EmptyView from "./EmptyView";
 import SafeEra from "./SafeEra";
 import QRCodeScanner from "./QRCodeScaner";
 import LoadingModal from "./LoadingModal";
+import RealTimeClock from "./RealTimeClock";
+
 export { default as AttendanceBottomSheet } from './AttendanceBottomSheet';
 
 
@@ -34,4 +36,5 @@ export {
   EmptyView,
   QRCodeScanner,
   LoadingModal,
+  RealTimeClock
 };

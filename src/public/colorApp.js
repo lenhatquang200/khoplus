@@ -8,6 +8,8 @@ const colorApp = {
   light_blue:"#87CEFA",
   light_blue_001:"#63B8FF",
 
+  deepSkyBlue:"#00BFFF",
+
   colorText: "#292929",
   colorPlaceText: "#575757",
 

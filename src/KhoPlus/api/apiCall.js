@@ -21,6 +21,13 @@ export async function getListTimeKeeping(code, month, time){
   return result;
 }
 
+export async function timekeepingToday(code, value, time){
+  const result = await KhoPlusApi.CallApi(
+    `/staff/timekeeping/rollup-today/${code}/${value}?_=${time}`
+  );
+  return result;
+}
+
 export async function getListProduct(page) {
   page || 1;
   const result = await KhoPlusApi.CallApi(
