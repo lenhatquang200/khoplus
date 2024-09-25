@@ -98,7 +98,7 @@ const CheckinInfo = (props) => {
     <View style={styles.container}>
     {/* Thông tin chấm công */}
       <TouchableOpacity 
-      disabled={disabledCheckin}
+      // disabled={disabledCheckin}
       onPress={() => showBottomCheckin()}
       style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
         <View style={styles.alarm}>
