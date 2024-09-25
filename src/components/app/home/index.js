@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   View,
@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { colorApp, imageApp, settingApp } from "../../../public";
 import HeaderHome from "./component/headerHome";
-import { SafeEra } from "public/component";
+import { AttendanceBottomSheet, SafeEra } from "public/component";
 import { ApiCall } from "KhoPlus";
 import ChartReport from "./component/chartReport";
 import CheckinInfo from "./component/CheckinInfo";
@@ -16,6 +16,19 @@ import CheckinInfo from "./component/CheckinInfo";
 function HomeScreen(props) {
   const dispatch = useDispatch();
   const colleague = useSelector((state) => state?.app?.colleague);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const bottomSheetRef = useRef(null);
+
+
+  const handleSelectOption = (option) => {
+    setSelectedOption(option);
+    bottomSheetRef.current?.close(); // Đóng BottomSheet khi chọn xong
+  };
+
+  function openSheet(){
+    console.log('openSheet');
+    bottomSheetRef?.current?.open()
+  }
 
   return (
     <SafeEra style={styles.container}>
@@ -27,7 +40,10 @@ function HomeScreen(props) {
           <Image source={imageApp.bannerHome} style={{width:settingApp.width_32, height:160, borderRadius:8,}} resizeMode={"cover"} />
         </View>
         <HeaderHome colleague={colleague} />
-        <CheckinInfo  colleague={colleague} />    
+        <CheckinInfo  
+          colleague={colleague} 
+          showBottomCheckin={() => openSheet()}  
+        />    
         <ChartReport colleague={colleague} />
 
         <View 
@@ -35,6 +51,11 @@ function HomeScreen(props) {
             width:settingApp.width,
             height:60
           }}
+        />
+
+        <AttendanceBottomSheet 
+          ref={bottomSheetRef} onSelect={handleSelectOption}
+          colleague={colleague}  
         />
       </ScrollView>
     </SafeEra>

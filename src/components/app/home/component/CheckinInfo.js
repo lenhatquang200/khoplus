@@ -18,7 +18,7 @@ const infoSize = (settingApp.width_32 / 2) - 8
 let dataCheckin = null
 
 const CheckinInfo = (props) => {
-  const { colleague } = props || {};
+  const { colleague , showBottomCheckin } = props || {};
   const [colorCheckIn, setColorCheckin] = useState(colorApp.nonCheckin)
   const [titleTime, setTitleTime] = useState('Chấm công');
   const [countLeave, setCountLeave] = useState(0)
@@ -93,7 +93,9 @@ const CheckinInfo = (props) => {
   return (
     <View style={styles.container}>
     {/* Thông tin chấm công */}
-      <TouchableOpacity style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
+      <TouchableOpacity 
+      onPress={() => showBottomCheckin()}
+      style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
         <View style={styles.alarm}>
           <FontAwesome5
             name="calendar-check"
