@@ -1,4 +1,4 @@
-import { colorApp, Utils } from 'public';
+import { colorApp, settingApp, Utils } from 'public';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
@@ -6,6 +6,8 @@ import ItemDate from './itemDate';
 import DetailCheckin from './detailCheckin';
 import { ApiCall } from 'KhoPlus';
 import { useSelector } from 'react-redux';
+import { getTimeDate } from 'public/Utils';
+import { LoadingInContent } from 'public/component';
 
 const CalendarRender = (props) => {
   LocaleConfig.locales['vi'] = {
@@ -32,13 +34,48 @@ const CalendarRender = (props) => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [itemSeleted, setItemSeleted] = useState(null)
   const [listCheckin, setListCheckin] = useState(props?.listCheckin || []);
+  const [isLoading, setIsLoading] = useState(true)
 
   const colleague = useSelector((state) => state?.app?.colleague);
 
-  useEffect(() =>{
+  useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
+    if (props?.listCheckin && props?.listCheckin?.length !== 0) {
       setListCheckin(props?.listCheckin)
-      
-  },[props?.listCheckin])
+      getCurrentData()
+    }
+  }, [props?.listCheckin])
+
+  async function getCurrentData() {
+    let list = []
+    if (listCheckin.length !== 0) {
+      list = listCheckin
+    }
+    else {
+      const { code } = colleague || {}
+      const time = new Date().getTime()
+      const patchMonth = getTimeDate('mm/yyyy')
+      const response = await ApiCall.getListTimeKeeping(code, patchMonth, time)
+      if (response && response?.data) {
+        const { listRollup } = response?.data || {}
+        list = listRollup
+      }
+    }
+
+    if (list.length !== 0) {
+      const currentDate = new Date().getDate()
+      list.map(item => {
+        if (item && item?.date === currentDate) {
+          setItemSeleted(item)
+        }
+      })
+    }
+
+    setIsLoading(false)
+  }
 
   const handleDateSelected = (data) => {
     const { time_show } = data || {}
@@ -47,17 +84,17 @@ const CalendarRender = (props) => {
     setItemSeleted(data)
   };
 
-  async function onMonthChange(dataMonth){
-    const{ month, year} = dataMonth
+  async function onMonthChange(dataMonth) {
+    const { month, year } = dataMonth
     let newMonth = month < 10 ? `0${month}` : month
     const { code } = colleague || {}
     const time = new Date().getTime()
     const patchMonth = `${newMonth}/${year}`
-    const response = await ApiCall.getListTimeKeeping(code, patchMonth ,time)
+    const response = await ApiCall.getListTimeKeeping(code, patchMonth, time)
     if (response && response?.data) {
-      const {listRollup } = response?.data || {}
+      const { listRollup } = response?.data || {}
       setListCheckin(listRollup)
-    } 
+    }
   }
 
   return (
@@ -113,14 +150,18 @@ const CalendarRender = (props) => {
           }
         }}
       />
-
-
+       
+      {isLoading &&
+        <View style={styles.loading}>
+          <LoadingInContent />
+        </View>
+      }
       {itemSeleted &&
         <>
           <Text style={styles.selectedDateText}>
             {`Chi tiết chấm công`}
           </Text>
-          <DetailCheckin dataCheckin={itemSeleted} />
+          {<DetailCheckin dataCheckin={itemSeleted} />}
         </>}
     </View>
   );
@@ -135,6 +176,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
+  loading:{
+    position:"absolute",
+    zIndex:2,
+    top:0
+  }
 });
 
 export default CalendarRender;

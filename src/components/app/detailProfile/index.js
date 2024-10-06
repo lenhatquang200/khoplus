@@ -1,7 +1,7 @@
 
 import React, { Component, useEffect, useState, } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import NavigationRoot from 'router';
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -10,53 +10,30 @@ import * as FileSystem from 'expo-file-system';
 import { screenName } from 'router/screenName';
 import TYPE_TAKE from './components/constants';
 import { ApiCall } from 'KhoPlus';
-import { colorApp, Icon, settingApp, Utils } from 'public';
-import { AvatarCustom, HeaderName, SafeEra } from 'public/component';
+import { colorApp, Icon, settingApp, ToastShow, Utils } from 'public';
+import { AvatarCustom, HeaderName, ImageLazyload, SafeEra } from 'public/component';
+import { converLinkImage } from 'public/Utils';
+import actions from 'state/actions';
 
-export default function DetailProfile({ }) {
+export default function DetailProfile(props) {
+    const dispatch = useDispatch();
     const colleague = useSelector(state => state?.app?.colleague)
     const { idcard } = colleague || {}
 
     const [dataCard, setDataCard] = useState(idcard)
-    const fileName = 'image.jpg';
 
-    useEffect(() => {
+    // useEffect(() =>{
+    //     updateInfo(dataCard)
+    // },[])
 
-    }, [colleague])
-
-    const getFileNameFromUri = (uri) => {
-        // Sử dụng split('/') để tách các phần của URI
-        const uriParts = uri.split('/');
-        
-        // Lấy phần cuối cùng của mảng là tên file
-        return uriParts[uriParts.length - 1];
-      };
-
-      const getFileTypeFromUri = (uri) => {
-        // Lấy tên file từ URI
-        const fileName = uri.split('/').pop();
-      
-        // Lấy phần đuôi file (extension)
-        const fileExtension = fileName.split('.').pop().toLowerCase();
-      
-        // Đối chiếu extension với các MIME type phổ biến
-        const mimeTypes = {
-          'jpg': 'image/jpeg',
-          'jpeg': 'image/jpeg',
-          'png': 'image/png',
-          'gif': 'image/gif',
-          'bmp': 'image/bmp',
-          'pdf': 'application/pdf',
-          'txt': 'text/plain',
-          'mp4': 'video/mp4',
-          'mov': 'video/quicktime',
-        };
-      
-        return mimeTypes[fileExtension] || null;
-      };
+    useEffect(() =>{
+        if(colleague){
+            console.log('colleague', colleague);
+            setDataCard(colleague?.idcard)
+        }
+    },[colleague])
 
     async function onGetParams(dataID) {
-        console.log('onGetParams', dataID);
         const { type } = dataID
         if (type === TYPE_TAKE.FONT) {
             if (dataID?.idCardInfo) {
@@ -64,37 +41,112 @@ export default function DetailProfile({ }) {
                 const newData = {
                     address: idCardInfo?.address,
                     code: idCardInfo?.idNumber,
-                    // birthday: Utils.formatDateByString(idCardInfo?.dateOfBirth),
-                    // date_of_issue: Utils.formatDateByString(idCardInfo?.issueDate),
+                    birthday: idCardInfo?.dateOfBirth ? Utils.formatDateByString(idCardInfo?.dateOfBirth) : '--',
+                    date_of_issue: idCardInfo?.issueDate ? Utils.formatDateByString(idCardInfo?.issueDate) : '--',
                     name: idCardInfo?.name,
-                    fontCard: idCardInfo?.base64?.base64
+                    fontCard: null
                 }
                 const uri_imge = idCardInfo?.base64?.uri
-                const fileInfo = await FileSystem.getInfoAsync(uri_imge);
-                console.log('fileInfo', fileInfo);
-                if (fileInfo.exists) {
-                    const formData = new FormData();
-                    formData.append('myFile', {
-                        uri: fileInfo?.uri,   // The URI of the photo
-                        name: getFileNameFromUri(uri_imge),  // Name of the file (you can customize this)
-                        type: getFileTypeFromUri(uri_imge),
-                        modificationTime:fileInfo?.modificationTime,
-                        size:fileInfo?.size
-                    });
-                    console.log('formData', formData);
-                    const response = await ApiCall.uploadIdCard(formData, colleague?.code, 1)
-                    console.log('response', response);
-                    setDataCard(newData)
-                }
+                newData.fontCard  = await postImage(uri_imge, 1)
+                setDataCard(newData)
+                dispatch(actions.getColleague({
+                    ...colleague,
+                    idcard:{
+                        ...idcard,
+                        ...newData
+                    }
+                }));
+                alerUpdateInfo(newData)
             }
         }
         else {
-            if (dataID?.photo?.base64) {
-                setDataCard({
-                    ...dataCard,
-                    backCard: dataID?.photo?.base64
-                })
+            if (dataID?.photo?.uri) {
+                const newData = {...dataCard, backCard:null}
+                const uri_imge = dataID?.photo?.uri
+                newData.backCard  = await postImage(uri_imge, 2)
+                setDataCard(newData)
+                dispatch(actions.getColleague({
+                    ...colleague,
+                    idcard:{
+                        ...idcard,
+                        ...newData
+                    }
+                }));
             }
+        }
+    }
+
+    async function postImage(uri, type) {
+        const uri_imge = uri
+        const fileInfo = await FileSystem.getInfoAsync(uri_imge);
+        if (fileInfo.exists) {
+            const fileData = await FileSystem.readAsStringAsync(fileInfo?.uri, {
+                encoding: FileSystem.EncodingType.Base64,
+                });
+            const body = {
+                image: `data:image/jpeg;base64,${fileData}`
+            }
+            const response = await ApiCall.uploadIdCard(body, colleague?.code, type)
+            if(response && response?.link){
+                return await converLinkImage(response?.link)
+            }
+            return null
+        }
+        else{
+            return null
+        }
+    }
+
+    function alerUpdateInfo(newData){
+        Alert.alert(
+            "Cập nhật thông tin ?",
+            "Bạn có muốn cập nhật lại thông tin tài khoản theo thông tin trên CCCD không ?",
+            [
+              {
+                text: "Đóng",
+                onPress: () => "",
+                style: "cancel",
+              },
+              {
+                text: "Cập nhật",
+                onPress: () => updateInfo(newData),
+              },
+            ]
+          );
+    }
+
+    async function updateInfo(newData){
+        const { code, name, birthday, address, date_of_issue } = newData
+        const newBody = {
+            _id: colleague?._id, 
+            code:colleague?.code,
+            name,
+            birthday, 
+            phone:colleague?.phone,
+            address,
+            idcard:{
+                address: address,
+                birthday: birthday,
+                code: code,
+                date_of_issue: date_of_issue,
+                name: name,
+                place: ""
+            }
+        }
+        const response = await ApiCall.updateInfoStaff(newBody)
+        if(response && response?.data){
+            const {  data } = response
+            dispatch(actions.getColleague({
+                ...colleague,
+                ...data,
+                idcard:{
+                    ...idcard,
+                    ...data?.idcard
+                }
+            }));
+        }
+        else{
+            ToastShow('Cập nhật thông tin không thành công')
         }
     }
 
@@ -149,10 +201,11 @@ export default function DetailProfile({ }) {
                                     <Image
                                         style={{ width: settingApp.width_32, height: 240, marginTop: 12, marginBottom: 12 }}
                                         source={{
-                                            uri: `data:image/png;base64, ${dataCard?.fontCard}`,
+                                            uri:dataCard?.fontCard,
                                         }}
                                         resizeMode='cover'
-                                    /> :
+                                    />
+                                    :
                                     <AntDesign name='idcard' size={220} color={colorApp.disable} />}
                                 <TouchableOpacity
                                     onPress={() => NavigationRoot.push(screenName.TAKE_ID_CARD, {
@@ -173,7 +226,7 @@ export default function DetailProfile({ }) {
                                     <Image
                                         style={{ width: settingApp.width_32, height: 240, marginTop: 12, marginBottom: 12 }}
                                         source={{
-                                            uri: `data:image/png;base64, ${dataCard?.backCard}`,
+                                            uri:dataCard?.backCard,
                                         }}
                                         resizeMode='cover'
                                     /> :

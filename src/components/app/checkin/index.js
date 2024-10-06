@@ -25,8 +25,8 @@ export default function Checkin(props) {
             <HeaderDetail 
                 titleHeader='Lịch sử chấm công'
                 onPress={() => NavigationRoot.pop()}
-                    description={fullDate}
-                />
+                description={fullDate}
+            />
             <CalendarCheckin listCheckin={listCheckin}/>
         </SafeEra>
     )
@@ -37,38 +37,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: settingApp.space_16,
         paddingRight: settingApp.space_16,
-        backgroundColor: colorApp.white
-    },
-    viewDate: {
-        width: settingApp.width_32 - 120,
-        height: 64,
-        justifyContent: "center",
-        marginLeft:12
-    },
-    textTitleHeader: {
-        fontSize: 20,
-        color: colorApp.colorText,
-        fontWeight: "600"
-    },
-    textDateInfo: {
-        fontSize: 14,
-        color: colorApp.colorPlaceText,
-        lineHeight: 18,
-        marginTop: 5
-    },
-    agendaContainer: {
-        width: settingApp.width_32,
-    },
-    hearderCheckin:{
-        flexDirection:"row",
-        height:60,
-        alignItems:"center",
-        marginTop:12
-    },
-    buttonBack:{
-        height:40,
-        width:40,
-        justifyContent:"center",
-        alignItems:"flex-start"
+        backgroundColor:colorApp.white
     }
 })

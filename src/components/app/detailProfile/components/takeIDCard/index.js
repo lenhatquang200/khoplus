@@ -90,25 +90,9 @@ export default function TakeIDCard(props) {
         setStartScan(true)
         const options = { base64: false, quality: 0.8 };
         const photo = await cameraRef?.current?.takePictureAsync(options);
-        console.log("startScanning", photo);
         if(type == TYPE_TAKE.FONT){
-            const idCardInfo = {
-                idNumber: 1,              // Mã số định danh cá nhân
-                additionalId: 2,          // Mã số khác (nếu có)
-                name: 3,                  // Tên
-                dateOfBirth: 4,           // Ngày sinh
-                gender: 5,                // Giới tính
-                address: 6,               // Địa chỉ
-                issueDate: 7, 
-                base64:photo             // Ngày cấp hoặc ngày hết hạn
-            };
-            route?.params?.onGetParams && route?.params?.onGetParams({
-                idCardInfo,
-                type
-            });
-            NavigationRoot?.pop()
-            // setPhotoCard(photo)
-            // setScanning(true);
+            setPhotoCard(photo)
+            setScanning(true);
         }
         else{
             setStartScan(false)

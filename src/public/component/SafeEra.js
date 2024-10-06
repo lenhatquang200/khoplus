@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, StatusBar, Platform } from "react-native";
 import settingApp from "../settingApp";
+import colorApp from "public/colorApp";
 
 export default function SafeEra({
   children,
@@ -36,5 +37,6 @@ const styles = StyleSheet.create({
   background: {
     height: settingApp.height,
     width:settingApp.width,
+    backgroundColor:colorApp.white
   },
 });

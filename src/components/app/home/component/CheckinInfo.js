@@ -21,11 +21,12 @@ const CheckinInfo = (props) => {
   const { colleague , showBottomCheckin, infoCheckToday } = props || {};
   const [colorCheckIn, setColorCheckin] = useState(colorApp.nonCheckin)
   const [titleTime, setTitleTime] = useState('Chấm công');
-  const [countLeave, setCountLeave] = useState(0)
   const [countRollup, setCountRollup] = useState('0/0')
   const [isLoading, setIsLoading] = useState(true)
   const [disabledCheckin, setDisableCheckin] = useState(false)
+  const [pointCheckin, setPointCheking] = useState(0)
   const [infoCheckin, setInfo] = useState(null)
+  const [infoLeave, setInfoLeave] = useState(null)
   
 
   useEffect(() => {
@@ -36,7 +37,6 @@ const CheckinInfo = (props) => {
 
   useEffect(() =>{
     if(infoCheckToday?.value){
-      // getCheckinToday(infoCheckToday)
       getCheckin()
     }
   },[infoCheckToday])
@@ -47,15 +47,38 @@ const CheckinInfo = (props) => {
     const response = await ApiCall.getInfoCheckin(code, time)
     if (response && response?.data) {
       dataCheckin = response?.data
-      
       // xử lý thông tin checkin của ngày hôm nay
       const { info, listOnLeave, listRollup } = response?.data || {}
-      const _leave = listOnLeave?.length ? listOnLeave?.length : 0
-      setCountLeave(_leave)
+      setInfo(info)
+      countPoint(listRollup)
+      countLeave_Func(listOnLeave)
       getCheckinToday(info)
       getlistRollup(listRollup)
     }
     setIsLoading(false)
+  }
+
+  function countPoint(listRollup){
+    let number = 0
+    if(listRollup.length !== 0){
+      listRollup.map(item =>{
+        if(item && item?.point != 0){
+          number = number + item?.point
+        }
+      })
+    }
+    setPointCheking(number)
+  }
+
+  function countLeave_Func(listOnLeave){
+    const currentMonth = getTimeDate('mm/yyyy')
+    if(listOnLeave.length !=0 ){
+      listOnLeave.map(item =>{
+        if(item?.month === currentMonth.toString()){
+            setInfoLeave(item)          
+        }
+      })
+    }
   }
 
   function getlistRollup(listRollup){
@@ -72,6 +95,7 @@ const CheckinInfo = (props) => {
   function getCheckinToday(info){
     if (isEmptyObject(info)) {
       setColorCheckin(colorApp.nonCheckin)
+      
     }
     else {
       const { value, time_show } = info
@@ -94,8 +118,9 @@ const CheckinInfo = (props) => {
     }
   }
 
+
   const today = getTimeDate('dd/mm/yyyy')
-  const tileCheckin = disabledCheckin ? "Đã chấm công:" : "Bạn chưa chấm công"
+  const tileCheckin = disabledCheckin ? "Đã chấm công" : "Bạn chưa chấm công"
   return (
     <View style={styles.container}>
     {/* Thông tin chấm công */}
@@ -117,7 +142,7 @@ const CheckinInfo = (props) => {
 
         <>
           <Text style={styles.txtCheckinToday}>{tileCheckin}</Text>
-          <Text style={styles.txtCheckinToday}>{}</Text>
+          <Text style={styles.txtCheckinToday}>{infoCheckin?.name || ''}</Text>
         </>
 
         <View style={[styles.view_txt_checkin,{
@@ -137,7 +162,7 @@ const CheckinInfo = (props) => {
           })}
           style={styles.infoList}>
           <Text style={styles.textCheckinList}>{`Lịch chấm công`}</Text>
-          <Text style={styles.textCheckinCount}>{countRollup}</Text>
+          <Text style={styles.textCheckinCount}>{countRollup + ' - ' + pointCheckin + ' công'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -146,7 +171,7 @@ const CheckinInfo = (props) => {
           })}
           style={styles.infoLeave}>
           <Text style={styles.textCheckinList}>{`Nghỉ phép`}</Text>
-          <Text style={styles.textCheckinCount}>{countLeave}</Text>
+          <Text style={styles.textCheckinCount}>{`${infoLeave?.amount || 0} lượt - ${infoLeave?.amount || 0} công`}</Text>
         </TouchableOpacity>
       </View>
 
@@ -175,7 +200,7 @@ const styles = StyleSheet.create({
   },
   infoList: {
     width: infoSize,
-    height: (infoSize / 2) - 12,
+    minHeigh: (infoSize / 2) - 12,
     backgroundColor: "#E6E6FA",
     marginLeft: 18,
     borderRadius: 12,
@@ -222,7 +247,7 @@ const styles = StyleSheet.create({
     color: colorApp.colorPlaceText,
   },
   textCheckinCount: {
-    fontSize: 18,
+    fontSize: 16,
     color: colorApp.colorText,
     fontWeight: "600",
     marginTop:5

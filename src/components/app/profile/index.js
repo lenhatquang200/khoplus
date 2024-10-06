@@ -13,7 +13,7 @@ import { HeaderProfile } from "./components";
 import KhoPlus from "KhoPlus/api/khoplusApi";
 import CONSTANTS from "./components/CONSTANTS";
 import { screenName } from "router/screenName";
-import { HeaderAction } from "public/component";
+import { HeaderAction, HeaderName, SafeEra } from "public/component";
 import Indvidual from "./components/individual";
 import { useSharedValue } from "react-native-reanimated";
 
@@ -41,15 +41,17 @@ function Profile(props) {
   }
 
   return (
-    <View style={styles.mainView}>
-      <Component.LinearBackGround />
-      <HeaderAction title={"Thông tin"} />
-      <ScrollView>
+    <SafeEra style={styles.mainView} overStatusBar={true}>
+      <HeaderAction title={"Thông tin"} styleTitle={{color:colorApp.colorText, marginLeft:12}}/>
+      <ScrollView style={{
+        flex:1,
+        paddingLeft:settingApp.space_12
+      }}>
         <HeaderProfile colleague={colleague} />
         <Indvidual colleague={colleague} />
         {buttonLogout()}
       </ScrollView>
-    </View>
+    </SafeEra>
   );
 }
 export default Profile;
@@ -57,7 +59,6 @@ export default Profile;
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
-    alignItems: "center",
   },
   background: {
     position: "absolute",
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     paddingRight: space_16,
     flexDirection: "row",
     justifyContent: "space-between",
+    
   },
   txt_logout: {
     fontSize: size_14,

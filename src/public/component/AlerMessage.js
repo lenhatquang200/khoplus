@@ -1,10 +1,9 @@
-import LottieView from "lottie-react-native";
+import React, { useRef } from "react";
+import { View, Text, Image } from "react-native";
 import colorApp from "public/colorApp";
 import imageApp from "public/imageApp";
-import lottiesJson from "public/lottiesJson";
 import settingApp from "public/settingApp";
-import React, { Component, useRef } from "react";
-import { View, Text, Image } from "react-native";
+
 
 export default function AlertMessage({ title, mess, isCancle, buttonAction }) {
   const lottie = useRef();

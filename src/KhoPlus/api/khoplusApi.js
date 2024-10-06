@@ -25,7 +25,6 @@ function removeApiSuffix(url) {
 
 async function GetAuthInfo() {
   let urlHost = _urlDomain ? _urlDomain : await getUrl()
-  
   let result = await AsyncStorage.getItem(AuthStorageKey);
   if (result) {
     result = JSON.parse(result);
@@ -46,16 +45,26 @@ async function GetAuthInfo() {
       console.log('GetAuthInfo error', error);
     }
     
-    if (refresh_token?.status === 200) {
+    if (refresh_token && refresh_token?.status === 200) {
       refresh_token = await refresh_token.json();
       if (refresh_token?.data?.token) {
         const { token, user } = refresh_token?.data;
         const urlPath = await getUrl()
         const modifiedUrl = removeApiSuffix(urlPath);
         const linkImage = `${modifiedUrl}/avatar/${user?.code}.jpg`
+        const fontCard = `${modifiedUrl}/idcard/${user?.code}_1.jpg`;
+        const backCard = `${modifiedUrl}/idcard/${user?.code}_2.jpg`
         const infoLogin = {
           auth: { access_token: token, token_type: "Bearer" },
-          userInfo: {...user, photo:linkImage},
+          userInfo: {
+            ...user,
+            photo:linkImage,
+            idcard:{
+              ...user?.idcard,
+              backCard,
+              fontCard
+            }
+          },
           login: {
             phone: user?.phone,
           },
@@ -84,7 +93,6 @@ async function GetAuthInfo() {
 }
 
 async function LoginAuth(param, domainUser) {
-     
      let response = null
      try {
       response = await fetch(`${domainUser}/auth/login`, {
@@ -127,10 +135,20 @@ async function LoginAuth(param, domainUser) {
       const urlPath = await getUrl()
       const modifiedUrl = removeApiSuffix(urlPath);
       const linkImage = `${modifiedUrl}/avatar/${user?.code}.jpg`
+      const fontCard = `${modifiedUrl}/idcard/${user?.code}_1.jpg`;
+      const backCard = `${modifiedUrl}/idcard/${user?.code}_2.jpg`
 
       const infoLogin = {
         auth: { access_token: token, token_type: "Bearer" },
-        userInfo: {...user, photo: linkImage},
+        userInfo: {
+          ...user, 
+          photo: linkImage, 
+          idcard:{
+            ...user?.idcard,
+            backCard,
+            fontCard
+          }
+        },
         login: {
           phone: user?.phone,
           domainUser
@@ -196,11 +214,16 @@ async function CallApi(patch, method, body) {
   if (isDev) {
     console.log(`===${response.status}=== ${response.url}`);
   }
-  return await response.json();
+  try {
+    return await response.json(); // Dữ liệu cần parse
+  } catch (error) {
+    console.error('JSON Parse Error:', error);
+    // Hiển thị thông báo lỗi cho người dùng hoặc log vào server
+  }
+  
 }
 
 async function UploadFileApi(patch, method, body) {
-  console.log('UploadFileApi', body);
   let urlHost = _urlDomain ? _urlDomain : await getUrl()
   let authInfo = await GetAccessToken();
   if (authInfo === null) {
@@ -222,7 +245,6 @@ async function UploadFileApi(patch, method, body) {
   };
   const url = `${urlHost}${patch}`
   let response = await fetch(url, header);
-  console.log(`response`, response);
   if (isDev) {
     console.log(`===${response.status}=== ${response.url}`);
   }

@@ -16,33 +16,27 @@ export default function HeaderDetail({
 
     return(
         <View style={styles.hearderCheckin}>
-                <TouchableOpacity
-                    onPress={onPress ? onPress : null}
-                    style={styles.buttonBack}
-                >
-                    <Icon.icon_Back/>
-                </TouchableOpacity>
+            <TouchableOpacity
+                onPress={onPress ? onPress : null}
+                style={styles.buttonBack}
+            >
+                <Icon.icon_Back/>
+            </TouchableOpacity>
 
-                <AvatarCustom 
-                    size={30} 
-                    name={colleague?.name || ''}
-                    picture=""
-                />
-                <View style={styles.viewDate}>
-                    <Text style={styles.textTitleHeader}>{titleHeader}</Text>
-                    <Text style={styles.textDateInfo}>{description}</Text>
-                </View>
+            <AvatarCustom 
+                size={30} 
+                name={colleague?.name || ''}
+                picture=""
+            />
+            <View style={styles.viewDate}>
+                <Text style={styles.textTitleHeader}>{titleHeader}</Text>
+                <Text style={styles.textDateInfo}>{description}</Text>
             </View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingLeft: settingApp.space_16,
-        paddingRight: settingApp.space_16,
-        backgroundColor: colorApp.white
-    },
     viewDate: {
         width: settingApp.width_32 - 120,
         height: 64,
@@ -67,12 +61,14 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         height:60,
         alignItems:"center",
-        marginTop:12
+        marginTop:12,
     },
     buttonBack:{
         height:40,
         width:40,
         justifyContent:"center",
-        alignItems:"flex-start"
+        alignItems:"flex-start",
+        left:12,
+        marginRight:12
     }
 })

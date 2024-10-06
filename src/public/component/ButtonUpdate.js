@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import colorApp from "public/colorApp";
 import settingApp from "public/settingApp";
 import lang from "public/locate";

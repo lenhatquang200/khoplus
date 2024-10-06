@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import settingApp from 'public/settingApp';
 import colorApp from 'public/colorApp';
-import { Icon } from 'public';
 import RealTimeClock from './RealTimeClock';
 import CONSTANTS from 'public/CONSTANTS';
+import * as Icon from '../icon'
 
 const AttendanceBottomSheet = forwardRef(({ onSelect, colleague }, ref) => {
   const bottomSheetRef = useRef(null);

@@ -1,3 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import keyStore from "./keyStore";
+
 export function isPhoneNumber(number) {
   return /([\+0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/.test(number);
 }
@@ -77,4 +80,43 @@ export function formatDateByString(dateString) {
   const year = dateString.slice(4);
 
   return `${day}/${month}/${year}`;
+}
+
+
+const getFileTypeFromUri = (uri) => {
+  const fileName = uri.split('/').pop();
+  const fileExtension = fileName.split('.').pop().toLowerCase();
+  const mimeTypes = {
+      'jpg': 'image/jpeg',
+      'jpeg': 'image/jpeg',
+      'png': 'image/png',
+      'gif': 'image/gif',
+      'bmp': 'image/bmp',
+      'pdf': 'application/pdf',
+      'txt': 'text/plain',
+      'mp4': 'video/mp4',
+      'mov': 'video/quicktime',
+  };
+
+  return mimeTypes[fileExtension] || null;
+};
+
+
+export async function converLinkImage(link){
+  let newUrl = null;
+  const resLocal = await AsyncStorage.getItem(keyStore.domainName)
+  if(resLocal){
+    const pathToRemove = '/example/api';
+      const dataLogin = JSON.parse(resLocal)
+      let _urlDomain = removeApiFromUrl(dataLogin?.domainUser, pathToRemove) 
+      newUrl = `${_urlDomain}${link}`
+  }
+  return newUrl
+}
+ 
+export function removeApiFromUrl(url, pathToRemove = '') {
+  if (url.includes(pathToRemove)) {
+    return url.replace(pathToRemove, '');
+  }
+  return url;
 }
