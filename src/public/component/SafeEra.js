@@ -8,8 +8,10 @@ export default function SafeEra({
   barStyle = 'dark-content',
   backgroundStatusBar = 'white',
   translucent = false,
-  overStatusBar = false
-}, props) {
+  overStatusBar = false,
+  style,
+  ...props
+}) {
 
   useEffect(() => {
       StatusBar.setBarStyle(barStyle);
@@ -25,7 +27,7 @@ export default function SafeEra({
     <View
       style={[styles.background,{
         paddingTop: overStatusBar ? 0 : settingApp.statusBarHeight,
-        ...props.style
+        ...style
       }]}
     >
     {children}

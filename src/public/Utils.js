@@ -106,7 +106,7 @@ export async function converLinkImage(link){
   let newUrl = null;
   const resLocal = await AsyncStorage.getItem(keyStore.domainName)
   if(resLocal){
-    const pathToRemove = '/example/api';
+    const pathToRemove = 'api';
       const dataLogin = JSON.parse(resLocal)
       let _urlDomain = removeApiFromUrl(dataLogin?.domainUser, pathToRemove) 
       newUrl = `${_urlDomain}${link}`

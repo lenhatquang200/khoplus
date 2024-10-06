@@ -42,10 +42,13 @@ function Profile(props) {
 
   return (
     <SafeEra style={styles.mainView} overStatusBar={true}>
-      <HeaderAction title={"Thông tin"} styleTitle={{color:colorApp.colorText, marginLeft:12}}/>
+      <HeaderAction 
+        title={"Thông tin"} 
+        styleTitle={{color:colorApp.colorText, marginLeft:12}}
+          style={{backgroundColor:colorApp.white, width:settingApp.width}}
+        />
       <ScrollView style={{
         flex:1,
-        paddingLeft:settingApp.space_12
       }}>
         <HeaderProfile colleague={colleague} />
         <Indvidual colleague={colleague} />
@@ -59,6 +62,7 @@ export default Profile;
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
+    backgroundColor:colorApp.white_snow
   },
   background: {
     position: "absolute",
@@ -68,10 +72,9 @@ const styles = StyleSheet.create({
     height: settingApp.height,
   },
   bt_logout: {
-    width: CONSTANTS.WIDTH_PADING,
+    width: settingApp.width,
     height: 45,
     backgroundColor: colorApp.white,
-    borderRadius: space_8,
     alignItems: "center",
     paddingLeft: space_16,
     paddingRight: space_16,

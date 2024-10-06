@@ -3,11 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import settingApp from "public/settingApp";
 import colorApp from "public/colorApp";
 
-export default function HeaderAction({ title, chilldrend, styleTitle }) {
+export default function HeaderAction({ title, chilldrend, styleTitle, style }) {
   title = title || "";
   chilldrend = chilldrend || <View />;
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {...style}]}>
       <Text style={[styles.txt_name, { ...styleTitle}]}>{title}</Text>
 
       {chilldrend}

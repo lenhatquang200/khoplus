@@ -87,8 +87,10 @@ export default function DetailProfile(props) {
                 image: `data:image/jpeg;base64,${fileData}`
             }
             const response = await ApiCall.uploadIdCard(body, colleague?.code, type)
-            if(response && response?.link){
-                return await converLinkImage(response?.link)
+            console.log('response', response);
+            
+            if(response && response?.link_relative){
+                return await converLinkImage(response?.link_relative)
             }
             return null
         }

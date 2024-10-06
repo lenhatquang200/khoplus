@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { settingApp, colorApp, Component } from "../../../../public";
+import { settingApp, colorApp, Component, Icon } from "../../../../public";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CONSTANTS from "./CONSTANTS";
 import NavigationRoot from "router";
@@ -17,7 +17,7 @@ function HeaderProfile(props) {
       {/* view profile */}
       <View style={styles.view_info}>
         {/* image */}
-        <Component.AvatarCustom name={colleague?.name} size={60} />
+        <Component.AvatarCustom name={colleague?.name} size={60} picture={colleague?.photo} />
         {/* info */}
         <View style={styles.view_info_name}>
           <Text style={styles.txt_name}>
@@ -29,6 +29,9 @@ function HeaderProfile(props) {
           <Text style={styles.txt_mail}>
             {colleague?.code || CONSTANTS.NONE_DATA}
           </Text>
+        </View>
+        <View style={styles.arrow_Right}>
+          <Icon.arrow_Right size={20}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -52,14 +55,15 @@ const styles = StyleSheet.create({
     color: colorApp.colorText,
   },
   view_info: {
-    width: settingApp.width_32,
+    width: settingApp.width,
     minHeight: 80,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colorApp.white,
     paddingLeft: 16,
-    borderRadius: 8,
-    ...settingApp.shadow,
+    paddingTop:24,
+    paddingBottom:24,
+    marginTop:12,
   },
   view_info_name: {
     minHeight: 80,
@@ -86,4 +90,8 @@ const styles = StyleSheet.create({
     fontSize: space_16,
     color: colorApp.colorText,
   },
+  arrow_Right:{
+    position:"absolute",
+    right:12
+  }
 });

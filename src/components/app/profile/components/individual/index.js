@@ -32,7 +32,6 @@ export default function Indvidual() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.txt_title}>{"Cá nhân"}</Text>
 
       <FlatList
         scrollEnabled={false}
@@ -48,9 +47,11 @@ export default function Indvidual() {
 const styles = StyleSheet.create({
   container: {
     minHeight: 80,
-    width: settingApp.width_32,
+    width: settingApp.width,
     borderRadius: 8,
     marginBottom: 16,
+    justifyContent:'center',
+    alignItems:"center"
   },
   txt_title: {
     fontSize: 18,
