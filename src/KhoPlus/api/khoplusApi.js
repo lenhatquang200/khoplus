@@ -16,6 +16,13 @@ async function getUrl() {
   }
 }
 
+function removeApiSuffix(url) {
+  if (url.endsWith('/api')) {
+    return url.slice(0, -4); // Xóa bỏ 4 ký tự cuối cùng (/api)
+  }
+  return url; // Nếu không có /api thì trả về nguyên vẹn
+}
+
 async function GetAuthInfo() {
   let urlHost = _urlDomain ? _urlDomain : await getUrl()
   
@@ -38,13 +45,17 @@ async function GetAuthInfo() {
     } catch (error) {
       console.log('GetAuthInfo error', error);
     }
+    
     if (refresh_token?.status === 200) {
       refresh_token = await refresh_token.json();
       if (refresh_token?.data?.token) {
         const { token, user } = refresh_token?.data;
+        const urlPath = await getUrl()
+        const modifiedUrl = removeApiSuffix(urlPath);
+        const linkImage = `${modifiedUrl}/avatar/${user?.code}.jpg`
         const infoLogin = {
           auth: { access_token: token, token_type: "Bearer" },
-          userInfo: user,
+          userInfo: {...user, photo:linkImage},
           login: {
             phone: user?.phone,
           },
@@ -112,9 +123,14 @@ async function LoginAuth(param, domainUser) {
     const dataJson = await response.json();
     if (dataJson?.data) {
       const { user, token } = dataJson?.data || {};
+
+      const urlPath = await getUrl()
+      const modifiedUrl = removeApiSuffix(urlPath);
+      const linkImage = `${modifiedUrl}/avatar/${user?.code}.jpg`
+
       const infoLogin = {
         auth: { access_token: token, token_type: "Bearer" },
-        userInfo: user,
+        userInfo: {...user, photo: linkImage},
         login: {
           phone: user?.phone,
           domainUser
@@ -183,9 +199,40 @@ async function CallApi(patch, method, body) {
   return await response.json();
 }
 
+async function UploadFileApi(patch, method, body) {
+  console.log('UploadFileApi', body);
+  let urlHost = _urlDomain ? _urlDomain : await getUrl()
+  let authInfo = await GetAccessToken();
+  if (authInfo === null) {
+    await LogOut();
+    return { error: true, message: "Get access token fail" };
+  }
+
+  if (!method) method = "GET";
+  let header = null;
+  let token = authInfo?.auth?.access_token;
+  header = {
+    method: method,
+    body: body ? JSON.stringify(body) : null,
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+  const url = `${urlHost}${patch}`
+  let response = await fetch(url, header);
+  console.log(`response`, response);
+  if (isDev) {
+    console.log(`===${response.status}=== ${response.url}`);
+  }
+  return await response.json();
+}
+
 export default {
   LoginAuth,
   GetAuthInfo,
   LogOut,
   CallApi,
+  UploadFileApi
 };

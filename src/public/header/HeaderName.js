@@ -17,7 +17,7 @@ const { width } = settingApp;
 export default function HeaderName({ title, goBack }) {
   return (
     <View style={styles.container}>
-      {Platform.OS === "ios" && <View style={styles.statusBar} />}
+      {/* {Platform.OS === "ios" && <View style={styles.statusBar} />} */}
 
       <View style={styles.view_main}>
         <TouchableOpacity onPress={goBack} style={styles.bt_goback}>
@@ -42,9 +42,10 @@ const styles = StyleSheet.create({
   },
   view_main: {
     width,
-    height: 100 - settingApp.statusBarHeight,
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
+    paddingTop: settingApp.statusBarHeight
   },
   bt_goback: {
     width: 40,
@@ -52,10 +53,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   txt_title: {
-    fontSize: settingApp.size_24,
-    fontWeight: "bold",
+    fontSize: settingApp.size_18,
+    fontWeight: "600",
     color: settingApp.colorText,
-    marginBottom: settingApp.space_6,
   },
   box_search: {
     width: width - 75,

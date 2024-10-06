@@ -3,6 +3,7 @@ import {
   Feather,
   MaterialCommunityIcons,
   Ionicons,
+  FontAwesome
 } from "@expo/vector-icons";
 import colorApp from "./colorApp";
 
@@ -158,6 +159,45 @@ export const icon_Image = (props) => {
       name="image"
       size={size}
       color={colorApp.black}
+    />
+  );
+};
+
+export const icon_Phone = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <FontAwesome
+      name="phone"
+      size={size}
+      color={color}
+    />
+  );
+};
+
+export const icon_Navigation = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <FontAwesome
+      name="location-arrow"
+      size={size}
+      color={color}
+    />
+  );
+};
+
+export const icon_Birthday = (props) => {
+  let { size, color } = props;
+  size = size || 24;
+  color = color || colorApp.colorText;
+  return (
+    <FontAwesome
+      name="birthday-cake"
+      size={size}
+      color={color}
     />
   );
 };

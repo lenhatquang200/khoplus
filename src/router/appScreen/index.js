@@ -25,6 +25,9 @@ import CustomerDetail from "components/app/screens/customer/component/customerDe
 import Checkin from "components/app/checkin";
 import LeaveList from "components/app/leave";
 
+import DetailProfile from "components/app/detailProfile";
+import TakeIDCard from "components/app/detailProfile/components/takeIDCard";
+
 import { screenName } from "../screenName";
 const Stack = createStackNavigator();
 const optionsHorizontal = {
@@ -82,6 +85,9 @@ function AppScreen(props) {
 
       <Stack.Screen component={Checkin} name={screenName.CHECKIN} />
       <Stack.Screen component={LeaveList} name={screenName.LEAVE} />
+
+      <Stack.Screen component={DetailProfile} name={screenName.DETAIL_PROFILE} />
+      <Stack.Screen component={TakeIDCard} name={screenName.TAKE_ID_CARD} />
     </Stack.Navigator>
   );
 }

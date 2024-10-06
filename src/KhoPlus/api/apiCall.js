@@ -28,6 +28,14 @@ export async function timekeepingToday(code, value, time){
   return result;
 }
 
+export async function uploadIdCard(file, code, type, ){
+  const result = await KhoPlusApi.UploadFileApi( `/upload/idcard/${code}/${type}`, "POST", file);
+  return result;
+}
+
+
+
+///////// ============
 export async function getListProduct(page) {
   page || 1;
   const result = await KhoPlusApi.CallApi(

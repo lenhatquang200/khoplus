@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar, Alert, AppState } from 'react-native';
-import { CameraView, useCameraPermissions, Camera } from "expo-camera"
-import * as ImagePicker from 'expo-image-picker';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, Alert } from 'react-native';
+import { useCameraPermissions } from "expo-camera"
 
-import { colorApp, Icon, lang, settingApp } from 'public';
+import { colorApp, lang, settingApp } from 'public';
 import NavigationRoot from 'router';
 import { useIsFocused } from '@react-navigation/native';
 import { QRCodeScanner } from 'public/component';

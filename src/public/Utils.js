@@ -54,8 +54,6 @@ export function getDayOfWeek() {
 }
 
 export function genarateDayLocal(year, month){
-  console.log('month', month);
-  
     const daysInMonth = new Date(year, month, 0).getDate();
     const formattedDays = [];
 
@@ -71,5 +69,12 @@ export function genarateDayLocal(year, month){
     }
 
     return formattedDays;
-  
+}
+
+export function formatDateByString(dateString) {
+  const day = dateString.slice(0, 2);
+  const month = dateString.slice(2, 4);
+  const year = dateString.slice(4);
+
+  return `${day}/${month}/${year}`;
 }

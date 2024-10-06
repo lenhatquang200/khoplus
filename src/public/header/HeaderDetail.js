@@ -4,7 +4,7 @@ import { AvatarCustom } from 'public/component';
 import settingApp from 'public/settingApp';
 import colorApp from 'public/colorApp';
 import { useSelector } from 'react-redux';
-import { Icon } from 'public';
+import * as Icon from "../icon";
 
 
 export default function HeaderDetail({

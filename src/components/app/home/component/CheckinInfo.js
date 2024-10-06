@@ -25,6 +25,7 @@ const CheckinInfo = (props) => {
   const [countRollup, setCountRollup] = useState('0/0')
   const [isLoading, setIsLoading] = useState(true)
   const [disabledCheckin, setDisableCheckin] = useState(false)
+  const [infoCheckin, setInfo] = useState(null)
   
 
   useEffect(() => {
@@ -94,6 +95,7 @@ const CheckinInfo = (props) => {
   }
 
   const today = getTimeDate('dd/mm/yyyy')
+  const tileCheckin = disabledCheckin ? "Đã chấm công:" : "Bạn chưa chấm công"
   return (
     <View style={styles.container}>
     {/* Thông tin chấm công */}
@@ -101,16 +103,22 @@ const CheckinInfo = (props) => {
       // disabled={disabledCheckin}
       onPress={() => showBottomCheckin()}
       style={[styles.infoToday, { backgroundColor: colorCheckIn }]}>
+      <View style={styles.viewAlarm}>
         <View style={styles.alarm}>
-          <FontAwesome5
-            name="calendar-check"
-            color={colorApp.white}
-            size={20}
-          />
-        </View>
-        <Text style={styles.dayMonth}>{today}</Text>
+            <FontAwesome5
+              name="calendar-check"
+              color={colorApp.white}
+              size={20}
+            />
+          </View>
+          <Text style={styles.dayMonth}>{today}</Text>
+      </View>
+        
 
-        {disabledCheckin && <Text style={styles.txtCheckinToday}>{"Bạn đã chấm công hôm nay"}</Text>}
+        <>
+          <Text style={styles.txtCheckinToday}>{tileCheckin}</Text>
+          <Text style={styles.txtCheckinToday}>{}</Text>
+        </>
 
         <View style={[styles.view_txt_checkin,{
             marginTop: disabledCheckin ? 0 : 20,
@@ -198,9 +206,9 @@ const styles = StyleSheet.create({
   },
   dayMonth: {
     fontSize: 16,
-    marginTop: 8,
     color: colorApp.white,
-    fontWeight: "600"
+    fontWeight: "600",
+    marginLeft:8
   },
   view_txt_checkin: {
     flexDirection: "row",
@@ -223,5 +231,10 @@ const styles = StyleSheet.create({
     fontSize:16,
     color:colorApp.white,
     fontWeight:"500"
+  },
+  viewAlarm:{
+    flexDirection:"row",
+    alignItems:"center",
+    marginBottom:8
   }
 });

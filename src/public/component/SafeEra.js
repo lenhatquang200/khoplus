@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import { View, StyleSheet, StatusBar, Platform } from "react-native";
 import settingApp from "../settingApp";
 
-export default function SafeEra(props) {
-  const { 
-    children,
-    barStyle = 'dark-content',
-    backgroundStatusBar = 'white',
-    translucent = false,
-    overStatusBar = false
-  } = props
+export default function SafeEra({
+  children,
+  barStyle = 'dark-content',
+  backgroundStatusBar = 'white',
+  translucent = false,
+  overStatusBar = false
+}, props) {
 
   useEffect(() => {
       StatusBar.setBarStyle(barStyle);

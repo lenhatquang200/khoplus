@@ -36,6 +36,7 @@ export default function AuthApp(props) {
   const [isLoginApi, setIsloginApi] = useState(false)
 
   useEffect(() => {
+    KhoPlusApi.LogOut()
     setTimeout(() => {
       getAthenInfo();
     }, 500);

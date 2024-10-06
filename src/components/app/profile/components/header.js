@@ -3,17 +3,17 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { settingApp, colorApp, Component } from "../../../../public";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import CONSTANTS from "./CONSTANTS";
+import NavigationRoot from "router";
+import { screenName } from "router/screenName";
 const { width, height, space_16, size_20, size_24, space_8, width_32 } =
   settingApp;
 
 function HeaderProfile(props) {
   const { colleague, onLogout } = props;
   return (
-    <View style={styles.container}>
-      {/* <View style={styles.view_title}>
-        <Text style={styles.txt_title}>{"Thông tin"}</Text>
-      </View> */}
-
+    <TouchableOpacity 
+      onPress={() => NavigationRoot.push(screenName.DETAIL_PROFILE)}
+      style={styles.container}>
       {/* view profile */}
       <View style={styles.view_info}>
         {/* image */}
@@ -31,7 +31,7 @@ function HeaderProfile(props) {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 export default HeaderProfile;

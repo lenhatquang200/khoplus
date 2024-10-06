@@ -15,6 +15,7 @@ import CONSTANTS from "./components/CONSTANTS";
 import { screenName } from "router/screenName";
 import { HeaderAction } from "public/component";
 import Indvidual from "./components/individual";
+import { useSharedValue } from "react-native-reanimated";
 
 const { space_8, space_16, size_14, size_20, width } = settingApp;
 function Profile(props) {

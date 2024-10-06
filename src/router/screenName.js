@@ -33,5 +33,8 @@ export const screenName = {
   EXPORT_FOR_CUSTOMER: "exportForCustomer",
 
   CHECKIN:"Checkin",
-  LEAVE:"leave"
+  LEAVE:"leave",
+
+  DETAIL_PROFILE:"DetailProfile",
+  TAKE_ID_CARD:"TakeIDCard"
 };
