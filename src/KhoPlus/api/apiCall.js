@@ -38,6 +38,12 @@ export async function  updateInfoStaff(params) {
   return result;
 }
 
+export async function  getListOnLeave(month, time) {
+  const result = await KhoPlusApi.CallApi( `/staff/onleave/list?month=${month}&_=${time}`);
+  return result;
+}
+
+
 
 ///////// ============
 export async function getListProduct(page) {

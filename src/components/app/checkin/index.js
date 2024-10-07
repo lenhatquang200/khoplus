@@ -1,10 +1,8 @@
-import React, { Component, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import { AvatarCustom, SafeEra } from 'public/component';
-import HeaderCheckin from './component/headerCheckin';
-import { useSelector } from 'react-redux';
-import { colorApp, Icon, settingApp } from 'public';
-import { getDayOfWeek, getTimeDate } from 'public/Utils';
+import React, { useEffect, useState } from 'react';
+import {  StyleSheet } from 'react-native';
+import {  SafeEra } from 'public/component';
+import { colorApp, settingApp } from 'public';
+import { getTimeDate } from 'public/Utils';
 import CalendarCheckin from './component/calendar';
 import NavigationRoot from 'router';
 import { HeaderDetail } from 'public/header';

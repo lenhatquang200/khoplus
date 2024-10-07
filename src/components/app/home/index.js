@@ -33,8 +33,6 @@ function HomeScreen(props) {
     else{
       ToastShow("Chấm công thất bại. Vui lòng thử lại")
     }
-    // setSelectedOption(option);
-    // bottomSheetRef.current?.close(); 
   };
 
  

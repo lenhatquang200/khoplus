@@ -18,6 +18,11 @@ const colorApp = {
   checkinMorningDay: "#FFA54F",
   checkinAffterDay: "#87CEFA",
 
+  noneLeave:"#FFFFFF",
+  leaveFullDay:"#E6E6FA",
+  leaveMorningDay:"#FFEFD5",
+  leaveAffterDay:"#BFEFFF",
+
   //   green_primary: "#56C596",
   green_primary: "#198754",
   blue_primary: "#1e6091",
