@@ -28,7 +28,6 @@ export default function DetailProfile(props) {
 
     useEffect(() =>{
         if(colleague){
-            console.log('colleague', colleague);
             setDataCard(colleague?.idcard)
         }
     },[colleague])
@@ -87,8 +86,6 @@ export default function DetailProfile(props) {
                 image: `data:image/jpeg;base64,${fileData}`
             }
             const response = await ApiCall.uploadIdCard(body, colleague?.code, type)
-            console.log('response', response);
-            
             if(response && response?.link_relative){
                 return await converLinkImage(response?.link_relative)
             }

@@ -25,7 +25,6 @@ export default function LeaveList(props){
         const month = getTimeDate('mm/yyyy')
         const currentTime = new Date().getTime()
         const response = await ApiCall.getListOnLeave(month, currentTime)
-        console.log('getdataLeave', response);
         const newList = []
         if(response?.data?.length !== 0){
             const listLeave =  response.data

@@ -1,7 +1,8 @@
-import { colorApp, Utils } from 'public';
+import { colorApp } from 'public';
 import CONSTANTS from 'public/CONSTANTS';
+import { getTimeDate } from 'public/Utils';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const defaultValue ={
     colorBackground:colorApp.transparent,
@@ -16,14 +17,14 @@ export default function ItemDate(props) {
     useEffect(() =>{
         getStateForDate()
         checkCurrentDate()
-    },[listCheckin])
+    },[props])
 
     function checkCurrentDate(){
-        const currentD = Number(Utils.getTimeDate('dd'))
-        const currentM = Utils.getTimeDate('mm')
-        const currentY = Number(Utils.getTimeDate("yyyy"))
+        const currentD = getTimeDate('dd')
+        const currentM = getTimeDate('mm')
+        const currentY = getTimeDate("yyyy")
         let newMonth = date?.month < 10 ? `0${date?.month}` : date?.month
-        if(currentD === date?.day && currentM === newMonth && currentY === date?.year){
+        if(currentD == date?.day && currentM == newMonth && currentY == date?.year){
             setIscurrent(true)
         }
         else{
@@ -35,7 +36,6 @@ export default function ItemDate(props) {
         const { listCheckin, date } = props || {}
         if(listCheckin && listCheckin?.length !== 0){
             listCheckin.map(item =>{
-                
                 if(item?.date === date?.day && 
                     item?.month === date?.month &&
                     item?.year === date?.year
