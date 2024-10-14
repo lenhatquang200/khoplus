@@ -33,6 +33,8 @@ export default function DetailProfile(props) {
     },[colleague])
 
     async function onGetParams(dataID) {
+        console.log('onGetParams', dataID);
+        
         const { type } = dataID
         if (type === TYPE_TAKE.FONT) {
             if (dataID?.idCardInfo) {
@@ -60,15 +62,27 @@ export default function DetailProfile(props) {
         }
         else {
             if (dataID?.photo?.uri) {
-                const newData = {...dataCard, backCard:null}
+                let newData = {...dataCard, backCard:null}
                 const uri_imge = dataID?.photo?.uri
-                newData.backCard  = await postImage(uri_imge, 2)
-                setDataCard(newData)
+                const backCard  = await postImage(uri_imge, 2)
+                console.log('backCard', backCard);
+                newData ={
+                    ...newData,
+                    backCard:backCard
+                }
+
+                console.log('newData', newData);
+
+                setDataCard({
+                    ...newData,
+                    backCard:backCard
+                })
                 dispatch(actions.getColleague({
                     ...colleague,
                     idcard:{
                         ...idcard,
-                        ...newData
+                        ...newData,
+                        backCard:backCard
                     }
                 }));
             }

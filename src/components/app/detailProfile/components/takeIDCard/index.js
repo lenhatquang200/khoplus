@@ -4,8 +4,9 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { colorApp, settingApp } from 'public';
 import { useIsFocused } from '@react-navigation/native';
 import NavigationRoot from 'router';
-import { CameraView } from "expo-camera";
 import { Camera, CameraType} from 'expo-camera/legacy';
+import * as ImageManipulator from 'expo-image-manipulator';
+
 import TYPE_TAKE from '../constants';
 
 const { height, width } = settingApp
@@ -91,7 +92,25 @@ export default function TakeIDCard(props) {
         const options = { base64: false, quality: 0.8 };
         const photo = await cameraRef?.current?.takePictureAsync(options);
         if(type == TYPE_TAKE.FONT){
-            setPhotoCard(photo)
+            const { height, width } = photo;
+            const desiredHeight = height * 0.4;
+            const originY = (height * 0.25 ) + 100;
+
+            const croppedPhoto = await ImageManipulator.manipulateAsync(
+                photo.uri,
+                [
+                    { 
+                        crop: { 
+                            originX: 0, 
+                            originY: originY, 
+                            width: width, 
+                            height: desiredHeight 
+                        } 
+                    },
+                ],
+                { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
+            );
+            setPhotoCard(croppedPhoto)
             setScanning(true);
         }
         else{

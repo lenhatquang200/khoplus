@@ -52,6 +52,14 @@ function Profile(props) {
       }}>
         <HeaderProfile colleague={colleague} />
         <Indvidual colleague={colleague} />
+
+        <TouchableOpacity
+          style={styles.buttonSection}
+        >
+          <Text style={styles.text_title_section}>{"Đổi kho hàng"}</Text>
+        </TouchableOpacity>
+
+
         {buttonLogout()}
       </ScrollView>
     </SafeEra>
@@ -101,4 +109,17 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingLeft: settingApp.space_16,
   },
+  buttonSection:{
+    width:settingApp.width,
+    height:46,
+    backgroundColor:colorApp.white,
+    marginBottom:8,
+    justifyContent:"center",
+    paddingLeft:settingApp.space_16
+  },
+  text_title_section:{
+    fontSize:14,
+    fontWeight:"400",
+    color:colorApp.colorText
+  }
 });
